@@ -1,0 +1,13 @@
+* {
+    box-sizing: border-box;
+}
+
+.grid-layout {
+    display: flex;
+    width: 60vw;
+    flex-wrap: wrap;
+}
+
+.tile {
+    width: 20%;
+}
