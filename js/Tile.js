@@ -2,18 +2,33 @@ export default {
     
     name: 'tile',
 
-    props: ['position'],
+    props: {
+        position: {
+            type: Object,
+            required: true
+        },
+
+        tileState: {
+            type: Array,
+            required: true
+        }
+    },
 
     template: `
-        <button
-        class="tile"
-        @click="logPosition"
-        >x</button>
+        <div class="tile" @click="logPosition">
+            <img v-bind:src="image">
+        </div>
     `,
 
     methods: {
         logPosition(){
             console.log(this.position.x, this.position.y)
+        }
+    },
+
+    computed: {
+        image(){
+            return this.tileState[2].tileImage
         }
     }
 }

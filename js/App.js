@@ -14,25 +14,25 @@ export default {
         ` 
 }
 
-document.addEventListener('keydown', logKey);
+// document.addEventListener('keydown', logKey);
 
-function logKey(e) {
-    switch (e.code) {
-        case "ArrowUp":
-            grid.goUp();
-            break;
-        case "ArrowDown":
-            grid.goDown();
-            break;
-        case "ArrowLeft":
-            grid.goLeft();
-            break;
-        case "ArrowRight":
-            grid.goRight();
-            break;
+// function logKey(e) {
+//     switch (e.code) {
+//         case "ArrowUp":
+//             grid.goUp();
+//             break;
+//         case "ArrowDown":
+//             grid.goDown();
+//             break;
+//         case "ArrowLeft":
+//             grid.goLeft();
+//             break;
+//         case "ArrowRight":
+//             grid.goRight();
+//             break;
 
-        default:
-	    //Do nothing.
-            break;
-    }
-}
+//         default:
+// 	    //Do nothing.
+//             break;
+//     }
+// }
