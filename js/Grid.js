@@ -11,16 +11,40 @@ export default {
     template: `
     <div class="grid-layout">
         <tile 
-        v-for="tile in flatTiles"
+        v-for="(tile, i) in flatTiles"
         v-bind:position="tile"
-        v-bind:key="'tile' + tile.x + tile.y"
+        v-bind:tileState="tileState"
+        v-bind:key="'tile' + i + tile.x + tile.y"
         ></tile>
     </div>
     `,
 
     data() {
         return {
-            tiles: []
+            tiles: [],
+            gridSize: 20,
+            tileState: [
+                {
+                    tileId: 0,
+                    tileName: 'Empty',
+                    tileImage: './Img/Empty.png'
+                },
+                {
+                    tileId: 1,
+                    tileName: 'Brick',
+                    tileImage: './Img/Brick.png'
+                },
+                {
+                    tileId: 2,
+                    tileName: 'Dirt',
+                    tileImage: './Img/Dirt.png'
+                },
+                {
+                    tileId: 3,
+                    tileName: 'Boulder',
+                    tileImage: './Img/Boulder.png'
+                },
+            ]
         }
     },
 
@@ -32,9 +56,9 @@ export default {
 
     created() {
 
-        for(let row = 0; row < 5; row++){
+        for(let row = 0; row < this.gridSize; row++){
             this.tiles[row] = []
-            for(let col = 0; col < 5; col++){
+            for(let col = 0; col < this.gridSize; col++){
                 let position = {
                     x: col,
                     y: row
@@ -42,9 +66,5 @@ export default {
                 this.tiles[row].push(position)
             }
         }
-
-        console.log(this.tiles)
-        console.log(this.flatTiles)
-
     }
 }
