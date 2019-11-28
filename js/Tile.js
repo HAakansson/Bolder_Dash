@@ -8,10 +8,15 @@ export default {
             required: true
         },
 
-        tileState: {
-            type: Array,
+        image: {
+            type: String,
             required: true
         }
+
+        // tileState: {
+        //     type: Array,
+        //     required: true
+        // }
     },
 
     template: `
@@ -26,9 +31,9 @@ export default {
         }
     },
 
-    computed: {
-        image(){
-            return this.tileState[2].tileImage
-        }
-    }
+    // computed: {
+    //     image(){
+    //         return this.tileState[2].tileImage
+    //     }
+    // }
 }

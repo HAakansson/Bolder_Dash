@@ -13,7 +13,7 @@ export default {
         <tile 
         v-for="(tile, i) in flatTiles"
         v-bind:position="tile"
-        v-bind:tileState="tileState"
+        v-bind:image="image"
         v-bind:key="'tile' + i + tile.x + tile.y"
         ></tile>
     </div>
@@ -21,6 +21,7 @@ export default {
 
     data() {
         return {
+            tileValue: 2,
             tiles: [],
             gridSize: 20,
             tileState: [
@@ -44,14 +45,18 @@ export default {
                     tileName: 'Boulder',
                     tileImage: './Img/Boulder.png'
                 },
-            ]
+            ],
         }
     },
 
     computed: {
        flatTiles() {
            return this.tiles.flat()
-       } 
+       },
+
+       image() {
+            return this.tileState[this.tileValue].tileImage
+       }
     },
 
     created() {
