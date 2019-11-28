@@ -13,7 +13,6 @@ export default {
         <tile 
         v-for="(tile, i) in flatTiles"
         v-bind:position="tile"
-        v-bind:image="image"
         v-bind:key="'tile' + i + tile.x + tile.y"
         ></tile>
     </div>
@@ -21,31 +20,9 @@ export default {
 
     data() {
         return {
-            tileValue: 2,
             tiles: [],
             gridSize: 20,
-            tileState: [
-                {
-                    tileId: 0,
-                    tileName: 'Empty',
-                    tileImage: './Img/Empty.png'
-                },
-                {
-                    tileId: 1,
-                    tileName: 'Brick',
-                    tileImage: './Img/Brick.png'
-                },
-                {
-                    tileId: 2,
-                    tileName: 'Dirt',
-                    tileImage: './Img/Dirt.png'
-                },
-                {
-                    tileId: 3,
-                    tileName: 'Boulder',
-                    tileImage: './Img/Boulder.png'
-                },
-            ],
+            counter: 1
         }
     },
 
@@ -54,9 +31,9 @@ export default {
            return this.tiles.flat()
        },
 
-       image() {
-            return this.tileState[this.tileValue].tileImage
-       }
+    //    image() {
+    //         return this.tileState[].tileImage
+    //    }
     },
 
     created() {
@@ -66,8 +43,26 @@ export default {
             for(let col = 0; col < this.gridSize; col++){
                 let position = {
                     x: col,
-                    y: row
+                    y: row,
+                    background: 2
                 }
+                if(
+                    position.y === 0 ||
+                    position.y === this.gridSize-1 ||
+                    position.x === 0 ||
+                    position.x === this.gridSize-1 ){
+                    position.background = 1
+                } else if(Math.random() > 0.8) {
+                    position.background = 3
+                }
+
+                // if(this.counter <= 10){
+                //     if(position.background === 2){
+                //         position.background = 0
+                //         this.counter++
+                //     } 
+                // }
+
                 this.tiles[row].push(position)
             }
         }
