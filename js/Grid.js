@@ -11,40 +11,60 @@ export default {
     template: `
     <div class="grid-layout">
         <tile 
-        v-for="tile in flatTiles"
+        v-for="(tile, i) in flatTiles"
         v-bind:position="tile"
-        v-bind:key="'tile' + tile.x + tile.y"
+        v-bind:key="'tile' + i + tile.x + tile.y"
         ></tile>
     </div>
     `,
 
     data() {
         return {
-            tiles: []
+            tiles: [],
+            gridSize: 20,
+            counter: 1
         }
     },
 
     computed: {
        flatTiles() {
            return this.tiles.flat()
-       } 
+       },
+
+    //    image() {
+    //         return this.tileState[].tileImage
+    //    }
     },
 
     created() {
 
-        for(let row = 0; row < 5; row++){
+        for(let row = 0; row < this.gridSize; row++){
             this.tiles[row] = []
-            for(let col = 0; col < 5; col++){
+            for(let col = 0; col < this.gridSize; col++){
                 let position = {
                     x: col,
-                    y: row
+                    y: row,
+                    background: 2
                 }
+                if(
+                    position.y === 0 ||
+                    position.y === this.gridSize-1 ||
+                    position.x === 0 ||
+                    position.x === this.gridSize-1 ){
+                    position.background = 1
+                } else if(Math.random() > 0.8) {
+                    position.background = 3
+                }
+
+                // if(this.counter <= 10){
+                //     if(position.background === 2){
+                //         position.background = 0
+                //         this.counter++
+                //     } 
+                // }
+
                 this.tiles[row].push(position)
             }
         }
-
-        console.log(this.tiles)
-        console.log(this.flatTiles)
-
     }
 }
