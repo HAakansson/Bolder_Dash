@@ -76,6 +76,8 @@ export default {
         console.log("The grid has been changed");
 
         this.updateRollingStones();
+        // this.updatePlayerMovement()
+        // If the player moves, we should call forceRender
     },
     methods: {
         start: function () {
@@ -91,33 +93,52 @@ export default {
         },
 
         updateRollingStones: function () {
-            for (let row = 0; row < this.tiles.length; row++) {
-                for(let col = 0; col < this.tiles.length; col++) {
+            for (let row = this.tiles.length - 1; row >= 0; row--) {
+                for (let col = 0; col < this.tiles.length; col++) {
+                    this.tiles[row][col].hasMoved = false;
+                }
+            }
+            //Loopar nerifrån och upp för att undvika att stenarna går åt sidan ist för ner
+            for (let row = this.tiles.length - 1; row >= 0; row--) {
+                for (let col = 0; col < this.tiles.length; col++) {
                     const tile = this.tiles[row][col];
-                    if(tile.background == 3) {
+                    if (tile.hasMoved == true) {
+                        //Om stenen redan har flyttats så - skip och loopa vidare på nästa
+                        continue;
+                    }
+
+                    if (tile.background == 3) {
 
                         const tileUnder = this.tiles[row + 1][col];
-                        if(tileUnder.background == 3) {
+                        if (tileUnder.background == 3) {
 
                             const tileLeft = this.tiles[row][col - 1];
                             const tileRight = this.tiles[row][col + 1];
                             if (tileRight.background == 0) {
                                 const tileRightUnder = this.tiles[row + 1][col + 1];
-                                if(tileRightUnder.background == 0) {
+                                if (tileRightUnder.background == 0) {
                                     // console.log("x:", tile.x, "y:", tile.y, "should move right");
                                     tile.background = 0;
                                     tileRight.background = 3;
+                                    tileRight.hasMoved = true;
                                     this.forceRender();
+                                    col++;
                                 }
                             } else if (tileLeft.background == 0) {
                                 const tileLeftUnder = this.tiles[row + 1][col - 1];
-                                if(tileLeftUnder.background == 0) {
+                                if (tileLeftUnder.background == 0) {
                                     // console.log("x:", tile.x, "y:", tile.y, "should move left");
                                     tile.background = 0;
                                     tileLeft.background = 3;
+                                    tileLeft.hasMoved = true;
                                     this.forceRender();
                                 }
                             }
+                        } else if (tileUnder.background == 0) {
+                            tileUnder.background = 3;
+                            tile.background = 0;
+                            tile.hasMoved = true;
+                            this.forceRender();
                         }
                     }
                 }
