@@ -14,6 +14,8 @@ export default {
         v-for="(tile, i) in flatTiles"
         v-bind:position="tile"
         v-bind:key="'tile' + i + tile.x + tile.y + tile.background"
+        v-on:change-background="forceRender"
+        v-on:keyup.enter='movePlayer'
         ></tile>
     </div>
     `,
@@ -30,10 +32,6 @@ export default {
         flatTiles() {
             return this.tiles.flat()
         },
-
-        //    image() {
-        //         return this.tileState[].tileImage
-        //    }
     },
 
     created() {
@@ -54,20 +52,13 @@ export default {
                     position.background = Tile.boulder
                 }
 
-                // if(this.counter <= 10){
-                //     if(position.background === 2){
-                //         position.background = 0
-                //         this.counter++
-                //     } 
-                // }
-
                 this.tiles[row].push(position)
             }
         }
 
-        setTimeout(() => {
-            this.start();
-        }, 10)
+        // setTimeout(() => {
+        //     this.start();
+        // }, 0)
     },
 
     updated() {
@@ -78,6 +69,8 @@ export default {
         // If the player moves, we should call forceRender
     },
     methods: {
+        movePlayer: function() {
+        },
         //Inbyggd vue metod
         start: function () {
             this.forceRender();
@@ -88,7 +81,7 @@ export default {
             this.renderTimeout = setTimeout(() => {
                 // This will make the component re-render
                 Vue.set(this.tiles, 0, this.tiles[0]);
-            }, 1000)
+            }, 200)
         },
 
         updateRollingStones: function () {
@@ -143,6 +136,5 @@ export default {
                 }
             }
         }
-
     }
 }
