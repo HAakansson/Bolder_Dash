@@ -15,9 +15,8 @@ export default {
     methods: {
         
         onKeyPressed(event) {
-            let keyEvent = event.key
 
-            switch (keyEvent) {
+            switch (event.key) {
 
                 case 'ArrowUp': 
                 case 'w':
