@@ -11,7 +11,39 @@ export default {
             <h1>Vue Grid</h1>
             <grid></grid>
         </div>
-        ` 
+    `,
+    methods: {
+        
+        onKeyPressed(event) {
+            let keyEvent = event.key
+
+            switch (keyEvent) {
+
+                case 'ArrowUp': 
+                case 'w':
+                    console.log("Up")
+                    break
+                case 'ArrowDown':
+                case 's':
+                    console.log("Down")
+                    break
+                case 'ArrowLeft':
+                case 'a':
+                    console.log("Left")
+                    break
+                case 'ArrowRight':
+                case 'd':
+                    console.log("Right")
+                    break
+            }
+        }
+    }, 
+    created() {
+        window.addEventListener('keydown', this.onKeyPressed)
+    },
+    beforeDestroy() {
+        window.removeEventListener('keydown', this.onKeyPressed)
+    },
 }
 
 // document.addEventListener('keydown', logKey);
