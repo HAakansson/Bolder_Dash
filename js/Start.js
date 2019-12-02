@@ -9,7 +9,7 @@ export default {
         
             <div v-if="startSection" class="start">
 
-                <h1>Start Menu</h1>
+                <h1 class="game-title" data-text="[Bolder_Dash]">[Bolder_Dash]</h1>
                 <br>
                 <div class="start info-box">
                     <h2 class="made-by">Created by:</h2>
@@ -17,6 +17,11 @@ export default {
                         <li class="list" v-for="creator in creators">{{ creator.name }}</li>
                     </ul>
                 </div>
+
+                <!--<button>Previos</button>
+                <h1>Level 1</h1>
+                <button>Next</button>-->
+
                 <button class="begin" @click="beginGame">Start Game</button>
             </div>
 
@@ -35,8 +40,8 @@ export default {
             startSection: true,
             gameSection: false,
             creators: [
-                { name: 'Niklas Håkansson'},
-                { name: 'Anton ' },
+                { name: 'Niklas'},
+                { name: 'Anton' },
                 { name: 'Yusra'},
                 { name: 'Henrik'}
             ]
