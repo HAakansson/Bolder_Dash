@@ -1,15 +1,17 @@
 import Grid from './Grid.js'
+import Start from './Start.js'
 
 export default {
 
     components: {
+        Start,
         Grid
     },
 
     template: `
         <div id="app">
-            <h1>Vue Grid</h1>
-            <grid></grid>
+            <start/>
+            <!--<grid></grid>-->
         </div>
     `,
     methods: {
