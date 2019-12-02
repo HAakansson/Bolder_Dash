@@ -7,7 +7,7 @@ export default {
     dirt: 2,
     boulder: 3,
     diamond: 4,
-    player: 5, 
+    player: 5,
 
     props: {
         position: {
