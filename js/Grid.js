@@ -14,6 +14,7 @@ export default {
         v-for="(tile, i) in flatTiles"
         v-bind:position="tile"
         v-bind:key="'tile' + i + tile.x + tile.y + tile.background"
+        v-on:keyup.enter='movePlayer'
         ></tile>
     </div>
     `,
@@ -78,6 +79,8 @@ export default {
         // If the player moves, we should call forceRender
     },
     methods: {
+        movePlayer: function() {
+        },
         //Inbyggd vue metod
         start: function () {
             this.forceRender();
