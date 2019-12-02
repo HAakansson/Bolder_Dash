@@ -11,13 +11,13 @@ export default {
 
                 <h1>Start Menu</h1>
                 <br>
-                <button class="begin" @click="beginGame">Start Game</button>
                 <div class="start info-box">
                     <h2 class="made-by">Created by:</h2>
                     <ul class="mady-by-list">
                         <li class="list" v-for="creator in creators">{{ creator.name }}</li>
                     </ul>
                 </div>
+                <button class="begin" @click="beginGame">Start Game</button>
             </div>
 
 

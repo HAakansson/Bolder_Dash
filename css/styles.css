@@ -2,6 +2,15 @@
     box-sizing: border-box;
 }
 
+body {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: linear-gradient(black, gray);
+}
+
 .grid-layout {
     display: flex;
     width: 600px;
@@ -19,4 +28,67 @@ img {
     background: black;
     width: 100%;
     /* object-fit: cover; */
+}
+
+
+
+
+.game-title {
+    font-family: 'Quicksand', sans-serif;
+    color: white;
+    text-align: center;
+    text-shadow: 0 0 20px #ff005b;
+    margin-bottom: 10px;
+}
+
+/* Creates duplicate */
+.game-title:after {
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    color: #ff005b;
+    filter: blur(15px);
+}
+.game-title::before {
+    content: '';
+    position: absolute;
+   
+    width: 30%;
+    height: 8%;
+    background: #fe3a80;
+    z-index: -2;
+    opacity: .5;
+    filter: blur(70px);
+}
+
+.info-box {
+    background-color: gray;
+    border: 5px solid black;
+    width: 50vw;
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    flex-flow: column
+}
+
+.made-by {
+    margin-top: 0;
+    text-align: center;
+    text-decoration: underline;
+}
+
+.mady-by-list {
+    font-size: 20px;
+    padding-left: 100px;
+}
+
+.begin {
+
+    color: white;
+    background-color: rgb(34, 31, 31);
+    width: 35vw;
+    height: 10vh;
+
 }
