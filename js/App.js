@@ -47,7 +47,6 @@ export default {
     },
 }
 
-// document.addEventListener('keydown', logKey);
 
 // function logKey(e) {
 //     switch (e.code) {
