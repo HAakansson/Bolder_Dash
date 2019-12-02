@@ -42,7 +42,7 @@ export default {
                 {
                     tileId: this.diamond,
                     tileName: 'Diamond',
-                    tileImage: './Img/Empty.png'
+                    tileImage: './Img/Diamond.png'
                 },
                 {
                     tileId: this.player,

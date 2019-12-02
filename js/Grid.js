@@ -86,7 +86,7 @@ export default {
             this.forceRender();
         },
         forceRender: function () {
-            // rensar timern efter varje gång en sten hsr rört sig
+            // rensar timern efter varje gång en sten har rört sig
             clearTimeout(this.renderTimeout);
             this.renderTimeout = setTimeout(() => {
                 // This will make the component re-render
