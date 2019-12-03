@@ -49,7 +49,7 @@ export default {
                     position.x === 0 || position.x === this.gridSize - 1) {
                     position.background = Tile.brick
                 } else if (Math.random() > 0.8) {
-                    position.background = Tile.boulder
+                    position.background = Tile.diamond
                 }
 
                 this.tiles[row].push(position)
@@ -90,6 +90,7 @@ export default {
                     this.tiles[row][col].hasMoved = false;
                 }
             }
+
             //Loopar nerifrån och upp för att undvika att stenarna går åt sidan ist för ner
             for (let row = this.tiles.length - 1; row >= 0; row--) {
                 for (let col = 0; col < this.tiles.length; col++) {
@@ -99,7 +100,7 @@ export default {
                         continue;
                     }
 
-                    if (tile.background == Tile.boulder) {
+                    if (tile.background === Tile.boulder && tile.background === Tile.diamond) {
 
                         const tileUnder = this.tiles[row + 1][col];
                         if (tileUnder.background == Tile.boulder) {
