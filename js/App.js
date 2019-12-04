@@ -5,11 +5,12 @@ export default {
 
     components: {
         Grid,
-
+        Start
     },
 
     template: `
         <div id="app">
+            <!--<start/>-->
             <grid v:dir="dir" ref="gridComponent"></grid>
         </div>
     `,

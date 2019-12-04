@@ -79,6 +79,10 @@ export default {
             this.startGame = true
         },
 
+
+
+
+        // REMOVE
         onKeyPressed(event) {
 
             switch (event.key) {
@@ -95,11 +99,8 @@ export default {
 
         nextLevel() {
             this.currentLevel = this.currentLevel >= this.maxNumberOfLevels ? 1 : this.currentLevel + 1
-            
-            
         }
     },
-
 
     created: function () {
         window.addEventListener('keyup', this.onKeyPressed)
