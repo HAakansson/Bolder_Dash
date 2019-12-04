@@ -42,7 +42,7 @@ export default {
                 {
                     tileId: this.diamond,
                     tileName: 'Diamond',
-                    tileImage: './Img/Empty.png'
+                    tileImage: './Img/Diamond.png'
                 },
                 {
                     tileId: this.player,
@@ -85,7 +85,7 @@ export default {
         },
 
         setDiamond() {
-            this.position.background = 3;
+            this.position.background = Tile.diamond;
             this.$emit('change-background');
         }
     },
