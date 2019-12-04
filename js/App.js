@@ -9,9 +9,7 @@ export default {
 
     template: `
         <div id="app">
-            <h1>Vue Grid</h1>
             <grid v:dir="dir" ref="gridComponent"></grid>
-            
         </div>
     `,
 

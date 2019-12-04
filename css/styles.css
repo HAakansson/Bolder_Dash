@@ -2,6 +2,11 @@
     box-sizing: border-box;
 }
 
+#app {
+    display: flex;
+    justify-content: center;
+}
+
 .grid-layout {
     display: flex;
     width: 80vw;

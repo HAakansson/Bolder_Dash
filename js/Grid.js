@@ -16,6 +16,7 @@ export default {
         v-for="(tile, i) in flatTiles"
         v-bind:position="tile"
         v-bind:key="'tile' + i + tile.x + tile.y + tile.background"
+        v-on:change-background="forceRender"
         ></tile>
     </div>
     `,
@@ -23,6 +24,28 @@ export default {
     data() {
         return {
             tiles: [],
+            customGrid: [
+                ['B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B'],
+                ['B','',' ',' ',' ',' ',' ','S',' ',' ',' ','S',' ','S',' ',' ',' ',' ','S',' ',' ',' ',' ',' ','D','S',' ',' ',' ','B'],
+                ['B',' ','S','S',' ','S',' ',' ','S','S','D',' ','D','S',' ',' ','S',' ','S',' ','S',' ','S',' ',' ',' ',' ','S',' ','B'],
+                ['B',' ','S','D',' ',' ',' ','S','D',' ',' ','S',' ',' ',' ','S',' ',' ',' ',' ','S',' ',' ','S',' ',' ',' ',' ',' ','B'],
+                ['B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B',' ','B'],
+                ['B',' ',' ',' ',' ',' ',' ',' ',' ',' ','B',' ',' ',' ',' ',' ',' ',' ',' ','S',' ',' ',' ','S',' ','S',' ',' ','D','B'],
+                ['B','S',' ',' ','D',' ',' ',' ',' ','S','B',' ',' ',' ',' ',' ','S',' ',' ',' ',' ','S',' ',' ',' ','B',' ',' ','S','B'],
+                ['B',' ',' ',' ',' ',' ',' ',' ','S','D','B',' ',' ',' ',' ',' ',' ','S',' ',' ',' ',' ',' ',' ',' ','B',' ',' ',' ','B'],
+                ['B',' ','S',' ',' ',' ',' ',' ',' ','S','B',' ',' ',' ',' ',' ','D',' ','S',' ',' ',' ','S',' ',' ','B','B','B',' ','B'],
+                ['B',' ','S',' ',' ',' ','D',' ',' ',' ','B',' ',' ',' ',' ',' ',' ',' ','B','B','B','B','D','S',' ',' ',' ','S','D','B'],
+                ['B',' ','D','S',' ',' ',' ',' ',' ',' ','B','B','S',' ',' ',' ',' ',' ',' ','S',' ',' ',' ',' ',' ',' ',' ',' ',' ','B'],
+                ['B',' ',' ','B','B','B',' ',' ',' ','B','B','D',' ',' ','B','B','B',' ',' ','S',' ',' ',' ',' ',' ',' ',' ',' ',' ','B'],
+                ['B',' ',' ',' ','S',' ',' ',' ',' ',' ',' ',' ',' ',' ','S','D','B',' ',' ',' ',' ','S',' ','S',' ',' ',' ',' ',' ','B'],
+                ['B',' ',' ',' ','S','B','B','B',' ',' ',' ',' ',' ',' ','B',' ',' ','S',' ',' ',' ',' ','S','D','S',' ','S',' ',' ','B'],
+                ['B',' ',' ',' ','D',' ',' ','S',' ',' ','D',' ',' ',' ','B','B','B',' ',' ','S',' ',' ',' ','S',' ',' ',' ',' ',' ','B'],
+                ['B',' ',' ',' ',' ',' ',' ',' ',' ',' ','B',' ',' ',' ','S',' ',' ',' ',' ','D',' ',' ',' ','S',' ',' ',' ',' ',' ','B'],
+                ['B',' ',' ',' ',' ',' ','S',' ',' ','B','B','B','B','B','B','B',' ',' ',' ',' ',' ',' ',' ','S',' ','B','B','S',' ','B'],
+                ['B',' ','S','S',' ',' ',' ',' ',' ','B',' ',' ','D',' ',' ','D',' ',' ',' ',' ','S',' ','S','D',' ','B','D',' ',' ','B'],
+                ['B','P','D',' ',' ',' ',' ',' ',' ','S',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','B',' ',' ',' ','B'],
+                ['B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B'],
+            ],
             gridHeiht: 20,
             gridWidth: 30,
             counter: 1
@@ -50,14 +73,11 @@ export default {
                     background: Tile.dirt
                 }
 
-                if (position.x === 5 && position.y === 5) {
-                    position.background = Tile.player
-                }
-                if (
-                    position.y === 0 || position.y === this.gridHeiht - 1 ||
-                    position.x === 0 || position.x === this.gridWidth - 1) {
-                    position.background = Tile.brick
-                }
+                // if (
+                //     position.y === 0 || position.y === this.gridHeiht - 1 ||
+                //     position.x === 0 || position.x === this.gridWidth - 1) {
+                //     position.background = Tile.brick
+                // } 
 
                 if (position.x === 2 && position.y === 3 ||
                     position.x === 2 && position.y === 2 ||
@@ -69,7 +89,7 @@ export default {
             }
         }
 
-        console.log(this.flatTiles)
+        this.populateMap()
     },
 
     updated() {
@@ -135,20 +155,37 @@ export default {
                             break;
                     }
                 }
-            }
-
-            for (let row = this.gridWidth - 1; row >= 0; row--) {
-                for (let col = 0; col < this.gridHeight; col++) {
-                    const tile = this.tiles[row][col];
-                    switch (direction) {
-                        case 'down':
-                            if (tile.background === Tile.player) {
-                                const moveDown = this.tiles[row + 1][col];
-                                if (moveDown.background !== Tile.brick &&
-                                    moveDown.background !== Tile.boulder) {
-                                    tile.background = Tile.empty;
-                                    moveDown.background = Tile.player;
-                                    this.forceRender();
+            } else if (direction === 'left' || direction === 'down') {
+                for (let row = this.gridHeiht - 1; row >= 0; row--) {
+                    for (let col = 0; col < this.gridWidth; col++) {
+                        const tile = this.tiles[row][col];
+                        switch (direction) {
+                            case 'left':
+                                if (tile.background === Tile.player) {
+                                    const moveLeft = this.tiles[row][col - 1];
+                                    const checkIfEmpty = this.tiles[row][col - 2];
+                                    if (moveLeft.background !== Tile.brick &&
+                                        moveLeft.background !== Tile.boulder) {
+                                        tile.background = Tile.empty;
+                                        moveLeft.background = Tile.player;
+                                        this.forceRender();
+                                    } else if (moveLeft.background === Tile.boulder && checkIfEmpty.background === Tile.empty) {
+                                        moveLeft.background = Tile.player;
+                                        checkIfEmpty.background = Tile.boulder;
+                                        tile.background = Tile.empty;
+                                        console.log('Hej')
+                                        this.forceRender();
+                                    }
+                                } break
+                            case 'down':
+                                if (tile.background === Tile.player) {
+                                    const moveDown = this.tiles[row + 1][col];
+                                    if (moveDown.background !== Tile.brick &&
+                                        moveDown.background !== Tile.boulder) {
+                                        tile.background = Tile.empty;
+                                        moveDown.background = Tile.player;
+                                        this.forceRender();
+                                    }
                                 }
                             }
                             break
@@ -177,16 +214,17 @@ export default {
 
 
         updateRollingStones: function () {
-            for (let row = this.tiles.length - 1; row >= 0; row--) {
-                for (let col = 0; col < this.tiles.length; col++) {
+            for (let row = this.gridHeiht - 1; row >= 0; row--) {
+                for (let col = 0; col < this.gridWidth; col++) {
                     this.tiles[row][col].hasMoved = false;
                 }
             }
             //Loopar nerifrån och upp för att undvika att stenarna går åt sidan ist för ner
-            for (let row = this.tiles.length - 1; row >= 0; row--) {
-                for (let col = 0; col < this.tiles.length; col++) {
+            for (let row = this.gridHeiht - 1; row >= 0; row--) {
+                for (let col = 0; col < this.gridWidth; col++) {
                     const tile = this.tiles[row][col];
                     if (tile.hasMoved == true) {
+                        console.log('has moved')
                         //Om stenen redan har flyttats så - skip och loopa vidare på nästa
                         continue;
                     }
@@ -227,7 +265,38 @@ export default {
                     }
                 }
             }
+        },
 
+        populateMap() {
+
+            for (let row = 0; row < this.gridHeiht; row++) {
+
+                for (let col = 0; col < this.gridWidth; col++) {
+
+                    switch(this.customGrid[row][col]) {
+
+                        case 'B':
+                            this.tiles[row][col].background = Tile.brick
+                            break
+                        case 'E':
+                            this.tiles[row][col].background = Tile.empty
+                             break
+                        case 'P':
+                            this.tiles[row][col].background = Tile.player
+                            break
+                        case 'S':
+                            this.tiles[row][col].background = Tile.boulder
+                            break
+                        case 'D':
+                            this.tiles[row][col].background = Tile.diamond
+                            break
+                    }
+                    // this.tiles[col][row].type = this.tileType
+                    // index++
+                    // console.log(index)
+                }
+            }
+          
         }
     }
 }
