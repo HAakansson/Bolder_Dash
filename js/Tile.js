@@ -47,7 +47,7 @@ export default {
                 {
                     tileId: this.player,
                     tileName: 'Player',
-                    tileImage: './Img/Brick.png'
+                    tileImage: './Img/Player.png'
                 },
             ],
         }
