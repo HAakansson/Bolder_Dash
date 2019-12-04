@@ -54,13 +54,23 @@ export default {
     },
 
     template: `
-        <div class="tile" @click="logPosition">
+        <div 
+        class="tile" @click="logPosition">
             <img v-bind:src="image">
         </div>
     `,
 
     methods: {
         logPosition() {
+
+            // if(this.position.background === this.tileState.length-1){
+            //     this.position.background = 0;
+            //     this.$emit('change-background');
+            // } else {
+            //     this.position.background = 0;
+            //     this.$emit('change-background');
+            // }
+
             const convert = id => {
                 switch (id) {
                     case 0: return "empty";
@@ -72,6 +82,11 @@ export default {
                 }
             }
             console.log(this.position.x, this.position.y, convert(this.position.background))
+        },
+
+        setDiamond() {
+            this.position.background = 3;
+            this.$emit('change-background');
         }
     },
 

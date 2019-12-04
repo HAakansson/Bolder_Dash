@@ -1,11 +1,13 @@
 import Tile from './Tile.js'
+import Map1 from './Map1.js'
 
 export default {
 
     name: 'grid',
 
     components: {
-        Tile
+        Tile,
+        Map1
     },
 
     template: `
@@ -21,7 +23,8 @@ export default {
     data() {
         return {
             tiles: [],
-            gridSize: 20,
+            gridHeiht: 20,
+            gridWidth: 30,
             counter: 1
         }
     },
@@ -34,46 +37,36 @@ export default {
         flatTiles() {
             return this.tiles.flat()
         },
-        //    image() {
-        //         return this.tileState[].tileImage
-        //    }
     },
 
     created() {
 
-        for (let row = 0; row < this.gridSize; row++) {
+        for (let row = 0; row < this.gridHeiht; row++) {
             this.tiles[row] = []
-            for (let col = 0; col < this.gridSize; col++) {
+            for (let col = 0; col < this.gridWidth; col++) {
                 let position = {
                     x: col,
                     y: row,
                     background: Tile.dirt
                 }
-                if (position.x === 1 && position.y === 1) {
-                    position.background = Tile.player
-                }
-                if (
-                    position.y === 0 || position.y === this.gridSize - 1 ||
-                    position.x === 0 || position.x === this.gridSize - 1) {
-                    position.background = Tile.brick
-                } else if (Math.random() > 0.8 && position.x !== 1 && position.y !== 1) {
-                    position.background = Tile.boulder
-                }
 
-                // if(this.counter <= 10){
-                //     if(position.background === 2){
-                //         position.background = 0
-                //         this.counter++
-                //     } 
+                if (
+                    position.y === 0 || position.y === this.gridHeiht - 1 ||
+                    position.x === 0 || position.x === this.gridWidth - 1) {
+                    position.background = Tile.brick
+                } 
+
+                // if (position.x === 1 && position.y === 1 ||
+                //     position.x === 2 && position.y === 2 ||
+                //     position.x === 3 && position.y === 3 ) {
+                //     position.background = Tile.boulder
                 // }
 
                 this.tiles[row].push(position)
             }
         }
 
-        setTimeout(() => {
-            this.start();
-        }, 10)
+        console.log(this.flatTiles)
     },
 
     updated() {
