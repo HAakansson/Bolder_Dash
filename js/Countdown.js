@@ -31,6 +31,8 @@ export default {
     
         gameOver() {
             alert("Time's up!") // TODO: kolla poäng jämfört med highscore lista (ange namn om högt nog) 
+            clearTimeout
+            // TODO: return till huvudmeny
         },
 
         /*startCountdown() {
@@ -74,6 +76,7 @@ export default {
         gameTime(val) {
             if (val === 0) {
                 console.log("Listener says 0")
+                // SKicka emit med sekunder kvar???
                 this.gameOver()
             }
         }

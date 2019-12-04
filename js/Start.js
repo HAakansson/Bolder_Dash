@@ -19,21 +19,23 @@ export default {
                 <h1 class="game-title" data-text="[Bolder_Dash]">[Bolder_Dash]</h1>
                 <br>
                 <div class="start info-box">
-                    <h2 class="made-by">Created by:</h2> <!-- Kolla egna hemsidan links  --->
-                    <ul class="mady-by-list">
-                        <li class="list" v-for="creator in creators">{{ creator.name }}</li>
-                    </ul>
-
-                    <highscore/>
+                    <highscore class="highscore"/>
                 </div>
 
-                <!-- v-on:keyup -->
-                <!--<button>Previos</button>
-                <h1>Level 1</h1>
-                <button>Next</button>-->
-                <button @click="nextLevel">Level {{ currentLevel }}</button>
 
-                <button class="begin" @click="beginGame">Start Game</button>
+                <div class="buttons">
+
+                </div>
+                <button class="next-level" @click="nextLevel">Level {{ currentLevel }}</button>
+                <button class="start-level" @click="beginGame">Start Game</button>
+
+
+                <div class="creators-list">
+                    <h2>Creators:</h2> 
+                    <h3 class="creators-name" v-for="creator in creators"> || {{ creator.name }}  </h3>
+                </div>
+
+
             </div>
 
 

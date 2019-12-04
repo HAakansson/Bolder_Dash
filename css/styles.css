@@ -33,6 +33,12 @@ img {
 
 
 
+
+
+
+/* Start Page */
+
+
 .game-title {
     font-family: 'Quicksand', sans-serif;
     color: white;
@@ -66,26 +72,21 @@ img {
 .info-box {
     background-color: gray;
     border: 5px solid black;
-    width: 50vw;
-    height: 50vh;
-    display: flex;
+    width: 60vw;
+    height: 40vh;
+    font-size: 18px;
+    /*display: flex;
     justify-content: center;
-    flex-flow: column
+    flex-flow: column*/
 }
 
-.made-by {
-    margin-top: 0;
+
+.highscore {
     text-align: center;
-    text-decoration: underline;
 }
 
-.mady-by-list {
-    font-size: 20px;
-    padding-left: 100px;
-}
 
-.begin {
-
+.start-level {
     color: white;
     background-color: rgb(34, 31, 31);
     width: 35vw;
@@ -93,6 +94,29 @@ img {
 
 }
 
+.next-level {
+    margin-top: 20px;
+    display: block;
+    width: 35vw;
+    height: 10vh;
+}
+
+
+
+
+
+.creators-list {
+    color: white;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+}
+
+.creators-name {
+    
+    padding-left: 20px;
+}
 
 
 .hud {
