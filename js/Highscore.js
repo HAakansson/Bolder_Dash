@@ -38,7 +38,7 @@ export default {
         },
 
         updateLowestScoreVariable() {
-
+            //this.newScore.score
         },
 
 
