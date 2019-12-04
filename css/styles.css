@@ -92,3 +92,17 @@ img {
     height: 10vh;
 
 }
+
+
+
+.hud {
+    color: white;
+    font-family: 'Tomorrow', sans-serif;
+    border: 5px solid gray;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.timer {
+}

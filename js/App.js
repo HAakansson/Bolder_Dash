@@ -40,10 +40,10 @@ export default {
         }
     }, 
     created() {
-        window.addEventListener('keydown', this.onKeyPressed)
+        //window.addEventListener('keydown', this.onKeyPressed)
     },
     beforeDestroy() {
-        window.removeEventListener('keydown', this.onKeyPressed)
+        //window.removeEventListener('keydown', this.onKeyPressed)
     },
 }
 
