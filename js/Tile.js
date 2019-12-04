@@ -42,7 +42,7 @@ export default {
                 {
                     tileId: this.diamond,
                     tileName: 'Diamond',
-                    tileImage: './Img/Empty.png'
+                    tileImage: './Img/Diamond.png'
                 },
                 {
                     tileId: this.player,
@@ -63,13 +63,13 @@ export default {
     methods: {
         logPosition() {
 
-            // if(this.position.background === this.tileState.length-1){
-            //     this.position.background = 0;
-            //     this.$emit('change-background');
-            // } else {
-            //     this.position.background = 0;
-            //     this.$emit('change-background');
-            // }
+            if(this.position.background === this.tileState.length-1){
+                this.position.background = 0;
+                this.$emit('change-background');
+            } else {
+                this.position.background = 0;
+                this.$emit('change-background');
+            }
 
             const convert = id => {
                 switch (id) {
