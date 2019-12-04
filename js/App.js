@@ -27,7 +27,6 @@ export default {
             switch (keyEvent) {
                 case 'ArrowUp':
                 case 'w':
-                    console.log("Up")
                     this.$refs.gridComponent.updatePlayerMovement('up');
                     break;
                 case 'ArrowDown':
