@@ -23,6 +23,28 @@ export default {
     data() {
         return {
             tiles: [],
+            customGrid: [
+                ['B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B'],
+                ['B','P','S','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','B'],
+                ['B','D','D','S','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','B'],
+                ['B','D','S','G','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','B'],
+                ['B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','D','B'],
+                ['B','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','B'],
+                ['B','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','B','D','D','D','D','B'],
+                ['B','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','B','D','D','D','D','B'],
+                ['B','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','B','D','D','D','D','B'],
+                ['B','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','B','D','D','D','D','B'],
+                ['B','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','B','D','D','D','D','B'],
+                ['B','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','B','D','D','D','D','B'],
+                ['B','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','B','D','D','D','D','B'],
+                ['B','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','B','D','D','D','D','B'],
+                ['B','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','B','D','D','D','D','B'],
+                ['B','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','B','D','D','D','D','B'],
+                ['B','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','B','D','D','D','D','B'],
+                ['B','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','B','D','D','D','D','B'],
+                ['B','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','D','B','D','D','D','D','B'],
+                ['B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B'],
+            ],
             gridHeiht: 20,
             gridWidth: 30,
             counter: 1
@@ -47,14 +69,14 @@ export default {
                 let position = {
                     x: col,
                     y: row,
-                    background: Tile.dirt
+                    background: Tile.empty
                 }
 
-                if (
-                    position.y === 0 || position.y === this.gridHeiht - 1 ||
-                    position.x === 0 || position.x === this.gridWidth - 1) {
-                    position.background = Tile.brick
-                } 
+                // if (
+                //     position.y === 0 || position.y === this.gridHeiht - 1 ||
+                //     position.x === 0 || position.x === this.gridWidth - 1) {
+                //     position.background = Tile.brick
+                // } 
 
                 // if (position.x === 1 && position.y === 1 ||
                 //     position.x === 2 && position.y === 2 ||
@@ -66,7 +88,7 @@ export default {
             }
         }
 
-        console.log(this.flatTiles)
+        this.populateMap()
     },
 
     updated() {
@@ -213,6 +235,42 @@ export default {
                     }
                 }
             }
+        },
+
+        populateMap() {
+
+            let index = 0;
+            for (let row = 0; row < this.gridHeiht; row++) {
+
+                for (let col = 0; col < this.gridWidth; col++) {
+
+                    switch(this.customGrid[row][col]) {
+
+                        case 'B':
+                            this.tiles[row][col].background = Tile.brick
+                            break
+                        case 'D':
+                            this.tiles[row][col].background = Tile.dirt
+                            break
+                        case 'E':
+                            this.tiles[row][col].background = Tile.empty
+                             break
+                        case 'P':
+                            this.tiles[row][col].background = Tile.player
+                            break
+                        case 'S':
+                        this.tiles[row][col].background = Tile.boulder
+                        break
+                        case 'G':
+                        this.tiles[row][col].background = Tile.diamond
+                        break
+                    }
+                    // this.tiles[col][row].type = this.tileType
+                    // index++
+                    // console.log(index)
+                }
+            }
+          
         }
     }
 }
