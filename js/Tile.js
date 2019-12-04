@@ -7,7 +7,7 @@ export default {
     dirt: 2,
     boulder: 3,
     diamond: 4,
-    player: 5, 
+    player: 5,
 
     props: {
         position: {
@@ -42,25 +42,33 @@ export default {
                 {
                     tileId: this.diamond,
                     tileName: 'Diamond',
-                    tileImage: './Img/Empty.png'
+                    tileImage: './Img/Diamond.png'
                 },
                 {
                     tileId: this.player,
                     tileName: 'Player',
-                    tileImage: './Img/Brick.png'
+                    tileImage: './Img/Player.png'
                 },
             ],
         }
     },
 
     template: `
-        <div class="tile" @click="logPosition">
+        <div 
+        class="tile" @click="logPosition">
             <img v-bind:src="image">
         </div>
     `,
 
     methods: {
         logPosition() {
+
+            if(this.position.background !== 1){
+                this.position.background = 0;
+                this.$emit('change-background');
+            }                
+
+
             const convert = id => {
                 switch (id) {
                     case 0: return "empty";
@@ -72,6 +80,11 @@ export default {
                 }
             }
             console.log(this.position.x, this.position.y, convert(this.position.background))
+        },
+
+        setDiamond() {
+            this.position.background = 3;
+            this.$emit('change-background');
         }
     },
 

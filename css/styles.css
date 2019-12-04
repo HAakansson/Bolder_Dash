@@ -2,25 +2,20 @@
     box-sizing: border-box;
 }
 
-body {
+#app {
     display: flex;
     justify-content: center;
-    margin: 0;
-    width: 100vw;
-    height: 100vh;
-    background-image: linear-gradient(black, gray);
 }
 
 .grid-layout {
     display: flex;
-    width: 600px;
-    height: 600px;
+    width: 80vw;
+    height: auto;
     flex-wrap: wrap;
 }
 
 .tile {
-    width: 5%;
-    height: 5%;
+    width: 3.33333%;
     
 }
 
