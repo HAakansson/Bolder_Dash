@@ -1,14 +1,16 @@
 import Grid from './Grid.js'
+import Start from './Start.js'
 
 export default {
 
     components: {
         Grid,
-
+        Start
     },
 
     template: `
         <div id="app">
+            <!--<start/>-->
             <grid v:dir="dir" ref="gridComponent"></grid>
         </div>
     `,
@@ -22,12 +24,14 @@ export default {
     methods: {
 
         onKeyPressed(event) {
+
             let keyEvent = event.key
 
             switch (keyEvent) {
                 case 'ArrowUp':
                 case 'w':
                     this.$refs.gridComponent.updatePlayerMovement('up');
+                    console.log("up")
                     break;
                 case 'ArrowDown':
                 case 's':
