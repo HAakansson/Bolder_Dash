@@ -48,8 +48,15 @@ export default {
                     position.y === 0 || position.y === this.gridSize - 1 ||
                     position.x === 0 || position.x === this.gridSize - 1) {
                     position.background = Tile.brick
-                } else if (Math.random() > 0.8) {
-                    position.background = Tile.diamond
+                }
+                else if (Math.random() > 0.8) {
+                    position.background = Tile.boulder
+                    if (Math.random() > 0.8) {
+                        position.background = Tile.diamond
+
+
+                    }
+
                 }
 
                 this.tiles[row].push(position)
@@ -69,7 +76,7 @@ export default {
         // If the player moves, we should call forceRender
     },
     methods: {
-        movePlayer: function() {
+        movePlayer: function () {
         },
         //Inbyggd vue metod
         start: function () {
@@ -100,11 +107,11 @@ export default {
                         continue;
                     }
 
-                    if (tile.background === Tile.boulder && tile.background === Tile.diamond) {
-
+                    if (tile.background === Tile.boulder || tile.background === Tile.diamond) {
+                    let tempTile = tile.background;
                         const tileUnder = this.tiles[row + 1][col];
-                        if (tileUnder.background == Tile.boulder) {
-
+                        if (tileUnder.background === Tile.boulder || tileUnder.background === Tile.diamond) {
+                          
                             const tileLeft = this.tiles[row][col - 1];
                             const tileRight = this.tiles[row][col + 1];
                             if (tileRight.background == Tile.empty) {
@@ -112,23 +119,23 @@ export default {
                                 if (tileRightUnder.background == Tile.empty) {
                                     // console.log("x:", tile.x, "y:", tile.y, "should move right");
                                     tile.background = Tile.empty;
-                                    tileRight.background = Tile.boulder;
+                                    tileRight.background = tempTile;
                                     tileRight.hasMoved = true;
                                     this.forceRender();
                                     col++;
                                 }
-                            } else if (tileLeft.background == Tile.boulder) {
+                            } else if (tileLeft.background == Tile.empty) {
                                 const tileLeftUnder = this.tiles[row + 1][col - 1];
                                 if (tileLeftUnder.background == Tile.empty) {
                                     // console.log("x:", tile.x, "y:", tile.y, "should move left");
                                     tile.background = Tile.empty;
-                                    tileLeft.background = Tile.boulder;
+                                    tileLeft.background = tempTile;
                                     tileLeft.hasMoved = true;
                                     this.forceRender();
                                 }
                             }
                         } else if (tileUnder.background == Tile.empty) {
-                            tileUnder.background = Tile.boulder;
+                            tileUnder.background = tempTile;
                             tile.background = Tile.empty;
                             tile.hasMoved = true;
                             this.forceRender();
