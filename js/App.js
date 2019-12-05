@@ -1,43 +1,53 @@
 import Grid from './Grid.js'
+import Start from './Start.js'
 
 export default {
 
     components: {
-        Grid
+        Grid,
+        Start
     },
 
     template: `
         <div id="app">
-            <h1>Vue Grid</h1>
-            <grid></grid>
+            <!--<start/>-->
+            <grid v:dir="dir" ref="gridComponent"></grid>
         </div>
     `,
+
+    data() {
+        return {
+            dir: 0,
+        }
+    },
+
     methods: {
-        
+
         onKeyPressed(event) {
+
             let keyEvent = event.key
 
             switch (keyEvent) {
-
-                case 'ArrowUp': 
+                case 'ArrowUp':
                 case 'w':
-                    console.log("Up")
-                    break
+                    this.$refs.gridComponent.updatePlayerMovement('up');
+                    console.log("up")
+                    break;
                 case 'ArrowDown':
                 case 's':
-                    console.log("Down")
+                    this.$refs.gridComponent.updatePlayerMovement('down');
                     break
                 case 'ArrowLeft':
                 case 'a':
-                    console.log("Left")
+                    this.$refs.gridComponent.updatePlayerMovement('left');
                     break
                 case 'ArrowRight':
                 case 'd':
-                    console.log("Right")
+                    this.$refs.gridComponent.updatePlayerMovement('right');
                     break
             }
         }
-    }, 
+    },
     created() {
         window.addEventListener('keydown', this.onKeyPressed)
     },
@@ -45,25 +55,3 @@ export default {
         window.removeEventListener('keydown', this.onKeyPressed)
     },
 }
-
-
-// function logKey(e) {
-//     switch (e.code) {
-//         case "ArrowUp":
-//             grid.goUp();
-//             break;
-//         case "ArrowDown":
-//             grid.goDown();
-//             break;
-//         case "ArrowLeft":
-//             grid.goLeft();
-//             break;
-//         case "ArrowRight":
-//             grid.goRight();
-//             break;
-
-//         default:
-// 	    //Do nothing.
-//             break;
-//     }
-// }

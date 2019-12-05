@@ -47,7 +47,7 @@ export default {
                 {
                     tileId: this.player,
                     tileName: 'Player',
-                    tileImage: './Img/Brick.png'
+                    tileImage: './Img/Player.png'
                 },
             ],
         }
@@ -63,13 +63,11 @@ export default {
     methods: {
         logPosition() {
 
-            if(this.position.background === this.tileState.length-1){
+            if(this.position.background !== 1){
                 this.position.background = 0;
                 this.$emit('change-background');
-            } else {
-                this.position.background = 0;
-                this.$emit('change-background');
-            }
+            }                
+
 
             const convert = id => {
                 switch (id) {
