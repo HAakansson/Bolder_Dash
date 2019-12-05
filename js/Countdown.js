@@ -1,6 +1,7 @@
 export default {
 
     props: ['newScore'],
+    // TODO: send remainning time
     // TODO: ta emot en array av Scores! om score vid end är högre än i listan -> skriv namn (spara nytti highscore)
     template: `
         <div class="hud timer">
@@ -36,7 +37,6 @@ export default {
             }, 1000)  
         },
     },
-
 
     created() {
         this.startTimer()

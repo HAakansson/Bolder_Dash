@@ -14,6 +14,7 @@ export default {
         <div @keyup.ArrowLeft="pressedKey">
             <!--<Countdown/>-->
 
+            <!-- Reanme to main menu-->
             <div v-if="startSection" class="start">
 
                 <h1 class="game-title" data-text="[Bolder_Dash]">[Bolder_Dash]</h1>
@@ -28,7 +29,6 @@ export default {
                 </div>
                 <button class="next-level" @click="nextLevel">Level {{ currentLevel }}</button>
                 <button class="start-level" @click="beginGame">Start Game</button>
-
 
                 <div class="creators-list">
                     <h2>Creators:</h2> 
@@ -45,6 +45,7 @@ export default {
                 <!--<Countdown/>-->
             </div>
 
+            
             <div v-if="currentLevel==1&&startGame">
                 <grid/>
             </div>
@@ -63,8 +64,6 @@ export default {
             maxNumberOfLevels: 2,
             startSection: true,
             startGame: false,
-            //firstLevel: false,
-            //secondLevel: false,
             creators: [
                 { name: 'Niklas'},
                 { name: 'Anton' },
@@ -83,7 +82,7 @@ export default {
 
 
         // REMOVE
-        onKeyPressed(event) {
+        /*onKeyPressed(event) {
 
             switch (event.key) {
                 case 'ArrowLeft':
@@ -95,7 +94,7 @@ export default {
                     console.log("Higher Level")
                     break
             }
-        },
+        },*/
 
         nextLevel() {
             this.currentLevel = this.currentLevel >= this.maxNumberOfLevels ? 1 : this.currentLevel + 1
@@ -103,6 +102,6 @@ export default {
     },
 
     created: function () {
-        window.addEventListener('keyup', this.onKeyPressed)
+        //window.addEventListener('keyup', this.onKeyPressed)
     },
 }

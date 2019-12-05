@@ -49,7 +49,7 @@ export default {
             ],
             gridHeiht: 20,
             gridWidth: 30,
-            counter: 1
+            counter: 1,
         }
     },
 
@@ -184,6 +184,7 @@ export default {
                     }
                 }
             }
+            this.checkForDiamonds() // TEST!!!!
         },
 
         updateRollingStones: function () {
@@ -271,6 +272,22 @@ export default {
                 }
             }
           
+        },
+
+        checkForDiamonds(playerPosition) {
+
+            for (let row = 0; row < this.gridHeiht; row++) {
+
+                for (let col = 0; col < this.gridWidth; col++) {
+                    
+                    if (this.customGrid[row][col] == 'D' && this.tiles[row][col].background == Tile.player) {
+                        console.log("DIAMOND!")
+                    }
+                }
+            }
         }
-    }
+    },
+    watch: {
+        
+    },
 }
