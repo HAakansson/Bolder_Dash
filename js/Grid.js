@@ -71,7 +71,7 @@ export default {
                 let position = {
                     x: col,
                     y: row,
-                    background: Tile.empty
+                    background: Tile.dirt
                 }
 
                 // if (

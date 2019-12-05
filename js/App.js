@@ -25,10 +25,13 @@ export default {
 
         onKeyPressed(event) {
 
+            let keyEvent = event.key
+
             switch (keyEvent) {
                 case 'ArrowUp':
                 case 'w':
                     this.$refs.gridComponent.updatePlayerMovement('up');
+                    console.log("up")
                     break;
                 case 'ArrowDown':
                 case 's':
@@ -46,9 +49,9 @@ export default {
         }
     },
     created() {
-        //window.addEventListener('keydown', this.onKeyPressed)
+        window.addEventListener('keydown', this.onKeyPressed)
     },
     beforeDestroy() {
-        //window.removeEventListener('keydown', this.onKeyPressed)
+        window.removeEventListener('keydown', this.onKeyPressed)
     },
 }

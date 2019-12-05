@@ -45,14 +45,18 @@ export default {
         updateHighscore(score) {
 
             // Sätt storleks ordning
+            let newValueInserted = false
 
             for (let highscore of highscoreList.score) {
-                if (score > highscore.score) {
 
+                if (score > highscore.score && !newValueInserted) {
+
+                    // TODO: Sätt in nya värdet på rätt plats
                     highscoreList.splice(highscore -1, highscoreList.length - 1, score)
                     //highscoreList.splice
                     // Insert score (remove scores after 5)
-                    return
+                    
+                    newValueInserted = true
                 }
             }
             
