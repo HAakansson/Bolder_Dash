@@ -25,30 +25,32 @@ export default {
         return {
             tiles: [],
             customGrid: [
-                ['B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B'],
-                ['B','',' ',' ',' ',' ',' ','S',' ',' ',' ','S',' ','S',' ',' ',' ',' ','S',' ',' ',' ',' ',' ','D','S',' ',' ',' ','B'],
-                ['B',' ','S','S',' ','S',' ',' ','S','S','D',' ','D','S',' ',' ','S',' ','S',' ','S',' ','S',' ',' ',' ',' ','S',' ','B'],
-                ['B',' ','S','D',' ',' ',' ','S','D',' ',' ','S',' ',' ',' ','S',' ',' ',' ',' ','S',' ',' ','S',' ',' ',' ',' ',' ','B'],
-                ['B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B',' ','B'],
-                ['B',' ',' ',' ',' ',' ',' ',' ',' ',' ','B',' ',' ',' ',' ',' ',' ',' ',' ','S',' ',' ',' ','S',' ','S',' ',' ','D','B'],
-                ['B','S',' ',' ','D',' ',' ',' ',' ','S','B',' ',' ',' ',' ',' ','S',' ',' ',' ',' ','S',' ',' ',' ','B',' ',' ','S','B'],
-                ['B',' ',' ',' ',' ',' ',' ',' ','S','D','B',' ',' ',' ',' ',' ',' ','S',' ',' ',' ',' ',' ',' ',' ','B',' ',' ',' ','B'],
-                ['B',' ','S',' ',' ',' ',' ',' ',' ','S','B',' ',' ',' ',' ',' ','D',' ','S',' ',' ',' ','S',' ',' ','B','B','B',' ','B'],
-                ['B',' ','S',' ',' ',' ','D',' ',' ',' ','B',' ',' ',' ',' ',' ',' ',' ','B','B','B','B','D','S',' ',' ',' ','S','D','B'],
-                ['B',' ','D','S',' ',' ',' ',' ',' ',' ','B','B','S',' ',' ',' ',' ',' ',' ','S',' ',' ',' ',' ',' ',' ',' ',' ',' ','B'],
-                ['B',' ',' ','B','B','B',' ',' ',' ','B','B','D',' ',' ','B','B','B',' ',' ','S',' ',' ',' ',' ',' ',' ',' ',' ',' ','B'],
-                ['B',' ',' ',' ','S',' ',' ',' ',' ',' ',' ',' ',' ',' ','S','D','B',' ',' ',' ',' ','S',' ','S',' ',' ',' ',' ',' ','B'],
-                ['B',' ',' ',' ','S','B','B','B',' ',' ',' ',' ',' ',' ','B',' ',' ','S',' ',' ',' ',' ','S','D','S',' ','S',' ',' ','B'],
-                ['B',' ',' ',' ','D',' ',' ','S',' ',' ','D',' ',' ',' ','B','B','B',' ',' ','S',' ',' ',' ','S',' ',' ',' ',' ',' ','B'],
-                ['B',' ',' ',' ',' ',' ',' ',' ',' ',' ','B',' ',' ',' ','S',' ',' ',' ',' ','D',' ',' ',' ','S',' ',' ',' ',' ',' ','B'],
-                ['B',' ',' ',' ',' ',' ','S',' ',' ','B','B','B','B','B','B','B',' ',' ',' ',' ',' ',' ',' ','S',' ','B','B','S',' ','B'],
-                ['B',' ','S','S',' ',' ',' ',' ',' ','B',' ',' ','D',' ',' ','D',' ',' ',' ',' ','S',' ','S','D',' ','B','D',' ',' ','B'],
-                ['B','P','D',' ',' ',' ',' ',' ',' ','S',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','B',' ',' ',' ','B'],
-                ['B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B'],
+                ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'],
+                ['B', '', ' ', ' ', ' ', ' ', ' ', 'S', ' ', ' ', ' ', 'S', ' ', 'S', ' ', ' ', ' ', ' ', 'S', ' ', ' ', ' ', ' ', ' ', 'D', 'S', ' ', ' ', ' ', 'B'],
+                ['B', ' ', 'S', 'S', ' ', 'S', ' ', ' ', 'S', 'S', 'D', ' ', 'D', 'S', ' ', ' ', 'S', ' ', 'S', ' ', 'S', ' ', 'S', ' ', ' ', ' ', ' ', 'S', ' ', 'B'],
+                ['B', ' ', 'S', 'D', ' ', ' ', ' ', 'S', 'D', ' ', ' ', 'S', ' ', ' ', ' ', 'S', ' ', ' ', ' ', ' ', 'S', ' ', ' ', 'S', ' ', ' ', ' ', ' ', ' ', 'B'],
+                ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', ' ', 'B'],
+                ['B', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'B', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'S', ' ', ' ', ' ', 'S', ' ', 'S', ' ', ' ', 'D', 'B'],
+                ['B', 'S', ' ', ' ', 'D', ' ', ' ', ' ', ' ', 'S', 'B', ' ', ' ', ' ', ' ', ' ', 'S', ' ', ' ', ' ', ' ', 'S', ' ', ' ', ' ', 'B', ' ', ' ', 'S', 'B'],
+                ['B', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'S', 'D', 'B', ' ', ' ', ' ', ' ', ' ', ' ', 'S', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'B', ' ', ' ', ' ', 'B'],
+                ['B', ' ', 'S', ' ', ' ', ' ', ' ', ' ', ' ', 'S', 'B', ' ', ' ', ' ', ' ', ' ', 'D', ' ', 'S', ' ', ' ', ' ', 'S', ' ', ' ', 'B', 'B', 'B', ' ', 'B'],
+                ['B', ' ', 'S', ' ', ' ', ' ', 'D', ' ', ' ', ' ', 'B', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'B', 'B', 'B', 'B', 'D', 'S', ' ', ' ', ' ', 'S', 'D', 'B'],
+                ['B', ' ', 'D', 'S', ' ', ' ', ' ', ' ', ' ', ' ', 'B', 'B', 'S', ' ', ' ', ' ', ' ', ' ', ' ', 'S', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'B'],
+                ['B', ' ', ' ', 'B', 'B', 'B', ' ', ' ', ' ', 'B', 'B', 'D', ' ', ' ', 'B', 'B', 'B', ' ', ' ', 'S', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'B'],
+                ['B', ' ', ' ', ' ', 'S', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'S', 'D', 'B', ' ', ' ', ' ', ' ', 'S', ' ', 'S', ' ', ' ', ' ', ' ', ' ', 'B'],
+                ['B', ' ', ' ', ' ', 'S', 'B', 'B', 'B', ' ', ' ', ' ', ' ', ' ', ' ', 'B', ' ', ' ', 'S', ' ', ' ', ' ', ' ', 'S', 'D', 'S', ' ', 'S', ' ', ' ', 'B'],
+                ['B', ' ', ' ', ' ', 'D', ' ', ' ', 'S', ' ', ' ', 'D', ' ', ' ', ' ', 'B', 'B', 'B', ' ', ' ', 'S', ' ', ' ', ' ', 'S', ' ', ' ', ' ', ' ', ' ', 'B'],
+                ['B', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'B', ' ', ' ', ' ', 'S', ' ', ' ', ' ', ' ', 'D', ' ', ' ', ' ', 'S', ' ', ' ', ' ', ' ', ' ', 'B'],
+                ['B', ' ', ' ', ' ', ' ', ' ', 'S', ' ', ' ', 'B', 'B', 'B', 'B', 'B', 'B', 'B', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'S', ' ', 'B', 'B', 'S', ' ', 'B'],
+                ['B', ' ', 'S', 'S', ' ', ' ', ' ', ' ', ' ', 'B', ' ', ' ', 'D', ' ', ' ', 'D', ' ', ' ', ' ', ' ', 'S', ' ', 'S', 'D', ' ', 'B', 'D', ' ', ' ', 'B'],
+                ['B', 'P', 'D', ' ', ' ', ' ', ' ', ' ', ' ', 'S', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'B', ' ', ' ', ' ', 'B'],
+                ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'],
             ],
             gridHeiht: 20,
             gridWidth: 30,
-            counter: 1
+            counter: 1,
+            boulderOnHead: false,
+            fallValue: null
         }
     },
 
@@ -94,15 +96,17 @@ export default {
 
     updated() {
         this.updateRollingStones();
+        console.log(Date.now())
         //this.updatePlayerMovement()
         // If the player moves, we should call forceRender
     },
     methods: {
         //Inbyggd vue metod
         start: function () {
+
             this.forceRender();
         },
-        forceRender: async function () {
+        forceRender: function () {
             // rensar timern efter varje gång en sten hsr rört sig
             clearTimeout(this.renderTimeout);
             this.renderTimeout = setTimeout(() => {
@@ -131,12 +135,14 @@ export default {
                                     moveRight.background = Tile.player;
                                     this.forceRender();
 
+
                                 } else if (moveRight.background === Tile.boulder &&
                                     checkIfEmpty.background === Tile.empty) {
 
                                     moveRight.background = Tile.player;
                                     checkIfEmpty.background = Tile.boulder;
                                     tile.background = Tile.empty;
+                                    this.forceRender();
 
                                 }
                             }
@@ -149,46 +155,18 @@ export default {
                                     tile.background = Tile.empty;
                                     moveUp.background = Tile.player;
                                     this.forceRender();
+
                                 }
                             }
                         default:
                             break;
                     }
                 }
-            } else if (direction === 'left' || direction === 'down') {
-                for (let row = this.gridHeiht - 1; row >= 0; row--) {
-                    for (let col = 0; col < this.gridWidth; col++) {
-                        const tile = this.tiles[row][col];
-                        switch (direction) {
-                            case 'left':
-                                if (tile.background === Tile.player) {
-                                    const moveLeft = this.tiles[row][col - 1];
-                                    const checkIfEmpty = this.tiles[row][col - 2];
-                                    if (moveLeft.background !== Tile.brick &&
-                                        moveLeft.background !== Tile.boulder) {
-                                        tile.background = Tile.empty;
-                                        moveLeft.background = Tile.player;
-                                        this.forceRender();
-                                    } else if (moveLeft.background === Tile.boulder && checkIfEmpty.background === Tile.empty) {
-                                        moveLeft.background = Tile.player;
-                                        checkIfEmpty.background = Tile.boulder;
-                                        tile.background = Tile.empty;
-                                        console.log('Hej')
-                                        this.forceRender();
-                                    }
-                                } break
-                            case 'down':
-                                if (tile.background === Tile.player) {
-                                    const moveDown = this.tiles[row + 1][col];
-                                    if (moveDown.background !== Tile.brick &&
-                                        moveDown.background !== Tile.boulder) {
-                                        tile.background = Tile.empty;
-                                        moveDown.background = Tile.player;
-                                        this.forceRender();
-                                    }
-                                }
-                            }
-                            break
+            }
+            for (let row = this.gridHeiht - 1; row >= 0; row--) {
+                for (let col = 0; col < this.gridWidth; col++) {
+                    const tile = this.tiles[row][col];
+                    switch (direction) {
                         case 'left':
                             if (tile.background === Tile.player) {
                                 const moveLeft = this.tiles[row][col - 1];
@@ -198,16 +176,50 @@ export default {
                                     tile.background = Tile.empty;
                                     moveLeft.background = Tile.player;
                                     this.forceRender();
-                                } else if (moveLeft.background === Tile.boulder && checkIfEmpty.background === Tile.empty) {
+                                } else if (moveLeft.background === Tile.boulder &&
+                                    checkIfEmpty.background === Tile.empty) {
                                     moveLeft.background = Tile.player;
                                     checkIfEmpty.background = Tile.boulder;
                                     tile.background = Tile.empty;
+                                    console.log('Hej')
                                     this.forceRender();
                                 }
                             } break
-                        default:
-                            break;
+                        case 'down':
+                            if (tile.background === Tile.player) {
+                                const moveDown = this.tiles[row + 1][col];
+                                if (moveDown.background !== Tile.brick &&
+                                    moveDown.background !== Tile.boulder) {
+                                    tile.background = Tile.empty;
+                                    moveDown.background = Tile.player;
+                                    this.forceRender();
+                                }
+                            }
+                            break
                     }
+
+
+
+                    //     switch(direction){
+                    //                 case 'left':
+                    //     if (tile.background === Tile.player) {
+                    //         const moveLeft = this.tiles[row][col - 1];
+                    //         const checkIfEmpty = this.tiles[row][col - 2];
+                    //         if (moveLeft.background !== Tile.brick &&
+                    //             moveLeft.background !== Tile.boulder) {
+                    //             tile.background = Tile.empty;
+                    //             moveLeft.background = Tile.player;
+                    //             this.forceRender();
+                    //         } else if (moveLeft.background === Tile.boulder && checkIfEmpty.background === Tile.empty) {
+                    //             moveLeft.background = Tile.player;
+                    //             checkIfEmpty.background = Tile.boulder;
+                    //             tile.background = Tile.empty;
+                    //             this.forceRender();
+                    //         }
+                    //     } break
+                    //                 default:
+                    //     break;
+                    // }
                 }
             }
         },
@@ -260,6 +272,7 @@ export default {
                             tileUnder.background = Tile.boulder;
                             tile.background = Tile.empty;
                             tile.hasMoved = true;
+                            this.boulderOnHead = false;
                             this.forceRender();
                         }
                     }
@@ -267,20 +280,23 @@ export default {
             }
         },
 
+
+
+
         populateMap() {
 
             for (let row = 0; row < this.gridHeiht; row++) {
 
                 for (let col = 0; col < this.gridWidth; col++) {
 
-                    switch(this.customGrid[row][col]) {
+                    switch (this.customGrid[row][col]) {
 
                         case 'B':
                             this.tiles[row][col].background = Tile.brick
                             break
                         case 'E':
                             this.tiles[row][col].background = Tile.empty
-                             break
+                            break
                         case 'P':
                             this.tiles[row][col].background = Tile.player
                             break
@@ -296,7 +312,8 @@ export default {
                     // console.log(index)
                 }
             }
-          
+
         }
-    }
+    },
+
 }
