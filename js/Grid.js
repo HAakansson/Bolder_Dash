@@ -24,6 +24,7 @@ export default {
     data() {
         return {
             tiles: [],
+            gridSize: 20,
             customGrid: [
                 ['B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B'],
                 ['B',' ',' ',' ',' ',' ',' ','S',' ',' ',' ','S',' ','S',' ',' ',' ',' ','S',' ',' ',' ',' ',' ','D','S',' ',' ',' ','B'],
@@ -104,7 +105,7 @@ export default {
             this.forceRender();
         },
         forceRender: function () {
-            // rensar timern efter varje gång en sten hsr rört sig
+            // rensar timern efter varje gång en sten har rört sig
             clearTimeout(this.renderTimeout);
             this.renderTimeout = setTimeout(() => {
                 // This will make the component re-render
@@ -190,6 +191,7 @@ export default {
                     this.tiles[row][col].hasMoved = false;
                 }
             }
+
             //Loopar nerifrån och upp för att undvika att stenarna går åt sidan ist för ner
             for (let row = this.gridHeiht - 1; row >= 0; row--) {
                 for (let col = 0; col < this.gridWidth; col++) {
@@ -200,11 +202,11 @@ export default {
                         continue;
                     }
 
-                    if (tile.background == Tile.boulder) {
-
+                    if (tile.background === Tile.boulder || tile.background === Tile.diamond) {
+                    let tempTile = tile.background;
                         const tileUnder = this.tiles[row + 1][col];
-                        if (tileUnder.background == Tile.boulder) {
-
+                        if (tileUnder.background === Tile.boulder || tileUnder.background === Tile.diamond) {
+                          
                             const tileLeft = this.tiles[row][col - 1];
                             const tileRight = this.tiles[row][col + 1];
                             if (tileRight.background == Tile.empty) {
@@ -212,23 +214,23 @@ export default {
                                 if (tileRightUnder.background == Tile.empty) {
                                     // console.log("x:", tile.x, "y:", tile.y, "should move right");
                                     tile.background = Tile.empty;
-                                    tileRight.background = Tile.boulder;
+                                    tileRight.background = tempTile;
                                     tileRight.hasMoved = true;
                                     this.forceRender();
                                     col++;
                                 }
-                            } else if (tileLeft.background == Tile.boulder) {
+                            } else if (tileLeft.background == Tile.empty) {
                                 const tileLeftUnder = this.tiles[row + 1][col - 1];
                                 if (tileLeftUnder.background == Tile.empty) {
                                     // console.log("x:", tile.x, "y:", tile.y, "should move left");
                                     tile.background = Tile.empty;
-                                    tileLeft.background = Tile.boulder;
+                                    tileLeft.background = tempTile;
                                     tileLeft.hasMoved = true;
                                     this.forceRender();
                                 }
                             }
                         } else if (tileUnder.background == Tile.empty) {
-                            tileUnder.background = Tile.boulder;
+                            tileUnder.background = tempTile;
                             tile.background = Tile.empty;
                             tile.hasMoved = true;
                             this.forceRender();
