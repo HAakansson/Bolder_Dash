@@ -26,7 +26,7 @@ export default {
             tiles: [],
             customGrid: [
                 ['B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B'],
-                ['B','',' ',' ',' ',' ',' ','S',' ',' ',' ','S',' ','S',' ',' ',' ',' ','S',' ',' ',' ',' ',' ','D','S',' ',' ',' ','B'],
+                ['B',' ',' ',' ',' ',' ',' ','S',' ',' ',' ','S',' ','S',' ',' ',' ',' ','S',' ',' ',' ',' ',' ','D','S',' ',' ',' ','B'],
                 ['B',' ','S','S',' ','S',' ',' ','S','S','D',' ','D','S',' ',' ','S',' ','S',' ','S',' ','S',' ',' ',' ',' ','S',' ','B'],
                 ['B',' ','S','D',' ',' ',' ','S','D',' ',' ','S',' ',' ',' ','S',' ',' ',' ',' ','S',' ',' ','S',' ',' ',' ',' ',' ','B'],
                 ['B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B',' ','B'],
@@ -74,7 +74,7 @@ export default {
                 }
 
                 // if (
-                //     position.y === 0 || position.y === this.gridHeiht - 1 ||
+                //     position.y === 0 || position. y === this.gridHeiht - 1 ||
                 //     position.x === 0 || position.x === this.gridWidth - 1) {
                 //     position.background = Tile.brick
                 // } 
@@ -164,7 +164,6 @@ export default {
                                         moveLeft.background = Tile.player;
                                         checkIfEmpty.background = Tile.boulder;
                                         tile.background = Tile.empty;
-                                        console.log('Hej')
                                         this.forceRender();
                                     }
                                 } break
