@@ -1,12 +1,11 @@
 export default {
 
-    props: ['newScore'],
-    // TODO: ta emot en array av Scores! om score vid end är högre än i listan -> skriv namn (spara nytti highscore)
     template: `
-        <div class="hud timer">
-            <h2>Time Left: {{ gameTime }}</h2>
+        <div class="timer">
+            <h2>Time Left: {{ gameTime }} </h2>
         </div>
     `,
+
     data() {
         return {
             gameTime: 120, 
@@ -26,17 +25,14 @@ export default {
 
             let time = setInterval(() => {
                 this.gameTime -= 1
-            
                 // Time's up (Game Over)
                 if (this.gameTime <= 0) {
-
                     console.log("Game Over!!")
                     this.gameTime = 0                    
                 }
             }, 1000)  
         },
     },
-
 
     created() {
         this.startTimer()

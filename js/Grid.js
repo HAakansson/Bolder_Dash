@@ -140,7 +140,6 @@ export default {
                                         moveLeft.background = Tile.player;
                                         checkIfEmpty.background = Tile.boulder;
                                         tile.background = Tile.empty;
-                                        console.log('Hej')
                                         this.forceRender();
                                     }
                                 } break
@@ -217,7 +216,7 @@ export default {
         },
 
         populateMap() {
-
+                    
             for (let row = 0; row < this.gridHeiht; row++) {
 
                 for (let col = 0; col < this.gridWidth; col++) {
