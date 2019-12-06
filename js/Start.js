@@ -38,10 +38,16 @@ export default {
                     
                 </div>
             </div>
-        
-        </div>     
-    `,
 
+            <div v-if="currentLevel==1 && startGame">
+                <grid level="0"/>
+            </div>
+
+            <div v-if="currentLevel==2 && startGame">
+                <grid level = "1" />
+            </div>
+        </div>   
+    `,
     data() {
         return {
             currentLevel: 1,
@@ -50,7 +56,7 @@ export default {
             startGame: false,
             showHighScore: false,
             creators: [
-                { name: 'Niklas'},
+                { name: 'Niklas' },
                 { name: 'Anton' },
                 { name: 'Yusra'},
                 { name: 'Henrik'}

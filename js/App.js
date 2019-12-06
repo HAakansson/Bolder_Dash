@@ -10,7 +10,7 @@ export default {
         <div id="app">
             <start/>
         </div>
-    `,
+    `
 
     data() {
         return {
