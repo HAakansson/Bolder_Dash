@@ -45,17 +45,14 @@ export default {
                 <!--<Countdown/>-->
             </div>
 
-            <div v-if="currentLevel==1&&startGame">
-                <grid/>
+            <div v-if="currentLevel==1 && startGame">
+                <grid level="0"/>
             </div>
 
-            <div v-if="currentLevel==2&&startGame">
-                
+            <div v-if="currentLevel==2 && startGame">
+                <grid level = "1" />
             </div>
-        
-        </div>
-
-        
+        </div>   
     `,
     data() {
         return {
@@ -66,10 +63,10 @@ export default {
             //firstLevel: false,
             //secondLevel: false,
             creators: [
-                { name: 'Niklas'},
+                { name: 'Niklas' },
                 { name: 'Anton' },
-                { name: 'Yusra'},
-                { name: 'Henrik'}
+                { name: 'Yusra' },
+                { name: 'Henrik' }
             ]
         }
     },

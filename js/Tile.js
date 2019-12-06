@@ -54,8 +54,7 @@ export default {
     },
 
     template: `
-        <div 
-        class="tile" @click="logPosition">
+        <div class="tile" @click="logPosition">
             <img v-bind:src="image">
         </div>
     `,
