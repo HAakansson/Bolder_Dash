@@ -73,19 +73,6 @@ export default {
                     y: row,
                     background: Tile.dirt
                 }
-
-                // if (
-                //     position.y === 0 || position. y === this.gridHeiht - 1 ||
-                //     position.x === 0 || position.x === this.gridWidth - 1) {
-                //     position.background = Tile.brick
-                // } 
-
-                // if (position.x === 1 && position.y === 1 ||
-                //     position.x === 2 && position.y === 2 ||
-                //     position.x === 3 && position.y === 3 ) {
-                //     position.background = Tile.boulder
-                // }
-
                 this.tiles[row].push(position)
             }
         }
@@ -241,7 +228,7 @@ export default {
         },
 
         populateMap() {
-
+                    
             for (let row = 0; row < this.gridHeiht; row++) {
 
                 for (let col = 0; col < this.gridWidth; col++) {

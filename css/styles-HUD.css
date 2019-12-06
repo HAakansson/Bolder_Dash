@@ -1,0 +1,13 @@
+.hud {
+    align-items: center;
+    border: 5px solid gray;
+    color: black;
+    display: flex;
+    font-family: 'Tomorrow', sans-serif;
+    justify-content: space-around;
+
+}
+
+.timer h2 {
+    padding: 10px;
+}
