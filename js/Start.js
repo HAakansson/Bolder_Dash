@@ -32,19 +32,11 @@ export default {
                     <Countdown/>
                 </div>
                 <div v-if="currentLevel === 1 && startGame">
-                    <grid v:dir="dir" ref="gridComponent"></grid>
+                    <grid v:dir="dir" ref="gridComponent" level="0"></grid>
                 </div>
                 <div v-if="currentLevel === 2 && startGame">
-                    
+                <grid v:dir="dir" ref="gridComponent" level="1"></grid>
                 </div>
-            </div>
-
-            <div v-if="currentLevel==1 && startGame">
-                <grid level="0"/>
-            </div>
-
-            <div v-if="currentLevel==2 && startGame">
-                <grid level = "1" />
             </div>
         </div>   
     `,
