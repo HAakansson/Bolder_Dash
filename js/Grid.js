@@ -2,18 +2,24 @@ import Tile from './Tile.js'
 import Map1 from './Map1.js'
 import Map2 from './Map2.js'
 
+import Score from './Score.js'
+
 export default {
 
     name: 'grid',
 
     components: {
-        Tile
+        Tile,
+        Score
     },
 
     props: ['level'],
 
     template: `
     <div class="grid-layout">
+        <score
+        :score="diamondsCollected"
+        />
         <tile
         v-for="(tile, i) in flatTiles"
         v-bind:position="tile"
@@ -32,8 +38,9 @@ export default {
             gridHeiht: 20,
             gridWidth: 30,
             playerHasMoved: false,
-            counter: 1
             counter: 1,
+            diamondsCollected: 0,
+            maxNumberOfDiamonds: 0,
         }
     },
 
@@ -249,14 +256,29 @@ export default {
           
         },
 
+
+      
+
         checkForDiamonds(playerPosition) {
 
             for (let row = 0; row < this.gridHeiht; row++) {
 
                 for (let col = 0; col < this.gridWidth; col++) {
                     
+                    if (this.customGrid[row][col] == 'D') {
+                        this.maxNumberOfDiamonds += 1
+                    }
+
                     if (this.customGrid[row][col] == 'D' && this.tiles[row][col].background == Tile.player) {
                         console.log("DIAMOND!")
+                        this.diamondsCollected += 1
+                        //console.log(this.diamondsCollected + "/" + maxDiamonds)
+                        /*let score = {
+                            collected: diamondsCollected,
+                            total: maxDiamonds 
+                        }*/
+                        //this.$emit('diamond', score)
+                        //this.$refs.scoreComponent.pickupDiamond()
                     }
                 }
             }

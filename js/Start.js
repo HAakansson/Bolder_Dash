@@ -1,12 +1,14 @@
 import Grid from './Grid.js'
 import Highscore from './Highscore.js'
 import Countdown from './Countdown.js'
+import Score from './Score.js'
 
 export default {
     components: {
         Grid,
         Highscore,
-        Countdown
+        Countdown,
+        Score
     },
 
     template: `
@@ -30,6 +32,7 @@ export default {
                 <div class="hud">
                     <h2 class="level-box">Level {{ currentLevel }}</h2>
                     <Countdown/>
+                    <Score/>
                 </div>
                 <div v-if="currentLevel === 1 && startGame">
                     <grid v:dir="dir" ref="gridComponent" level="0"></grid>
