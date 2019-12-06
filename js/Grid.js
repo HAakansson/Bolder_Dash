@@ -81,7 +81,7 @@ export default {
             this.renderTimeout = setTimeout(() => {
                 // This will make the component re-render
                 Vue.set(this.tiles, 0, this.tiles[0]);
-            }, 500)
+            }, 20)
         },
 
         updatePlayerMovement: function (direction) {
