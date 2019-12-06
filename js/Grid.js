@@ -49,6 +49,7 @@ export default {
             ],
             gridHeiht: 20,
             gridWidth: 30,
+            playerHasMoved: false,
             counter: 1
         }
     },
@@ -95,25 +96,26 @@ export default {
 
     updated() {
         console.log("The grid has been changed");
+        this.playerHasMoved = false;
         this.updateRollingStones();
         //this.updatePlayerMovement()
         // If the player moves, we should call forceRender
     },
     methods: {
-        //Inbyggd vue metod
-        start: function () {
-            this.forceRender();
-        },
         forceRender: function () {
             // rensar timern efter varje gång en sten har rört sig
             clearTimeout(this.renderTimeout);
             this.renderTimeout = setTimeout(() => {
                 // This will make the component re-render
                 Vue.set(this.tiles, 0, this.tiles[0]);
-            }, 20)
+            }, 500)
         },
 
         updatePlayerMovement: function (direction) {
+            //forcerender kallas endast en gång per  knapptryckning 
+            if (this.playerHasMoved) { return;}
+            this.playerHasMoved = true;
+
             if (direction === 'right' || direction === 'up') {
                 for (let col = this.gridWidth - 1; col >= 0; col--) {
                     for (let row = 0; row < this.gridHeiht; row++) {
@@ -189,7 +191,7 @@ export default {
         updateRollingStones: function () {
             for (let row = this.gridHeiht - 1; row >= 0; row--) {
                 for (let col = 0; col < this.gridWidth; col++) {
-                    this.tiles[row][col].hasMoved = false;
+                    this.tiles[row][col].playerHasMoved = false;
                 }
             }
 
@@ -197,7 +199,7 @@ export default {
             for (let row = this.gridHeiht - 1; row >= 0; row--) {
                 for (let col = 0; col < this.gridWidth; col++) {
                     const tile = this.tiles[row][col];
-                    if (tile.hasMoved == true) {
+                    if (tile.playerHasMoved == true) {
                         console.log('has moved')
                         //Om stenen redan har flyttats så - skip och loopa vidare på nästa
                         continue;
@@ -216,7 +218,7 @@ export default {
                                     // console.log("x:", tile.x, "y:", tile.y, "should move right");
                                     tile.background = Tile.empty;
                                     tileRight.background = tempTile;
-                                    tileRight.hasMoved = true;
+                                    tileRight.playerHasMoved = true;
                                     this.forceRender();
                                     col++;
                                 }
@@ -226,14 +228,14 @@ export default {
                                     // console.log("x:", tile.x, "y:", tile.y, "should move left");
                                     tile.background = Tile.empty;
                                     tileLeft.background = tempTile;
-                                    tileLeft.hasMoved = true;
+                                    tileLeft.playerHasMoved = true;
                                     this.forceRender();
                                 }
                             }
                         } else if (tileUnder.background == Tile.empty) {
                             tileUnder.background = tempTile;
                             tile.background = Tile.empty;
-                            tile.hasMoved = true;
+                            tile.playerHasMoved = true;
                             this.forceRender();
                         }
                     }
