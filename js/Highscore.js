@@ -14,6 +14,8 @@ export default {
     data() {
         return {
             
+            currentScore: 0,
+            lowestCurrentScore: 0,
             //highscoreList: [],
             highscoreList: [
                 { name: 'ABC', score: 123},
@@ -21,7 +23,6 @@ export default {
                 { name: 'CDE', score: 345},
                 { name: 'DEF', score: 456},
                 { name: 'EFG', score: 567},
-                { name: 'EFG', score: 232},
             ]
            
         }
@@ -67,6 +68,12 @@ export default {
 
     // TODO: Lägg till en listener för ett score object. När det ändras kör uppdate functionen
     watch: {
+
+
+        newScore(val) {
+            console.log("NEW SCORE IN HIGHSCORE")
+        },
+
         
         highscoreList: {
             // TODO: kalla updateHighscore?
@@ -76,7 +83,7 @@ export default {
             handler(val) {
                 localStorage.setItem('saved-scores', JSON.stringify(this.highscoreList))
             } 
-        }
+        },
     },
 
     created() {

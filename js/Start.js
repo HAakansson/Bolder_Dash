@@ -16,7 +16,9 @@ export default {
             <div v-if="showStartMenu" class="start-menu">
                 <h1 class="game-title" data-text="[Bolder_Dash]">[Bolder_Dash]</h1>
                 <div v-if="showHighScore" class="start info-box">
-                    <highscore class="highscore"/>
+                    <highscore
+                    :newScore="this.totalScore"
+                    class="highscore"/>
                 </div>
                 <div class="buttons">
                     <button class="next-level" @click="nextLevel">Choose your level: (Level {{ currentLevel }})</button>
@@ -32,10 +34,13 @@ export default {
                 <div class="hud">
                     <h2 class="level-box">Level {{ currentLevel }}</h2>
                     <Countdown/>
-                    <Score/>
+                    <Score 
+                    :collected="this.diamondsCollected"
+                    :total="this.totalAmountOfDiamonds"
+                    @finalScore="updateFinalScore"/>
                 </div>
                 <div v-if="currentLevel === 1 && startGame">
-                    <grid @collected="collectedDiamonds" v:dir="dir" ref="gridComponent" level="0"></grid>
+                    <grid @total="totalDiamonds" @collected="collectedDiamonds" v:dir="dir" ref="gridComponent" level="0"></grid>
                 </div>
                 <div v-if="currentLevel === 2 && startGame">
                     <grid @collected="collectedDiamonds" v:dir="dir" ref="gridComponent" level="1"></grid>
@@ -49,6 +54,7 @@ export default {
             maxNumberOfLevels: 2,
             diamondsCollected: 0,
             totalAmountOfDiamonds: 0,
+            totalScore: 0,
             showStartMenu: true,
             startGame: false,
             showHighScore: false,
@@ -68,31 +74,23 @@ export default {
             this.startGame = true
         },
 
-      
-        collectedDiamonds(collectibles) {
-            
-            console.log("DIAMOND START")
-            console.log(collectibles.total)
-            this.diamondsCollected = collectibles.collected
-            this.totalAmountOfDiamonds = collectibles.total
-            console.log("Collected" + this.diamondsCollected)
-            console.log("Total" + this.totalAmountOfDiamonds)
+
+        updateFinalScore(score) {
+            this.totalScore = score
+            showStartMenu = true,
+            startGame = false,
         },
 
-        // REMOVE
-        // onKeyPressed(event) {
-        //     switch (event.key) {
-        //         case 'ArrowLeft':
-        //         case 'a':
-        //             console.log("Lower Level")
-        //             break
-        //         case 'ArrowRight':
-        //         case 'd':
-        //             console.log("Higher Level")
-        //             break
-        //      }
-        // },
+        totalDiamonds(maxNumberOfDiamonds) {
+            this.totalAmountOfDiamonds = maxNumberOfDiamonds
+        },
+      
+        collectedDiamonds(diamondsCollected) {
+            
+            this.diamondsCollected = diamondsCollected
+        },
 
+     
         nextLevel() {
             this.currentLevel = this.currentLevel >= this.maxNumberOfLevels ? 1 : this.currentLevel + 1
         },

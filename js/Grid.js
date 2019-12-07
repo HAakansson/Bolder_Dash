@@ -254,28 +254,21 @@ export default {
 
 
       
-        // Skicka till start
         checkForDiamonds(playerPosition) {
 
             for (let row = 0; row < this.gridHeiht; row++) {
 
                 for (let col = 0; col < this.gridWidth; col++) {
                     
-                
                     if (this.customGrid[row][col] == 'D' && this.tiles[row][col].background == Tile.player) {
-                        console.log("DIAMOND!")
 
                         this.diamondsCollected += 1
-
-                        let collectibles = {
-                            total: this.maxNumberOfDiamonds,
-                            collected: this.diamondsCollected
-                        }
-                        this.$emit('collected', collectibles)
+                        this.$emit('collected', this.diamondsCollected)
                     }
                 }
             }
         },
+
 
         checkTotalAmountOfDiamonds() {
             
@@ -287,7 +280,9 @@ export default {
                     }
                 } 
             }
+            this.$emit('total', this.maxNumberOfDiamonds)
         },
+
 
         onKeyPressed(event) {
             let keyEvent = event.key
@@ -312,7 +307,5 @@ export default {
             }
         }
     },
-    watch: {
-        
-    },
+
 }
