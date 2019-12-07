@@ -1,7 +1,7 @@
 import Grid from './Grid.js'
 import Highscore from './Highscore.js'
 import Countdown from './Countdown.js'
-import Score from './Score.js'
+import Score from './ScoreCalculator.js'
 
 export default {
     components: {
@@ -35,10 +35,10 @@ export default {
                     <Score/>
                 </div>
                 <div v-if="currentLevel === 1 && startGame">
-                    <grid v:dir="dir" ref="gridComponent" level="0"></grid>
+                    <grid @collected="collectedDiamonds" v:dir="dir" ref="gridComponent" level="0"></grid>
                 </div>
                 <div v-if="currentLevel === 2 && startGame">
-                <grid v:dir="dir" ref="gridComponent" level="1"></grid>
+                    <grid @collected="collectedDiamonds" v:dir="dir" ref="gridComponent" level="1"></grid>
                 </div>
             </div>
         </div>   
@@ -47,6 +47,8 @@ export default {
         return {
             currentLevel: 1,
             maxNumberOfLevels: 2,
+            diamondsCollected: 0,
+            totalAmountOfDiamonds: 0,
             showStartMenu: true,
             startGame: false,
             showHighScore: false,
@@ -64,6 +66,17 @@ export default {
         beginGame() {
             this.showStartMenu = false
             this.startGame = true
+        },
+
+      
+        collectedDiamonds(collectibles) {
+            
+            console.log("DIAMOND START")
+            console.log(collectibles.total)
+            this.diamondsCollected = collectibles.collected
+            this.totalAmountOfDiamonds = collectibles.total
+            console.log("Collected" + this.diamondsCollected)
+            console.log("Total" + this.totalAmountOfDiamonds)
         },
 
         // REMOVE

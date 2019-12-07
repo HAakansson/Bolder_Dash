@@ -2,7 +2,6 @@ import Tile from './Tile.js'
 import Map1 from './Map1.js'
 import Map2 from './Map2.js'
 
-import Score from './Score.js'
 
 export default {
 
@@ -10,16 +9,12 @@ export default {
 
     components: {
         Tile,
-        Score
     },
 
     props: ['level'],
 
     template: `
     <div class="grid-layout">
-        <score
-        :score="diamondsCollected"
-        />
         <tile
         v-for="(tile, i) in flatTiles"
         v-bind:position="tile"
@@ -70,6 +65,7 @@ export default {
         }
         
         this.populateMap()
+        this.checkTotalAmountOfDiamonds()
     },
     beforeDestroy(){
         window.removeEventListener('keydown', this.onKeyPressed)
@@ -258,29 +254,38 @@ export default {
 
 
       
-
+        // Skicka till start
         checkForDiamonds(playerPosition) {
 
             for (let row = 0; row < this.gridHeiht; row++) {
 
                 for (let col = 0; col < this.gridWidth; col++) {
                     
+                
+                    if (this.customGrid[row][col] == 'D' && this.tiles[row][col].background == Tile.player) {
+                        console.log("DIAMOND!")
+
+                        this.diamondsCollected += 1
+
+                        let collectibles = {
+                            total: this.maxNumberOfDiamonds,
+                            collected: this.diamondsCollected
+                        }
+                        this.$emit('collected', collectibles)
+                    }
+                }
+            }
+        },
+
+        checkTotalAmountOfDiamonds() {
+            
+            for (let row = 0; row < this.gridHeiht; row++) {
+                for (let col = 0; col < this.gridWidth; col++) {
+                    
                     if (this.customGrid[row][col] == 'D') {
                         this.maxNumberOfDiamonds += 1
                     }
-
-                    if (this.customGrid[row][col] == 'D' && this.tiles[row][col].background == Tile.player) {
-                        console.log("DIAMOND!")
-                        this.diamondsCollected += 1
-                        //console.log(this.diamondsCollected + "/" + maxDiamonds)
-                        /*let score = {
-                            collected: diamondsCollected,
-                            total: maxDiamonds 
-                        }*/
-                        //this.$emit('diamond', score)
-                        //this.$refs.scoreComponent.pickupDiamond()
-                    }
-                }
+                } 
             }
         },
 

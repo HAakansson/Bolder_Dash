@@ -24,11 +24,15 @@ export default {
 
         startTimer() {
 
-            this.gameTime = 120
+            this.gameTime = 12
 
             let time = setInterval(() => {
                 this.gameTime -= 1
                 // Time's up (Game Over)
+                
+                // TODO: emit gameTime
+                this.$emit('timeLeft', this.gameTime)
+
                 if (this.gameTime <= 0) {
                     console.log("Game Over!!")
                     this.gameTime = 0                    
@@ -44,7 +48,6 @@ export default {
     watch: {
         gameTime(val) {
             if (val === 0) {
-                console.log("Listener says 0")
                 // SKicka emit med sekunder kvar???
                 this.gameIsOver()
             }
