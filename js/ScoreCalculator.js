@@ -11,7 +11,7 @@ export default {
         <div>
             <h2>Diamonds collected {{ collectedDiamonds }} / {{ totalDiamonds }}</h2>
             <Countdown @timeLeft="updateRemainingTime"/>
-            <button @click="showTimeLeft"></button>
+            <!--<button @click="showTimeLeft"></button>--> <!-- TODO: REMOVE-->
         </div>
     `,
 
@@ -33,9 +33,9 @@ export default {
             this.timeLeft = gameTime
         },
         
-        showTimeLeft() {
+        /*showTimeLeft() {
             alert("You have " + this.timeLeft + " seconds left")
-        },
+        },*/
 
         calculateFinalScore() {
             let totalScore = this.collectedDiamonds * 100
@@ -55,8 +55,8 @@ export default {
         },
 
         collectedDiamonds(val) {
-            //this.totalDiamonds = 2
-            if (val === 2) {
+            this.totalDiamonds = 5
+            if (val === this.totalDiamonds) {
                 this.gameWon = true
                 console.log("WON")
             }
@@ -67,7 +67,7 @@ export default {
 
                 let score = this.calculateFinalScore()
                 this.$emit('finalScore', score)
-                alert("You won!" + score)
+                alert("You won!" + score + " points")
                 console.log("WON GAME")
             }
         }

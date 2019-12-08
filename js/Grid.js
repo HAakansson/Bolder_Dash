@@ -65,7 +65,7 @@ export default {
         }
         
         this.populateMap()
-        this.checkTotalAmountOfDiamonds()
+        this.getTotalNumberOfDiamonds()
     },
     beforeDestroy(){
         window.removeEventListener('keydown', this.onKeyPressed)
@@ -249,11 +249,11 @@ export default {
                     // console.log(index)
                 }
             }
-          
         },
 
 
       
+        // Check if tile contains diamond
         checkForDiamonds(playerPosition) {
 
             for (let row = 0; row < this.gridHeiht; row++) {
@@ -270,7 +270,8 @@ export default {
         },
 
 
-        checkTotalAmountOfDiamonds() {
+        // Check how many diamonds level have
+        getTotalNumberOfDiamonds() {
             
             for (let row = 0; row < this.gridHeiht; row++) {
                 for (let col = 0; col < this.gridWidth; col++) {

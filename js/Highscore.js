@@ -1,15 +1,18 @@
-import Score from "./Score";
+//import Score from "./Score";
 
 export default {
 
     // Todo skicka nya score
     props: ["newScore"],
 
+    components: {
+        //Score
+    },
     template: `
         <div>
             <h2>Highscores</h2>
             <ol>
-                <li v-for="score in highscoreList">{{ score.name }} - Score: {{ score.score }}</li>
+                <li v-for="highscore in highscoreList">{{ highscore.name }} - Score: {{ highscore.score }}</li>
             </ol>
         </div>
     `,
@@ -59,9 +62,12 @@ export default {
                         name: "NEW SCORe",
                         score: score
                     }*/
-                    let newScore = new Score("Kalle", score)
 
-                    this.highscoreList.push(newScore(newScore))
+
+                    //let newScore = new Score("Kalle", score)
+                    //this.highscoreList.push(newScore(newScore))
+
+
                     //this.highscoreList.splice(highscore -1, this.highscoreList.length - 1, newScore)
                     
                     
@@ -82,9 +88,8 @@ export default {
 
 
         newScore(val) {
-            console.log("In HighSCore")
-            this.currentScore = val
             console.log("NEW SCORE IN HIGHSCORE")
+            this.currentScore = val
         },
 
         

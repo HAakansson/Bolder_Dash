@@ -33,7 +33,7 @@ export default {
             <div v-if="startGame" class="game-page-2">
                 <div class="hud">
                     <h2 class="level-box">Level {{ currentLevel }}</h2>
-                    <Countdown/>
+                    <!--<Countdown/>-->
                     <Score 
                     :collected="this.diamondsCollected"
                     :total="this.totalAmountOfDiamonds"
