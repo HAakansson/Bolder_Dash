@@ -1,3 +1,5 @@
+import Score from "./Score";
+
 export default {
 
     // Todo skicka nya score
@@ -16,14 +18,14 @@ export default {
             
             currentScore: 0,
             lowestCurrentScore: 0,
-            //highscoreList: [],
-            highscoreList: [
+            highscoreList: [Score],
+            /*highscoreList: [
                 { name: 'ABC', score: 123},
                 { name: 'BCD', score: 234},
                 { name: 'CDE', score: 345},
                 { name: 'DEF', score: 456},
                 { name: 'EFG', score: 567},
-            ]
+            ]*/
            
         }
     },
@@ -45,15 +47,24 @@ export default {
 
         updateHighscore(score) {
 
-            // Sätt storleks ordning
+            // Only insert new score once 
             let newValueInserted = false
 
-            for (let highscore of highscoreList.score) {
+            for (let highscore of this.highscoreList) {
 
                 if (score > highscore.score && !newValueInserted) {
 
                     // TODO: Sätt in nya värdet på rätt plats
-                    highscoreList.splice(highscore -1, highscoreList.length - 1, score)
+                    /*let newScore = {
+                        name: "NEW SCORe",
+                        score: score
+                    }*/
+                    let newScore = new Score("Kalle", score)
+
+                    this.highscoreList.push(newScore(newScore))
+                    //this.highscoreList.splice(highscore -1, this.highscoreList.length - 1, newScore)
+                    
+                    
                     //highscoreList.splice
                     // Insert score (remove scores after 5)
                     
@@ -71,6 +82,8 @@ export default {
 
 
         newScore(val) {
+            console.log("In HighSCore")
+            this.currentScore = val
             console.log("NEW SCORE IN HIGHSCORE")
         },
 
@@ -90,7 +103,7 @@ export default {
         this.removeLowScores()
         this.sortHighscores()
         //this.highscoreList = JSON.parse(localStorage.getItem('saved-scores'))
-
+        this.updateHighscore(3000)
     },
 
 }

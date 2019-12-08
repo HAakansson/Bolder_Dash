@@ -77,8 +77,11 @@ export default {
 
         updateFinalScore(score) {
             this.totalScore = score
-            showStartMenu = true,
-            startGame = false,
+            this.showStartMenu = true
+            this.startGame = false
+            this.showHighScore = true
+            console.log("FINAL SCORE" + this.totalScore )
+
         },
 
         totalDiamonds(maxNumberOfDiamonds) {
