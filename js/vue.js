@@ -9047,7 +9047,7 @@
           devtools.emit('init', Vue);
         } else {
           console[console.info ? 'info' : 'log'](
-            'Download the Vue Devtools extension for a better development experience:\n' +
+            'Download the Vue Devtoolz extension for a better development experience:\n' +
             'https://github.com/vuejs/vue-devtools'
           );
         }
@@ -9057,7 +9057,7 @@
       ) {
         console[console.info ? 'info' : 'log'](
           "You are running Vue in development mode.\n" +
-          "Make sure to turn on production mode when deploying for production.\n" +
+          "Make sure to turn on production mode when deploying for productionz.\n" +
           "See more tips at https://vuejs.org/guide/deployment.html"
         );
       }
