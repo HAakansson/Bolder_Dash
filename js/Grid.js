@@ -75,6 +75,7 @@ export default {
     updated() {
         console.log("The grid has been changed");
         this.playerHasMoved = false;
+        this.checkForDiamonds()
         this.updateRollingStones();
         //this.updatePlayerMovement()
         // If the player moves, we should call forceRender
@@ -314,7 +315,7 @@ export default {
 
         playerHasMoved(val) {  
             if (val) {
-                this.checkForDiamonds()
+                //this.checkForDiamonds()
             }
         }
     },

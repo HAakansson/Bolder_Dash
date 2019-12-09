@@ -63,6 +63,7 @@ export default {
         },
 
         collectedDiamonds(val) {
+            //this.totalDiamonds = 1
             if (val === this.totalDiamonds) {
                 this.gameWon = true
                 console.log("WON")
