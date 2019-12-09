@@ -50,7 +50,8 @@ export default {
     },
 
     created() {
-        // window.addEventListener('keydown', this.onKeyPressed)
+        console.log("GAME CREATED")
+        window.addEventListener('keydown', this.onKeyPressed)
 
         for (let row = 0; row < this.gridHeiht; row++) {
             this.tiles[row] = []
@@ -256,7 +257,7 @@ export default {
 
       
         // Check if tile player stands on contains a diamond
-        checkForDiamonds(playerPosition) {
+        checkForDiamonds() {
 
             for (let row = 0; row < this.gridHeiht; row++) {
 
@@ -310,6 +311,7 @@ export default {
             }
         }
     },
+
     watch: {
 
         playerHasMoved(val) {  
@@ -318,5 +320,4 @@ export default {
             }
         }
     },
-
 }
