@@ -73,15 +73,15 @@ export default {
                     
                     //highscoreList.splice
                     // Insert score (remove scores after 5)
-                    
+
                     newValueInserted = true
                 }
             }
-            
+
             this.removeLowScores()
         }
     },
-    
+
 
     // TODO: Lägg till en listener för ett score object. När det ändras kör uppdate functionen
     watch: {
@@ -97,7 +97,7 @@ export default {
         
         highscoreList: {
             // TODO: kalla updateHighscore?
-            
+
             deep: true,
 
             handler(val) {
