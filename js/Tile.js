@@ -9,6 +9,7 @@ export default {
     diamond: 4,
     player: 5,
     enemy: 6,
+    exit: 7,
 
     props: {
         position: {
@@ -55,6 +56,11 @@ export default {
                     tileName: 'Player',
                     tileImage: './Img/Player.png'
                 },
+                {
+                    tileId: this.exit,
+                    tileName: 'Exit',
+                    tileImage: './Img/Diamond.png'
+                },
             ],
         }
     },
@@ -82,6 +88,7 @@ export default {
                     case 4: return "diamond";
                     case 5: return "player";
                     case 6: return "enemy";
+                    case 7: return "exit";
                 }
             }
             console.log(this.position.x, this.position.y, convert(this.position.background))
