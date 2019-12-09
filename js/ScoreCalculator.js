@@ -71,7 +71,6 @@ export default {
 
         // Receives a boolean as parameter
         gameWon(val) {
-
             if (val) {
                 let score = this.calculateFinalScore()
                 this.$emit('finalScore', score)

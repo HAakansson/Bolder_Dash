@@ -73,9 +73,9 @@ export default {
         this.populateMap()
         this.getTotalNumberOfDiamonds()
     },
-    beforeDestroy(){
-        window.removeEventListener('keydown', this.onKeyPressed)
-    },
+    // beforeDestroy(){
+    //     window.removeEventListener('keydown', this.onKeyPressed)
+    // },
 
     updated() {
         console.log("The grid has been changed");
