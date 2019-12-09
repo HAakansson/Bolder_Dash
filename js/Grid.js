@@ -2,12 +2,13 @@ import Tile from './Tile.js'
 import Map1 from './Map1.js'
 import Map2 from './Map2.js'
 
+
 export default {
 
     name: 'grid',
 
     components: {
-        Tile
+        Tile,
     },
 
     props: ['level'],
@@ -32,7 +33,9 @@ export default {
             gridHeiht: 20,
             gridWidth: 30,
             playerHasMoved: false,
-            counter: 1
+            counter: 1,
+            diamondsCollected: 0,
+            maxNumberOfDiamonds: 0,
         }
     },
 
@@ -47,7 +50,7 @@ export default {
     },
 
     created() {
-        window.addEventListener('keydown', this.onKeyPressed)
+        // window.addEventListener('keydown', this.onKeyPressed)
 
         for (let row = 0; row < this.gridHeiht; row++) {
             this.tiles[row] = []
@@ -62,15 +65,17 @@ export default {
         }
         
         this.populateMap()
+        this.getTotalNumberOfDiamonds()
     },
-    beforeDestroy(){
-        window.removeEventListener('keydown', this.onKeyPressed)
-    },
+    // beforeDestroy(){
+    //     window.removeEventListener('keydown', this.onKeyPressed)
+    // },
 
     updated() {
         console.log("The grid has been changed");
         this.playerHasMoved = false;
         this.updateRollingStones();
+        // this.forceRender()
         //this.updatePlayerMovement()
         // If the player moves, we should call forceRender
     },
@@ -85,7 +90,8 @@ export default {
         },
 
         updatePlayerMovement: function (direction) {
-            //forcerender kallas endast en gång per  knapptryckning 
+            //forcerender kallas endast en gång per knapptryckning 
+            this.forceRender()
             if (this.playerHasMoved) { return;}
             this.playerHasMoved = true;
 
@@ -158,6 +164,7 @@ export default {
                     }
                 }
             }
+            //this.checkForDiamonds() 
         },
 
         updateRollingStones: function () {
@@ -244,8 +251,41 @@ export default {
                     // console.log(index)
                 }
             }
-          
         },
+
+
+      
+        // Check if tile player stands on contains a diamond
+        checkForDiamonds(playerPosition) {
+
+            for (let row = 0; row < this.gridHeiht; row++) {
+
+                for (let col = 0; col < this.gridWidth; col++) {
+                    
+                    if (this.customGrid[row][col] == 'D' && this.tiles[row][col].background == Tile.player) {
+                        
+                        this.diamondsCollected += 1
+                        this.$emit('collected', this.diamondsCollected)
+                    }
+                }
+            }
+        },
+
+
+        // Check how many diamonds the whole level have
+        getTotalNumberOfDiamonds() {
+            
+            for (let row = 0; row < this.gridHeiht; row++) {
+                for (let col = 0; col < this.gridWidth; col++) {
+                    
+                    if (this.customGrid[row][col] == 'D') {
+                        this.maxNumberOfDiamonds += 1
+                    }
+                } 
+            }
+            this.$emit('total', this.maxNumberOfDiamonds)
+        },
+
 
         onKeyPressed(event) {
             let keyEvent = event.key
@@ -269,5 +309,14 @@ export default {
                     break
             }
         }
-    }
+    },
+    watch: {
+
+        playerHasMoved(val) {  
+            if (val) {
+                this.checkForDiamonds()
+            }
+        }
+    },
+
 }

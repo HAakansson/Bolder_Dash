@@ -1,5 +1,8 @@
 export default {
 
+    props: ['newScore'],
+    // TODO: send remainning time
+    // TODO: ta emot en array av Scores! om score vid end är högre än i listan -> skriv namn (spara nytti highscore)
     template: `
         <div class="timer">
             <h2>Time Left: {{ gameTime }} </h2>
@@ -26,6 +29,10 @@ export default {
             let time = setInterval(() => {
                 this.gameTime -= 1
                 // Time's up (Game Over)
+                
+                // TODO: emit gameTime
+                this.$emit('timeLeft', this.gameTime)
+
                 if (this.gameTime <= 0) {
                     console.log("Game Over!!")
                     this.gameTime = 0                    
@@ -41,7 +48,6 @@ export default {
     watch: {
         gameTime(val) {
             if (val === 0) {
-                console.log("Listener says 0")
                 // SKicka emit med sekunder kvar???
                 this.gameIsOver()
             }
