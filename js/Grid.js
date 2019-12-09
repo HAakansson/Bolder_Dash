@@ -39,7 +39,8 @@ export default {
             counter: 1,
             boulderOnHead: false,
             fallValue: null,
-            direction: 'left'
+            direction: 'left',
+            enableExit: false,
         }
     },
 
@@ -54,7 +55,9 @@ export default {
     },
 
     created() {
-        console.log("GAME CREATED")
+
+        console.log("CREATED")
+
         window.addEventListener('keydown', this.onKeyPressed)
 
         for (let row = 0; row < this.gridHeiht; row++) {
@@ -78,13 +81,13 @@ export default {
     // },
 
     updated() {
-        console.log("The grid has been changed");
+        //console.log("The grid has been changed");
         this.playerHasMoved = false;
-        this.checkForDiamonds()
         this.updateRollingStones();
         this.enemyUpdate();
-        console.log(Date.now())
+        //console.log(Date.now())
         this.forceRender();
+        //this.checkForDiamonds()
         //this.updatePlayerMovement()
         // If the player moves, we should call forceRender
     },
@@ -290,7 +293,11 @@ export default {
                         case 'D':
                             this.tiles[row][col].background = Tile.diamond
                             break
-                        case 'E': this.tiles[row][col].background = Tile.enemy
+                        case 'E': 
+                            this.tiles[row][col].background = Tile.enemy
+                            break
+                        case 'G':
+                            this.tiles[row][col].background = Tile.exit
                     }
                     // this.tiles[col][row].type = this.tileType
                     // index++
@@ -410,7 +417,9 @@ export default {
         },
 
 
-      
+
+     
+    
         // Check if tile player stands on contains a diamond
         checkForDiamonds() {
 
@@ -422,6 +431,10 @@ export default {
                         
                         this.diamondsCollected += 1
                         this.$emit('collected', this.diamondsCollected)
+
+                        if (this.diamondsCollected === this.maxNumberOfDiamonds - 6) {
+                            this.enableExit = true
+                        }
                     }
                 }
             }
@@ -441,6 +454,35 @@ export default {
             }
             this.$emit('total', this.maxNumberOfDiamonds)
         },
+
+
+
+        openExit() {
+
+            this.customGrid[15][29] = 'G'
+            this.customGrid[14][29] = 'G'
+            this.tiles[15][29].background = Tile.exit
+            this.tiles[14][29].background = Tile.exit
+            this.forceRender()
+        
+        },
+
+        checkForExit() {
+
+            for (let row = 0; row < this.gridHeiht; row++) {
+
+                for (let col = 0; col < this.gridWidth; col++) {
+                    
+                    if (this.customGrid[row][col] == 'G' && this.tiles[row][col].background == Tile.player) {
+                        
+                        console.log("GAME FINISHED")
+                        alert("FINISHED")
+                    }
+                }
+            }
+        },
+
+
 
 
         onKeyPressed(event) {
@@ -469,9 +511,18 @@ export default {
 
     watch: {
 
+        enableExit(val) {
+            if (val) {
+                this.openExit()
+            }
+        },
+
+     
+
         playerHasMoved(val) {  
             if (val) {
-                //this.checkForDiamonds()
+                this.checkForDiamonds()
+                this.checkForExit()
             }
         }
     },

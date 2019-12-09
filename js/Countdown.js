@@ -11,23 +11,37 @@ export default {
     data() {
         return {
             gameTime: 120, 
-            timeLeft: true
+            timeLeft: true,
+            timer: 0,
         }
     },
     methods: {
     
         gameIsOver() {
             alert("Time's up! Game Over") // TODO: kolla poäng jämfört med highscore lista (ange namn om högt nog) 
-            clearTimeout
             this.timeLeft = false
             this.$emit('gameIsOver', this.timeLeft)
+            clearTimeout(this.time)
         },
+
+        /*testTimer() {
+            this.timer = setTimeout(function() {
+                this.gameTime -= 1
+
+                this.$emit('timeLeft', this.gameTime)
+
+                if (this.gameTime <= 0) {
+                    console.log("Game Over!!")
+                    this.gameTime = 0                    
+                }
+            }, 1000) 
+        },*/
 
         startTimer() {
 
-            //this.gameTime = 12
+            this.gameTime = 12
 
-            let time = setInterval(() => {
+            var time = setInterval(() => {
                 this.gameTime -= 1
                 // Time's up (Game Over)
                 
@@ -43,6 +57,7 @@ export default {
     },
 
     created() {
+        //this.testTimer()
         this.startTimer()
     },
 

@@ -64,10 +64,12 @@ export default {
 
         collectedDiamonds(val) {
             //this.totalDiamonds = 1
-            if (val === this.totalDiamonds) {
+            console.log(this.totalDiamonds + "total")
+            console.log(this.collectedDiamonds + " collected")
+            /*if (val === this.totalDiamonds) {
                 this.gameWon = true
                 console.log("WON")
-            }
+            }*/
         },
 
         // Receives a boolean as parameter
