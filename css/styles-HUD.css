@@ -11,3 +11,12 @@
 .timer h2 {
     padding: 10px;
 }
+
+.score-text {
+    display: flex;
+    align-items: center;
+}
+
+.diamond-calc {
+    margin: 0 10px;
+}
