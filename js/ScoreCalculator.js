@@ -55,19 +55,20 @@ export default {
         },
 
         collectedDiamonds(val) {
-            this.totalDiamonds = 5
+            //this.totalDiamonds = 5
             if (val === this.totalDiamonds) {
                 this.gameWon = true
                 console.log("WON")
             }
         },
 
+        // Receives a boolean as parameter
         gameWon(val) {
-            if (val) {
 
+            if (val) {
                 let score = this.calculateFinalScore()
                 this.$emit('finalScore', score)
-                alert("You won!" + score + " points")
+                alert("You have won!! " + score + " points")
                 console.log("WON GAME")
             }
         }

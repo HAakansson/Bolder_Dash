@@ -162,7 +162,7 @@ export default {
                     }
                 }
             }
-            this.checkForDiamonds() // TEST!!!!
+            //this.checkForDiamonds() 
         },
 
         updateRollingStones: function () {
@@ -253,7 +253,7 @@ export default {
 
 
       
-        // Check if tile contains diamond
+        // Check if tile player stands on contains a diamond
         checkForDiamonds(playerPosition) {
 
             for (let row = 0; row < this.gridHeiht; row++) {
@@ -261,7 +261,7 @@ export default {
                 for (let col = 0; col < this.gridWidth; col++) {
                     
                     if (this.customGrid[row][col] == 'D' && this.tiles[row][col].background == Tile.player) {
-
+                        
                         this.diamondsCollected += 1
                         this.$emit('collected', this.diamondsCollected)
                     }
@@ -270,7 +270,7 @@ export default {
         },
 
 
-        // Check how many diamonds level have
+        // Check how many diamonds the whole level have
         getTotalNumberOfDiamonds() {
             
             for (let row = 0; row < this.gridHeiht; row++) {
@@ -305,6 +305,14 @@ export default {
                 case 'd':
                     this.updatePlayerMovement('right');
                     break
+            }
+        }
+    },
+    watch: {
+
+        playerHasMoved(val) {  
+            if (val) {
+                this.checkForDiamonds()
             }
         }
     },

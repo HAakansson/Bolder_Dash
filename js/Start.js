@@ -43,7 +43,7 @@ export default {
                     <grid @total="totalDiamonds" @collected="collectedDiamonds" v:dir="dir" ref="gridComponent" level="0"></grid>
                 </div>
                 <div v-if="currentLevel === 2 && startGame">
-                    <grid @collected="collectedDiamonds" v:dir="dir" ref="gridComponent" level="1"></grid>
+                    <grid @total="totalDiamonds" @collected="collectedDiamonds" v:dir="dir" ref="gridComponent" level="1"></grid>
                 </div>
             </div>
         </div>   
@@ -75,12 +75,13 @@ export default {
         },
 
 
+        // IF GAME WON
         updateFinalScore(score) {
             this.totalScore = score
             this.showStartMenu = true
             this.startGame = false
             this.showHighScore = true
-            console.log("FINAL SCORE" + this.totalScore )
+            console.log("FINAL SCORE " + this.totalScore )
 
         },
 
