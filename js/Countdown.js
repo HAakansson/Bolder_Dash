@@ -1,7 +1,6 @@
 export default {
 
     props: ['newScore'],
-    // TODO: send remainning time
     // TODO: ta emot en array av Scores! om score vid end är högre än i listan -> skriv namn (spara nytti highscore)
     template: `
         <div class="timer">
@@ -26,7 +25,7 @@ export default {
 
         startTimer() {
 
-            this.gameTime = 12
+            //this.gameTime = 12
 
             let time = setInterval(() => {
                 this.gameTime -= 1
