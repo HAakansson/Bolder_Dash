@@ -8,6 +8,7 @@ export default {
     boulder: 3,
     diamond: 4,
     player: 5,
+    enemy: 6,
 
     props: {
         position: {
@@ -49,6 +50,11 @@ export default {
                     tileName: 'Player',
                     tileImage: './Img/Player.png'
                 },
+                {
+                    tileId: this.enemy,
+                    tileName: 'Player',
+                    tileImage: './Img/Player.png'
+                },
             ],
         }
     },
@@ -75,13 +81,14 @@ export default {
                     case 3: return "boulder";
                     case 4: return "diamond";
                     case 5: return "player";
+                    case 6: return "enemy";
                 }
             }
             console.log(this.position.x, this.position.y, convert(this.position.background))
         },
 
         setDiamond() {
-            this.position.background = 3;
+            this.position.background = Tile.diamond;
             this.$emit('change-background');
         }
     },

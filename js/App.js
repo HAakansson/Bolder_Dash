@@ -11,13 +11,11 @@ export default {
             <start/>
         </div>
     `,
-
     data() {
         return {
         //     dir: 0,
         }
     },
-
     methods: {
 
     //     onKeyPressed(event) {
@@ -53,3 +51,25 @@ export default {
     // },
     }
 }
+
+
+// function logKey(e) {
+//     switch (e.code) {
+//         case "ArrowUp":
+//             grid.goUp();
+//             break;
+//         case "ArrowDown":
+//             grid.goDown();
+//             break;
+//         case "ArrowLeft":
+//             grid.goLeft();
+//             break;
+//         case "ArrowRight":
+//             grid.goRight();
+//             break;
+
+//         default:
+// 	    //Do nothing.
+//             break;
+//     }
+// }
