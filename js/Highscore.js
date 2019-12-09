@@ -13,17 +13,17 @@ export default {
     `,
     data() {
         return {
-            
+
             //highscoreList: [],
             highscoreList: [
-                { name: 'ABC', score: 123},
-                { name: 'BCD', score: 234},
-                { name: 'CDE', score: 345},
-                { name: 'DEF', score: 456},
-                { name: 'EFG', score: 567},
-                { name: 'EFG', score: 232},
+                { name: 'ABC', score: 123 },
+                { name: 'BCD', score: 234 },
+                { name: 'CDE', score: 345 },
+                { name: 'DEF', score: 456 },
+                { name: 'EFG', score: 567 },
+                { name: 'EFG', score: 232 },
             ]
-           
+
         }
     },
 
@@ -52,30 +52,30 @@ export default {
                 if (score > highscore.score && !newValueInserted) {
 
                     // TODO: Sätt in nya värdet på rätt plats
-                    highscoreList.splice(highscore -1, highscoreList.length - 1, score)
+                    highscoreList.splice(highscore - 1, highscoreList.length - 1, score)
                     //highscoreList.splice
                     // Insert score (remove scores after 5)
-                    
+
                     newValueInserted = true
                 }
             }
-            
+
             this.removeLowScores()
         }
     },
-    
+
 
     // TODO: Lägg till en listener för ett score object. När det ändras kör uppdate functionen
     watch: {
-        
+
         highscoreList: {
             // TODO: kalla updateHighscore?
-            
+
             deep: true,
 
             handler(val) {
                 localStorage.setItem('saved-scores', JSON.stringify(this.highscoreList))
-            } 
+            }
         }
     },
 
