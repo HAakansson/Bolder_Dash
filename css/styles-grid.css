@@ -1,0 +1,25 @@
+* {
+    box-sizing: border-box;
+}
+
+#app {
+    display: flex;
+    justify-content: center;
+}
+
+.grid-layout {
+    display: flex;
+    width: 80vw;
+    height: auto;
+    flex-wrap: wrap;
+}
+
+.tile {
+    width: 3.33333%;
+    
+}
+
+img {
+    background: black;
+    width: 100%;
+}

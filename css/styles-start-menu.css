@@ -1,0 +1,62 @@
+.start-menu {
+    border: 2px solid black;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    width: 100%;
+}
+
+.game-title {
+    font-family: 'Quicksand', sans-serif;
+    color: white;
+    text-align: center;
+    text-shadow: 0 0 20px #ff005b;
+    margin: 10px;
+}
+/* Creates duplicate */
+.game-title:after {
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    color: #ff005b;
+    filter: blur(15px);
+}
+.game-title::before {
+    content: '';
+    position: absolute;  
+    width: 30%;
+    height: 8%;
+    background: #fe3a80;
+    z-index: -2;
+    opacity: .5;
+    filter: blur(70px);
+}
+
+.buttons {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+button {
+    width: 50%;
+    margin: 0.5vw;
+}
+
+.highscore {
+    text-align: center;
+}
+
+.creators-list {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.creators-name { 
+    padding-left: 20px;
+}
