@@ -53,7 +53,7 @@ export default {
                 {
                     tileId: this.enemy,
                     tileName: 'Player',
-                    tileImage: './Img/Player.png'
+                    tileImage: './Img/Enemy.png'
                 },
             ],
         }
