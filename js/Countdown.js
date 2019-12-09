@@ -26,7 +26,7 @@ export default {
 
         startTimer() {
 
-            this.gameTime = 12
+            //this.gameTime = 12
 
             let time = setInterval(() => {
                 this.gameTime -= 1
