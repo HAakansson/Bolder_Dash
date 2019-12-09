@@ -1,6 +1,5 @@
 export default {
 
-    props: ['newScore'],
     // TODO: ta emot en array av Scores! om score vid end är högre än i listan -> skriv namn (spara nytti highscore)
     template: `
         <div class="timer">
@@ -12,7 +11,6 @@ export default {
         return {
             gameTime: 120, 
             timeLeft: true,
-            timer: 0,
         }
     },
     methods: {
@@ -21,34 +19,21 @@ export default {
             alert("Time's up! Game Over") // TODO: kolla poäng jämfört med highscore lista (ange namn om högt nog) 
             this.timeLeft = false
             this.$emit('gameIsOver', this.timeLeft)
-            clearTimeout(this.time)
         },
 
-        /*testTimer() {
-            this.timer = setTimeout(function() {
-                this.gameTime -= 1
-
-                this.$emit('timeLeft', this.gameTime)
-
-                if (this.gameTime <= 0) {
-                    console.log("Game Over!!")
-                    this.gameTime = 0                    
-                }
-            }, 1000) 
-        },*/
 
         startTimer() {
 
             this.gameTime = 12
 
-            var time = setInterval(() => {
+            let timer = setInterval(() => {
                 this.gameTime -= 1
                 // Time's up (Game Over)
                 
-                // TODO: emit gameTime
-                this.$emit('timeLeft', this.gameTime)
+                this.$emit('timeLeft', this.gameTime) // Send remaining time to parent
 
                 if (this.gameTime <= 0) {
+                    clearInterval(timer)
                     console.log("Game Over!!")
                     this.gameTime = 0                    
                 }
@@ -57,7 +42,6 @@ export default {
     },
 
     created() {
-        //this.testTimer()
         this.startTimer()
     },
 
