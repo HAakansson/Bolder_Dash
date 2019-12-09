@@ -12,19 +12,21 @@ export default {
     data() {
         return {
             gameTime: 120, 
+            timeLeft: true
         }
     },
     methods: {
     
         gameIsOver() {
-            alert("Time's up!") // TODO: kolla poäng jämfört med highscore lista (ange namn om högt nog) 
+            alert("Time's up! Game Over") // TODO: kolla poäng jämfört med highscore lista (ange namn om högt nog) 
             clearTimeout
-            // TODO: return till huvudmeny
+            this.timeLeft = false
+            this.$emit('gameIsOver', this.timeLeft)
         },
 
         startTimer() {
 
-            this.gameTime = 120
+            this.gameTime = 12
 
             let time = setInterval(() => {
                 this.gameTime -= 1
