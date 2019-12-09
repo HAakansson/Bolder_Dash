@@ -1,5 +1,7 @@
 import Tile from './Tile.js'
 import Map1 from './Map1.js'
+import Map2 from './Map2.js'
+
 
 export default {
 
@@ -7,12 +9,13 @@ export default {
 
     components: {
         Tile,
-        Map1
     },
+
+    props: ['level'],
 
     template: `
     <div class="grid-layout">
-        <tile 
+        <tile
         v-for="(tile, i) in flatTiles"
         v-bind:position="tile"
         v-bind:key="'tile' + i + tile.x + tile.y + tile.background"
@@ -22,33 +25,17 @@ export default {
     `,
 
     data() {
+        const maps = [Map1, Map2]
         return {
             tiles: [],
             gridSize: 20,
-            customGrid: [
-                ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'],
-                ['B', '', ' ', ' ', ' ', ' ', ' ', 'S', ' ', ' ', ' ', 'S', ' ', 'S', ' ', ' ', ' ', ' ', 'S', ' ', ' ', ' ', ' ', ' ', 'D', 'S', ' ', ' ', ' ', 'B'],
-                ['B', ' ', 'S', 'S', ' ', 'S', ' ', ' ', 'S', 'S', 'D', ' ', 'D', 'S', ' ', ' ', 'S', ' ', 'S', ' ', 'S', ' ', 'S', ' ', ' ', ' ', ' ', 'S', ' ', 'B'],
-                ['B', ' ', 'S', 'D', ' ', ' ', ' ', 'S', 'D', ' ', ' ', 'S', ' ', ' ', ' ', 'S', ' ', ' ', ' ', ' ', 'S', ' ', ' ', 'S', ' ', ' ', ' ', ' ', ' ', 'B'],
-                ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', ' ', 'B'],
-                ['B', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'B', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'S', ' ', ' ', ' ', 'S', ' ', 'S', ' ', ' ', 'D', 'B'],
-                ['B', 'S', ' ', ' ', 'D', ' ', ' ', ' ', ' ', 'S', 'B', ' ', ' ', ' ', ' ', ' ', 'S', ' ', ' ', ' ', ' ', 'S', ' ', ' ', ' ', 'B', ' ', ' ', 'S', 'B'],
-                ['B', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'S', 'D', 'B', ' ', ' ', ' ', ' ', ' ', ' ', 'S', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'B', ' ', ' ', ' ', 'B'],
-                ['B', ' ', 'S', ' ', ' ', ' ', ' ', ' ', ' ', 'S', 'B', ' ', ' ', ' ', ' ', ' ', 'D', ' ', 'S', ' ', ' ', ' ', 'S', ' ', ' ', 'B', 'B', 'B', ' ', 'B'],
-                ['B', ' ', 'S', ' ', ' ', ' ', 'D', ' ', ' ', ' ', 'B', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'B', 'B', 'B', 'B', 'D', 'S', ' ', ' ', ' ', 'S', 'D', 'B'],
-                ['B', ' ', 'D', 'S', ' ', ' ', ' ', ' ', ' ', ' ', 'B', 'B', 'S', ' ', ' ', ' ', ' ', ' ', ' ', 'S', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'B'],
-                ['B', ' ', ' ', 'B', 'B', 'B', ' ', ' ', ' ', 'B', 'B', 'D', ' ', ' ', 'B', 'B', 'B', ' ', ' ', 'S', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'B'],
-                ['B', ' ', ' ', ' ', 'S', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'S', 'D', 'B', ' ', ' ', ' ', ' ', 'S', ' ', 'S', ' ', ' ', ' ', ' ', ' ', 'B'],
-                ['B', ' ', ' ', ' ', 'S', 'B', 'B', 'B', ' ', ' ', ' ', ' ', ' ', ' ', 'B', ' ', ' ', 'S', ' ', ' ', ' ', ' ', 'S', 'D', 'S', ' ', 'S', ' ', ' ', 'B'],
-                ['B', ' ', ' ', ' ', 'D', ' ', ' ', 'S', ' ', ' ', 'D', ' ', ' ', ' ', 'B', 'B', 'B', ' ', ' ', 'S', ' ', ' ', ' ', 'S', ' ', ' ', ' ', ' ', ' ', 'B'],
-                ['B', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'E', ' ', 'B', ' ', ' ', ' ', 'S', ' ', ' ', ' ', ' ', 'D', ' ', ' ', ' ', 'S', ' ', ' ', ' ', ' ', ' ', 'B'],
-                ['B', ' ', ' ', ' ', ' ', ' ', 'S', ' ', ' ', 'B', 'B', 'B', 'B', 'B', 'B', 'B', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'S', ' ', 'B', 'B', 'S', ' ', 'B'],
-                ['B', ' ', 'S', 'S', ' ', ' ', ' ', ' ', ' ', 'B', ' ', ' ', 'D', ' ', ' ', 'D', ' ', ' ', ' ', ' ', 'S', ' ', 'S', 'D', ' ', 'B', 'D', ' ', ' ', 'B'],
-                ['B', 'P', 'D', ' ', ' ', ' ', ' ', ' ', ' ', 'S', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'B', ' ', ' ', ' ', 'B'],
-                ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'],
-            ],
+            customGrid: maps[this.level],
             gridHeiht: 20,
             gridWidth: 30,
+            playerHasMoved: false,
+            counter: 1,
+            diamondsCollected: 0,
+            maxNumberOfDiamonds: 0,
             counter: 1,
             boulderOnHead: false,
             fallValue: null,
@@ -67,6 +54,8 @@ export default {
     },
 
     created() {
+        console.log("GAME CREATED")
+        window.addEventListener('keydown', this.onKeyPressed)
 
         for (let row = 0; row < this.gridHeiht; row++) {
             this.tiles[row] = []
@@ -76,28 +65,21 @@ export default {
                     y: row,
                     background: Tile.dirt
                 }
-
-                // if (
-                //     position.y === 0 || position.y === this.gridHeiht - 1 ||
-                //     position.x === 0 || position.x === this.gridWidth - 1) {
-                //     position.background = Tile.brick
-                // } 
-
-                if (position.x === 2 && position.y === 3 ||
-                    position.x === 2 && position.y === 2 ||
-                    position.x === 3 && position.y === 3) {
-                    position.background = Tile.boulder
-                }
-
                 this.tiles[row].push(position)
             }
             
         }
-
+        
         this.populateMap()
+        this.getTotalNumberOfDiamonds()
+    },
+    beforeDestroy(){
+        window.removeEventListener('keydown', this.onKeyPressed)
     },
 
     updated() {
+        console.log("The grid has been changed");
+        this.playerHasMoved = false;
         this.updateRollingStones();
         this.enemyUpdate();
         console.log(Date.now())
@@ -106,11 +88,6 @@ export default {
         // If the player moves, we should call forceRender
     },
     methods: {
-        //Inbyggd vue metod
-        start: function () {
-
-            this.forceRender();
-        },
         forceRender: function () {
             // rensar timern efter varje gång en sten har rört sig
             clearTimeout(this.renderTimeout);
@@ -121,6 +98,8 @@ export default {
         },
 
         updatePlayerMovement: function (direction) {
+            if (this.playerHasMoved) { return;}
+            this.playerHasMoved = true;
             for (let col = this.gridWidth - 1; col >= 0; col--) {
                 for (let row = 0; row < this.gridHeiht; row++) {
                     const tile = this.tiles[row][col];
@@ -185,7 +164,6 @@ export default {
                                     moveLeft.background = Tile.player;
                                     checkIfEmpty.background = Tile.boulder;
                                     tile.background = Tile.empty;
-                                    console.log('Hej')
                                     this.forceRender();
                                 }
                             } break
@@ -226,13 +204,14 @@ export default {
                     // }
                 }
             }
+            //this.checkForDiamonds() 
         },
 
 
         updateRollingStones: function () {
             for (let row = this.gridHeiht - 1; row >= 0; row--) {
                 for (let col = 0; col < this.gridWidth; col++) {
-                    this.tiles[row][col].hasMoved = false;
+                    this.tiles[row][col].playerHasMoved = false;
                 }
             }
 
@@ -240,7 +219,7 @@ export default {
             for (let row = this.gridHeiht - 1; row >= 0; row--) {
                 for (let col = 0; col < this.gridWidth; col++) {
                     const tile = this.tiles[row][col];
-                    if (tile.hasMoved == true) {
+                    if (tile.playerHasMoved == true) {
                         console.log('has moved')
                         //Om stenen redan har flyttats så - skip och loopa vidare på nästa
                         continue;
@@ -259,7 +238,7 @@ export default {
                                     // console.log("x:", tile.x, "y:", tile.y, "should move right");
                                     tile.background = Tile.empty;
                                     tileRight.background = tempTile;
-                                    tileRight.hasMoved = true;
+                                    tileRight.playerHasMoved = true;
                                     this.forceRender();
                                     col++;
                                 }
@@ -269,15 +248,14 @@ export default {
                                     // console.log("x:", tile.x, "y:", tile.y, "should move left");
                                     tile.background = Tile.empty;
                                     tileLeft.background = tempTile;
-                                    tileLeft.hasMoved = true;
+                                    tileLeft.playerHasMoved = true;
                                     this.forceRender();
                                 }
                             }
                         } else if (tileUnder.background == Tile.empty || tileUnder.background == Tile.player) {
                             tileUnder.background = tempTile;
                             tile.background = Tile.empty;
-                            tile.hasMoved = true;
-                            this.boulderOnHead = false;
+                            tile.playerHasMoved = true;
                             this.forceRender();
                         }
                     }
@@ -289,7 +267,7 @@ export default {
 
 
         populateMap() {
-
+                    
             for (let row = 0; row < this.gridHeiht; row++) {
 
                 for (let col = 0; col < this.gridWidth; col++) {
@@ -428,9 +406,72 @@ export default {
             }
 
 
+        },
+
+
+      
+        // Check if tile player stands on contains a diamond
+        checkForDiamonds() {
+
+            for (let row = 0; row < this.gridHeiht; row++) {
+
+                for (let col = 0; col < this.gridWidth; col++) {
+                    
+                    if (this.customGrid[row][col] == 'D' && this.tiles[row][col].background == Tile.player) {
+                        
+                        this.diamondsCollected += 1
+                        this.$emit('collected', this.diamondsCollected)
+                    }
+                }
+            }
+        },
+
+
+        // Check how many diamonds the whole level have
+        getTotalNumberOfDiamonds() {
+            
+            for (let row = 0; row < this.gridHeiht; row++) {
+                for (let col = 0; col < this.gridWidth; col++) {
+                    
+                    if (this.customGrid[row][col] == 'D') {
+                        this.maxNumberOfDiamonds += 1
+                    }
+                } 
+            }
+            this.$emit('total', this.maxNumberOfDiamonds)
+        },
+
+
+        onKeyPressed(event) {
+            let keyEvent = event.key
+
+            switch (keyEvent) {
+                case 'ArrowUp':
+                case 'w':
+                    this.updatePlayerMovement('up');
+                    break;
+                case 'ArrowDown':
+                case 's':
+                    this.updatePlayerMovement('down');
+                    break
+                case 'ArrowLeft':
+                case 'a':
+                    this.updatePlayerMovement('left');
+                    break
+                case 'ArrowRight':
+                case 'd':
+                    this.updatePlayerMovement('right');
+                    break
+            }
         }
     },
 
+    watch: {
+
+        playerHasMoved(val) {  
+            if (val) {
+                this.checkForDiamonds()
+            }
+        }
+    },
 }
-
-
