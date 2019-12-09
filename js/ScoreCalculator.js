@@ -9,19 +9,19 @@ export default {
     },
     template: `
         <div>
-            <h2 class="diamond-calc">Diamonds collected {{ collectedDiamonds }} / {{ totalDiamonds }}</h2>
-            <Countdown @timeLeft="updateRemainingTime"/>
+            <h2>Diamonds collected {{ collectedDiamonds }} / {{ totalDiamonds }}</h2>
+            <Countdown @gameIsOver="timeIsUp" @timeLeft="updateRemainingTime"/>
             <!--<button @click="showTimeLeft"></button>--> <!-- TODO: REMOVE-->
         </div>
     `,
-
 
     data() {
         return {
             collectedDiamonds: 0,
             totalDiamonds: 0,
             timeLeft: 120,
-            gameWon: false
+            gameWon: false,
+            gameOver: false
         }
     },
 
@@ -42,6 +42,14 @@ export default {
             totalScore += (this.timeLeft * 2)
 
             return totalScore
+        },
+
+        timeIsUp() {
+            gameOver: true
+
+            // TODO: GÖR HÅRD, sidoomladdning?
+            this.$emit('gameIsOver', this.gameOver)
+            //console.log("TIME IS UP SCORE")
         }
 
     },
@@ -55,7 +63,6 @@ export default {
         },
 
         collectedDiamonds(val) {
-            //this.totalDiamonds = 5
             if (val === this.totalDiamonds) {
                 this.gameWon = true
                 console.log("WON")
@@ -70,6 +77,8 @@ export default {
                 alert("You have won!! " + score + " points")
                 console.log("WON GAME")
             }
-        }
+        },
+
     },
+
 }

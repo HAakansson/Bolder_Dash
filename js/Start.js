@@ -16,9 +16,9 @@ export default {
             <div v-if="showStartMenu" class="start-menu">
                 <h1 class="game-title" data-text="[Bolder_Dash]">[Bolder_Dash]</h1>
                 <div v-if="showHighScore" class="start info-box">
-                    <highscore
+                    <!--<highscore
                     :newScore="this.totalScore"
-                    class="highscore"/>
+                    class="highscore"/>-->
                 </div>
                 <div class="buttons">
                     <button class="next-level" @click="nextLevel">Choose your level: (Level {{ currentLevel }})</button>
@@ -37,7 +37,8 @@ export default {
                     <Score class="score-text"
                     :collected="this.diamondsCollected"
                     :total="this.totalAmountOfDiamonds"
-                    @finalScore="updateFinalScore"/>
+                    @finalScore="updateFinalScore"
+                    @gameIsOver="resetGame"/>
                 </div>
                 <div v-if="currentLevel === 1 && startGame">
                     <grid @total="totalDiamonds" @collected="collectedDiamonds" v:dir="dir" ref="gridComponent" level="0"></grid>
@@ -57,7 +58,8 @@ export default {
             totalScore: 0,
             showStartMenu: true,
             startGame: false,
-            showHighScore: false,
+            showHighScore: true,
+            gameIsOver: false,
             creators: [
                 { name: 'Niklas' },
                 { name: 'Anton' },
@@ -82,7 +84,13 @@ export default {
             this.startGame = false
             this.showHighScore = true
             console.log("FINAL SCORE " + this.totalScore )
+        },
 
+        resetGame() {
+            console.log("Reset GAMEISNIAND")
+            this.showStartMenu = true
+            this.startGame = false
+            this.showHighScore = true
         },
 
         totalDiamonds(maxNumberOfDiamonds) {

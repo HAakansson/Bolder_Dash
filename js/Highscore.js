@@ -52,7 +52,7 @@ export default {
 
             // Only insert new score once 
             let newValueInserted = false
-
+            console.log("UPDATE HIGHSCORE")
             for (let highscore of this.highscoreList) {
 
                 if (score > highscore.score && !newValueInserted) {
@@ -87,6 +87,8 @@ export default {
     watch: {
 
 
+
+
         newScore(val) {
             console.log("NEW SCORE IN HIGHSCORE")
             this.currentScore = val
@@ -108,7 +110,7 @@ export default {
         this.removeLowScores()
         this.sortHighscores()
         //this.highscoreList = JSON.parse(localStorage.getItem('saved-scores'))
-        this.updateHighscore(3000)
+        //this.updateHighscore(this.newScore)
     },
 
 }
