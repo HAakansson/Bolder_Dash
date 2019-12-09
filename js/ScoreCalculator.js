@@ -9,7 +9,7 @@ export default {
     },
     template: `
         <div>
-            <h2>Diamonds collected {{ collectedDiamonds }} / {{ totalDiamonds }}</h2>
+            <h2 class="diamond-calc">Diamonds collected {{ collectedDiamonds }} / {{ totalDiamonds }}</h2>
             <Countdown @timeLeft="updateRemainingTime"/>
             <!--<button @click="showTimeLeft"></button>--> <!-- TODO: REMOVE-->
         </div>
@@ -64,7 +64,6 @@ export default {
 
         // Receives a boolean as parameter
         gameWon(val) {
-
             if (val) {
                 let score = this.calculateFinalScore()
                 this.$emit('finalScore', score)

@@ -34,7 +34,7 @@ export default {
                 <div class="hud">
                     <h2 class="level-box">Level {{ currentLevel }}</h2>
                     <!--<Countdown/>-->
-                    <Score 
+                    <Score class="score-text"
                     :collected="this.diamondsCollected"
                     :total="this.totalAmountOfDiamonds"
                     @finalScore="updateFinalScore"/>
