@@ -50,7 +50,7 @@ export default {
     },
 
     created() {
-        window.addEventListener('keydown', this.onKeyPressed)
+        // window.addEventListener('keydown', this.onKeyPressed)
 
         for (let row = 0; row < this.gridHeiht; row++) {
             this.tiles[row] = []
@@ -67,14 +67,15 @@ export default {
         this.populateMap()
         this.getTotalNumberOfDiamonds()
     },
-    beforeDestroy(){
-        window.removeEventListener('keydown', this.onKeyPressed)
-    },
+    // beforeDestroy(){
+    //     window.removeEventListener('keydown', this.onKeyPressed)
+    // },
 
     updated() {
         console.log("The grid has been changed");
         this.playerHasMoved = false;
         this.updateRollingStones();
+        // this.forceRender()
         //this.updatePlayerMovement()
         // If the player moves, we should call forceRender
     },
@@ -89,7 +90,8 @@ export default {
         },
 
         updatePlayerMovement: function (direction) {
-            //forcerender kallas endast en gång per  knapptryckning 
+            //forcerender kallas endast en gång per knapptryckning 
+            this.forceRender()
             if (this.playerHasMoved) { return;}
             this.playerHasMoved = true;
 
