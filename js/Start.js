@@ -2,6 +2,7 @@ import Grid from './Grid.js'
 import Highscore from './Highscore.js'
 import Countdown from './Countdown.js'
 import Score from './ScoreCalculator.js'
+import Tile from './Tile.js'
 
 export default {
     components: {
@@ -41,7 +42,7 @@ export default {
                     @gameIsOver="resetGame"/>
                 </div>
                 <div v-if="currentLevel === 1 && startGame">
-                    <grid @total="totalDiamonds" @collected="collectedDiamonds" v:dir="dir" ref="gridComponent" level="0"></grid>
+                    <grid @total="totalDiamonds" @collected="collectedDiamonds" @player-stuck="gameOver" v:dir="dir" ref="gridComponent" level="0"></grid>
                 </div>
                 <div v-if="currentLevel === 2 && startGame">
                     <grid @total="totalDiamonds" @collected="collectedDiamonds" v:dir="dir" ref="gridComponent" level="1"></grid>
@@ -63,27 +64,26 @@ export default {
             creators: [
                 { name: 'Niklas' },
                 { name: 'Anton' },
-                { name: 'Yusra'},
-                { name: 'Henrik'}
+                { name: 'Yusra' },
+                { name: 'Henrik' }
             ],
             dir: 0
         }
     },
 
     methods: {
+
         beginGame() {
             this.showStartMenu = false
             this.startGame = true
         },
-
-
         // IF GAME WON
         updateFinalScore(score) {
             this.totalScore = score
             this.showStartMenu = true
             this.startGame = false
             this.showHighScore = true
-            console.log("FINAL SCORE " + this.totalScore )
+            console.log("FINAL SCORE " + this.totalScore)
         },
 
         resetGame() {
@@ -96,39 +96,47 @@ export default {
         totalDiamonds(maxNumberOfDiamonds) {
             this.totalAmountOfDiamonds = maxNumberOfDiamonds
         },
-      
+
         collectedDiamonds(diamondsCollected) {
-            
+
             this.diamondsCollected = diamondsCollected
         },
 
-     
+
         nextLevel() {
             this.currentLevel = this.currentLevel >= this.maxNumberOfLevels ? 1 : this.currentLevel + 1
         },
 
         onKeyPressed(event) {
-
+            var audio = new Audio('Sound/MovementSound.mp3');
             let keyEvent = event.key
 
             switch (keyEvent) {
                 case 'ArrowUp':
                 case 'w':
                     this.$refs.gridComponent.updatePlayerMovement('up');
+                    audio.play();
                     break;
                 case 'ArrowDown':
                 case 's':
                     this.$refs.gridComponent.updatePlayerMovement('down');
+                    audio.play();
                     break
                 case 'ArrowLeft':
                 case 'a':
                     this.$refs.gridComponent.updatePlayerMovement('left');
+                    audio.play();
                     break
                 case 'ArrowRight':
                 case 'd':
                     this.$refs.gridComponent.updatePlayerMovement('right');
+                    audio.play();
                     break
             }
+        },
+
+        gameOver(){
+            alert('That move will result in you getting stuck... Sucker! Game over for you...')
         }
     },
 
