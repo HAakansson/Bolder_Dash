@@ -10,6 +10,7 @@ export default {
     player: 5,
     enemy: 6,
     exit: 7,
+    explode: 7,
 
     props: {
         position: {
@@ -29,7 +30,7 @@ export default {
                 {
                     tileId: this.brick,
                     tileName: 'Brick',
-                    tileImage: './Img/Brick.png'
+                    tileImage: './Img/Brick2.png'
                 },
                 {
                     tileId: this.dirt,
@@ -44,22 +45,27 @@ export default {
                 {
                     tileId: this.diamond,
                     tileName: 'Diamond',
-                    tileImage: './Img/Diamond.png'
+                    tileImage: './Img/Diamond.gif'
                 },
                 {
                     tileId: this.player,
                     tileName: 'Player',
-                    tileImage: './Img/Player.png'
+                    tileImage: './Img/PlayerAnimated.gif'
                 },
                 {
                     tileId: this.enemy,
-                    tileName: 'Player',
-                    tileImage: './Img/Player.png'
+                    tileName: 'Enemy',
+                    tileImage: './Img/EnemyAnimated.gif'
                 },
                 {
                     tileId: this.exit,
                     tileName: 'Exit',
                     tileImage: './Img/exit.png'
+                },
+                {
+                    tileId: this.explode,
+                    tileName: 'Explode',
+                    tileImage: './Img/Expolotion.gif'
                 },
             ],
         }
@@ -75,8 +81,9 @@ export default {
         logPosition() {
 
             if(this.position.background !== 1){
-                this.position.background = 0;
-                this.$emit('change-background');
+                //this.position.background = 0;
+                //this.$emit('change-background');
+                this.$emit('change-playerHasMoved');
             }                
 
             const convert = id => {
@@ -89,6 +96,7 @@ export default {
                     case 5: return "player";
                     case 6: return "enemy";
                     case 7: return "exit";
+                    case 7: return "explotion";
                 }
             }
             console.log(this.position.x, this.position.y, convert(this.position.background))
@@ -97,7 +105,7 @@ export default {
         setDiamond() {
             this.position.background = Tile.diamond;
             this.$emit('change-background');
-        }
+        },
     },
 
     computed: {

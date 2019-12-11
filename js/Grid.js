@@ -1,7 +1,5 @@
 import Tile from './Tile.js'
-import Map1 from './Map1.js'
-import Map2 from './Map2.js'
-
+import { mapsArray } from './Maps.js'
 
 export default {
 
@@ -16,82 +14,66 @@ export default {
     template: `
     <div class="grid-layout">
         <tile
-        v-for="(tile, i) in flatTiles"
+        v-for="(tile, i) in tiles.flat()"
         v-bind:position="tile"
         v-bind:key="'tile' + i + tile.x + tile.y + tile.background"
         v-on:change-background="forceRender"
+        ref="tileComponenet"
         ></tile>
     </div>
     `,
 
     data() {
-        const maps = [Map1, Map2]
         return {
             tiles: [],
-            gridSize: 20,
-            customGrid: maps[this.level],
-            gridHeiht: 20,
+            customGrid: mapsArray[this.level],
+            gridHeight: 20,
             gridWidth: 30,
             playerHasMoved: false,
-            counter: 1,
-            diamondsCollected: 0,
-            maxNumberOfDiamonds: 0,
-            counter: 1,
-            boulderOnHead: false,
-            fallValue: null,
-            direction: 'left',
-            enableExit: false,
+            diamondsCollected: null,
+            maxNumberOfDiamonds: null,
+            playerIsStuck: false
         }
-    },
-
-    properties() {
-        KeyboardEvent
-    },
-
-    computed: {
-        flatTiles() {
-            return this.tiles.flat()
-        },
     },
 
     created() {
 
-        console.log("CREATED")
-
-        window.addEventListener('keydown', this.onKeyPressed)
-
-        for (let row = 0; row < this.gridHeiht; row++) {
+        for (let row = 0; row < this.gridHeight; row++) {
             this.tiles[row] = []
             for (let col = 0; col < this.gridWidth; col++) {
                 let position = {
+                    // TODO MAYBE - Create an instance of a class here instead of x, y and background. Like a boulder class or something.
                     x: col,
                     y: row,
                     background: Tile.dirt
                 }
                 this.tiles[row].push(position)
             }
-            
         }
-        
+
         this.populateMap()
         this.getTotalNumberOfDiamonds()
+        var musicTheme = new Audio('Sound/MainTheme.mp3');
+        musicTheme.play();
     },
-    // beforeDestroy(){
-    //     window.removeEventListener('keydown', this.onKeyPressed)
-    // },
 
     updated() {
-        //console.log("The grid has been changed");
+
         this.playerHasMoved = false;
         this.updateRollingStones();
+        // TODO MAYBE - Fix so enemy moves when player moves, and it moves towards player.
         this.enemyUpdate();
-        //console.log(Date.now())
-        this.forceRender();
-        //this.checkForDiamonds()
-        //this.updatePlayerMovement()
-        // If the player moves, we should call forceRender
+        this.canKill = false;
+        this.forceRender()
+
+        if (this.checkIfPlayerIsStuck() && this.playerIsStuck === false) {
+            this.playerIsStuck = true
+            this.$emit('player-stuck')
+        }
     },
+
     methods: {
+
         forceRender: function () {
             // rensar timern efter varje gång en sten har rört sig
             clearTimeout(this.renderTimeout);
@@ -102,32 +84,36 @@ export default {
         },
 
         updatePlayerMovement: function (direction) {
-            if (this.playerHasMoved) { return;}
+
+            if (this.playerHasMoved) { return; }
             this.playerHasMoved = true;
+
             for (let col = this.gridWidth - 1; col >= 0; col--) {
-                for (let row = 0; row < this.gridHeiht; row++) {
+                for (let row = 0; row < this.gridHeight; row++) {
                     const tile = this.tiles[row][col];
+
                     switch (direction) {
                         case 'right':
 
                             if (tile.background == Tile.player) {
 
-                                const moveRight = this.tiles[row][col + 1];
-                                const checkIfEmpty = this.tiles[row][col + 2]
+                                const tileToTheRight = this.tiles[row][col + 1];
+                                const tile2StepsToTheRight = this.tiles[row][col + 2]
 
-                                if (moveRight.background !== Tile.brick &&
-                                    moveRight.background !== Tile.boulder) {
+                                if (tileToTheRight.background !== Tile.brick &&
+                                    tileToTheRight.background !== Tile.boulder) {
 
                                     tile.background = Tile.empty;
-                                    moveRight.background = Tile.player;
+                                    tileToTheRight.background = Tile.player;
                                     this.forceRender();
 
 
-                                } else if (moveRight.background === Tile.boulder &&
-                                    checkIfEmpty.background === Tile.empty) {
 
-                                    moveRight.background = Tile.player;
-                                    checkIfEmpty.background = Tile.boulder;
+                                } else if (tileToTheRight.background === Tile.boulder &&
+                                    tile2StepsToTheRight.background === Tile.empty) {
+
+                                    tileToTheRight.background = Tile.player;
+                                    tile2StepsToTheRight.background = Tile.boulder;
                                     tile.background = Tile.empty;
                                     this.forceRender();
 
@@ -150,7 +136,8 @@ export default {
                     }
                 }
             }
-            for (let row = this.gridHeiht - 1; row >= 0; row--) {
+
+            for (let row = this.gridHeight - 1; row >= 0; row--) {
                 for (let col = 0; col < this.gridWidth; col++) {
                     const tile = this.tiles[row][col];
                     switch (direction) {
@@ -183,63 +170,37 @@ export default {
                             }
                             break
                     }
-
-
-
-                    //     switch(direction){
-                    //                 case 'left':
-                    //     if (tile.background === Tile.player) {
-                    //         const moveLeft = this.tiles[row][col - 1];
-                    //         const checkIfEmpty = this.tiles[row][col - 2];
-                    //         if (moveLeft.background !== Tile.brick &&
-                    //             moveLeft.background !== Tile.boulder) {
-                    //             tile.background = Tile.empty;
-                    //             moveLeft.background = Tile.player;
-                    //             this.forceRender();
-                    //         } else if (moveLeft.background === Tile.boulder && checkIfEmpty.background === Tile.empty) {
-                    //             moveLeft.background = Tile.player;
-                    //             checkIfEmpty.background = Tile.boulder;
-                    //             tile.background = Tile.empty;
-                    //             this.forceRender();
-                    //         }
-                    //     } break
-                    //                 default:
-                    //     break;
-                    // }
                 }
             }
-            //this.checkForDiamonds() 
         },
 
-
         updateRollingStones: function () {
+            var boulderFall = new Audio('Sound/BoulderFall.mp3');
             for (let row = this.gridHeiht - 1; row >= 0; row--) {
                 for (let col = 0; col < this.gridWidth; col++) {
                     this.tiles[row][col].playerHasMoved = false;
+                    this.tiles[row][col].canKill = false;
                 }
             }
-
             //Loopar nerifrån och upp för att undvika att stenarna går åt sidan ist för ner
-            for (let row = this.gridHeiht - 1; row >= 0; row--) {
+            for (let row = this.gridHeight - 1; row >= 0; row--) {
                 for (let col = 0; col < this.gridWidth; col++) {
                     const tile = this.tiles[row][col];
-                    if (tile.playerHasMoved == true) {
-                        console.log('has moved')
-                        //Om stenen redan har flyttats så - skip och loopa vidare på nästa
-                        continue;
-                    }
 
                     if (tile.background === Tile.boulder || tile.background === Tile.diamond) {
                         let tempTile = tile.background;
-                        const tileUnder = this.tiles[row + 1][col];
+                        const tileUnder = this.tiles[row + 1][col]
+                        const tileAbove = this.tiles[row - 1][col]
+                        // const tile2StepsUnder = this.tiles[row + 2][col]
                         if (tileUnder.background === Tile.boulder || tileUnder.background === Tile.diamond) {
-
                             const tileLeft = this.tiles[row][col - 1];
                             const tileRight = this.tiles[row][col + 1];
+                            tileAbove.canKill = false;
+                            tileUnder.canKill = false;
+                            tile.canKill = false;
                             if (tileRight.background == Tile.empty) {
                                 const tileRightUnder = this.tiles[row + 1][col + 1];
                                 if (tileRightUnder.background == Tile.empty) {
-                                    // console.log("x:", tile.x, "y:", tile.y, "should move right");
                                     tile.background = Tile.empty;
                                     tileRight.background = tempTile;
                                     tileRight.playerHasMoved = true;
@@ -249,30 +210,62 @@ export default {
                             } else if (tileLeft.background == Tile.empty) {
                                 const tileLeftUnder = this.tiles[row + 1][col - 1];
                                 if (tileLeftUnder.background == Tile.empty) {
-                                    // console.log("x:", tile.x, "y:", tile.y, "should move left");
                                     tile.background = Tile.empty;
                                     tileLeft.background = tempTile;
                                     tileLeft.playerHasMoved = true;
                                     this.forceRender();
                                 }
                             }
-                        } else if (tileUnder.background == Tile.empty || tileUnder.background == Tile.player) {
+                        } else if (tileUnder.background === Tile.empty) {
+                            boulderFall.play();
+                            tile.canKill = false
+                            tileUnder.canKill = true
                             tileUnder.background = tempTile;
                             tile.background = Tile.empty;
-                            tile.playerHasMoved = true;
+                            tile.playerHasMoved = true
                             this.forceRender();
+                        } else if (tileUnder.background === Tile.player && tile.canKill === true) {
+                            // boulderFall.play();
+                            tileUnder.background = tempTile;
+                            tile.background = Tile.empty;
+                            this.explodes(tileUnder)
+                            this.forceRender();
+
+                        } else {
+                            tile.canKill = false
                         }
                     }
                 }
             }
         },
 
+        explodes(tile) {
 
+            let tileRight = this.tiles[tile.y][tile.x + 1]
+            let tileRightDown = this.tiles[tile.y + 1][tile.x + 1]
+            let tileDown = this.tiles[tile.y + 1][tile.x]
+            let tileLeftDown = this.tiles[tile.y + 1][tile.x - 1]
+            let tileLeft = this.tiles[tile.y][tile.x - 1]
+            let tileLeftAbove = this.tiles[tile.y - 1][tile.x - 1]
+            let tileAbove = this.tiles[tile.y - 1][tile.x]
+            let tileRightAbove = this.tiles[tile.y - 1][tile.x + 1]
 
+            tile.background = 7
+            tileRight.background = 7
+            tileRightDown.background = 7
+            tileDown.background = 7
+            tileLeftDown.background = 7
+            tileLeft.background = 7
+            tileLeftAbove.background = 7
+            tileAbove.background = 7
+            tileRightAbove.background = 7
+
+            this.$emit('game-over')
+        },
 
         populateMap() {
-                    
-            for (let row = 0; row < this.gridHeiht; row++) {
+
+            for (let row = 0; row < this.gridHeight; row++) {
 
                 for (let col = 0; col < this.gridWidth; col++) {
 
@@ -281,9 +274,9 @@ export default {
                         case 'B':
                             this.tiles[row][col].background = Tile.brick
                             break
-                        // case 'E':
-                        //     this.tiles[row][col].background = Tile.empty
-                        //     break
+                        case 'O':
+                            this.tiles[row][col].background = Tile.empty
+                            break
                         case 'P':
                             this.tiles[row][col].background = Tile.player
                             break
@@ -307,10 +300,8 @@ export default {
 
         },
 
-
-
         enemyUpdate: function () {
-            let rand = (Math.floor(Math.random()*4));
+            let rand = (Math.floor(Math.random() * 4));
             switch (rand) {
 
                 case 0:
@@ -329,9 +320,10 @@ export default {
 
 
         },
+
         enemyMoveUp: function () {
             for (let col = this.gridWidth - 1; col >= 0; col--) {
-                for (let row = 0; row < this.gridHeiht; row++) {
+                for (let row = 0; row < this.gridHeight; row++) {
                     const tile = this.tiles[row][col];
                     if (tile.background === Tile.enemy) {
                         const moveUp = this.tiles[row - 1][col]
@@ -340,16 +332,14 @@ export default {
                             tile.background = Tile.empty;
                             moveUp.background = Tile.enemy;
                             this.forceRender();
-                        }else{
-                            this.direction = 'right';
-
                         }
                     }
                 }
             }
         },
+
         enemyMoveDown: function () {
-            for (let row = this.gridHeiht - 1; row >= 0; row--) {
+            for (let row = this.gridHeight - 1; row >= 0; row--) {
                 for (let col = 0; col < this.gridWidth; col++) {
                     const tile = this.tiles[row][col];
                     if (tile.background === Tile.enemy) {
@@ -359,8 +349,6 @@ export default {
                             tile.background = Tile.empty;
                             moveDown.background = Tile.enemy;
                             this.forceRender();
-                        }else{
-                            this.direction ='left';
                         }
                     }
                 }
@@ -368,8 +356,9 @@ export default {
 
 
         },
+
         enemyMoveLeft: function () {
-            for (let row = this.gridHeiht - 1; row >= 0; row--) {
+            for (let row = this.gridHeight - 1; row >= 0; row--) {
                 for (let col = 0; col < this.gridWidth; col++) {
                     const tile = this.tiles[row][col];
                     if (tile.background === Tile.enemy) {
@@ -379,8 +368,6 @@ export default {
                             tile.background = Tile.empty;
                             moveLeft.background = Tile.enemy;
                             this.forceRender();
-                        }else{
-                            this.direction ='up';
                         }
                     }
                 }
@@ -388,9 +375,10 @@ export default {
 
             }
         },
+
         enemyMoveRight: function () {
             for (let col = this.gridWidth - 1; col >= 0; col--) {
-                for (let row = 0; row < this.gridHeiht; row++) {
+                for (let row = 0; row < this.gridHeight; row++) {
 
                     const tile = this.tiles[row][col];
 
@@ -406,8 +394,6 @@ export default {
 
                             this.forceRender();
 
-                        }else{
-                            this.direction = 'down';
                         }
                     }
                 }
@@ -415,20 +401,15 @@ export default {
 
 
         },
-
-
-
-     
-    
         // Check if tile player stands on contains a diamond
         checkForDiamonds() {
 
-            for (let row = 0; row < this.gridHeiht; row++) {
+            for (let row = 0; row < this.gridHeight; row++) {
 
                 for (let col = 0; col < this.gridWidth; col++) {
-                    
+
                     if (this.customGrid[row][col] == 'D' && this.tiles[row][col].background == Tile.player) {
-                        
+
                         this.diamondsCollected += 1
                         this.$emit('collected', this.diamondsCollected)
 
@@ -439,18 +420,16 @@ export default {
                 }
             }
         },
-
-
         // Check how many diamonds the whole level have
         getTotalNumberOfDiamonds() {
-            
-            for (let row = 0; row < this.gridHeiht; row++) {
+
+            for (let row = 0; row < this.gridHeight; row++) {
                 for (let col = 0; col < this.gridWidth; col++) {
-                    
+
                     if (this.customGrid[row][col] == 'D') {
                         this.maxNumberOfDiamonds += 1
                     }
-                } 
+                }
             }
             this.$emit('total', this.maxNumberOfDiamonds)
         },
@@ -505,6 +484,38 @@ export default {
                 case 'd':
                     this.updatePlayerMovement('right');
                     break
+            }
+        },
+
+        checkIfPlayerIsStuck() {
+            for (let col = this.gridWidth - 1; col >= 0; col--) {
+                for (let row = 0; row < this.gridHeight; row++) {
+                    let tile = this.tiles[row][col];
+                    if (tile.background === Tile.player) {
+
+                        let tileToTheRight = this.tiles[row][col + 1]
+                        let tile2StepsToTheRight = this.tiles[row][col + 2]
+                        let tileUnder = this.tiles[row + 1][col]
+                        let tileToTheLeft = this.tiles[row][col - 1]
+                        let tile2StepsToTheLeft = this.tiles[row][col - 2]
+                        let tileAbove = this.tiles[row - 1][col]
+                        const tile2StepsUp = this.tiles[row - 2][col]
+
+                        if (
+                            (tileToTheRight.background === Tile.brick || tileToTheRight.background === Tile.boulder) &&
+                            (tile2StepsToTheRight.background === Tile.brick || tile2StepsToTheRight.background === Tile.boulder || tile2StepsToTheRight.background === Tile.dirt || tile2StepsToTheLeft.background === Tile.diamonds) &&
+                            (tileUnder.background === Tile.brick || tileUnder.background === Tile.boulder) &&
+                            (tileToTheLeft.background === Tile.brick || tileToTheLeft.background === Tile.boulder) &&
+                            (tile2StepsToTheLeft.background === Tile.brick || tile2StepsToTheLeft.background === Tile.boulder || tile2StepsToTheLeft.background === Tile.dirt || tile2StepsToTheLeft.background === Tile.diamonds) &&
+                            (tileAbove.background === Tile.brick || tileAbove.background === Tile.boulder)
+                        ) {
+                            // console.log(true)
+                            return true
+                        }
+                        // console.log(false)
+                        return false
+                    }
+                }
             }
         }
     },
