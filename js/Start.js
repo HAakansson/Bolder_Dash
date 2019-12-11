@@ -42,7 +42,7 @@ export default {
                     @gameIsOver="resetGame"/>
                 </div>
                 <div v-if="currentLevel === 1 && startGame">
-                    <grid @total="totalDiamonds" @collected="collectedDiamonds" v:dir="dir" ref="gridComponent" level="0"></grid>
+                    <grid @total="totalDiamonds" @collected="collectedDiamonds" @player-stuck="gameOver" v:dir="dir" ref="gridComponent" level="0"></grid>
                 </div>
                 <div v-if="currentLevel === 2 && startGame">
                     <grid @total="totalDiamonds" @collected="collectedDiamonds" v:dir="dir" ref="gridComponent" level="1"></grid>
@@ -72,12 +72,11 @@ export default {
     },
 
     methods: {
+
         beginGame() {
             this.showStartMenu = false
             this.startGame = true
         },
-
-
         // IF GAME WON
         updateFinalScore(score) {
             this.totalScore = score
@@ -134,6 +133,10 @@ export default {
                     audio.play();
                     break
             }
+        },
+
+        gameOver(){
+            alert('That move will result in you getting stuck... Sucker! Game over for you...')
         }
     },
 
