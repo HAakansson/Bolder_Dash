@@ -18,7 +18,6 @@ export default {
         v-bind:position="tile"
         v-bind:key="'tile' + i + tile.x + tile.y + tile.background"
         v-on:change-background="forceRender"
-        v-on:change-playerHasMoved="updatePlayerHasMoved"
         ref="tileComponenet"
         ></tile>
     </div>
@@ -49,13 +48,13 @@ export default {
                     background: Tile.dirt
                 }
                 this.tiles[row].push(position)
-            }   
+            }
         }
 
         this.populateMap()
         this.getTotalNumberOfDiamonds()
         var musicTheme = new Audio('Sound/MainTheme.mp3');
-        musicTheme.play();  
+        musicTheme.play();
     },
 
     updated() {
@@ -70,7 +69,7 @@ export default {
         if (this.checkIfPlayerIsStuck() && this.playerIsStuck === false) {
             this.playerIsStuck = true
             this.$emit('player-stuck')
-        }  
+        }
     },
 
     methods: {
@@ -191,7 +190,7 @@ export default {
                     if (tile.background === Tile.boulder || tile.background === Tile.diamond) {
                         let tempTile = tile.background;
                         const tileUnder = this.tiles[row + 1][col]
-                        const tileAbove = this.tiles[row -1][col]
+                        const tileAbove = this.tiles[row - 1][col]
                         // const tile2StepsUnder = this.tiles[row + 2][col]
                         if (tileUnder.background === Tile.boulder || tileUnder.background === Tile.diamond) {
                             const tileLeft = this.tiles[row][col - 1];
@@ -214,7 +213,7 @@ export default {
                                     this.forceRender();
                                 }
                             }
-                        } else if (tileUnder.background === Tile.empty) { 
+                        } else if (tileUnder.background === Tile.empty) {
                             boulderFall.play();
                             tile.canKill = false
                             tileUnder.canKill = true
@@ -222,13 +221,13 @@ export default {
                             tile.background = Tile.empty;
                             tile.playerHasMoved = true
                             this.forceRender();
-                        } else if (tileUnder.background === Tile.player && tile.canKill === true){
+                        } else if (tileUnder.background === Tile.player && tile.canKill === true) {
                             // boulderFall.play();
                             tileUnder.background = tempTile;
                             tile.background = Tile.empty;
                             this.explodes(tileUnder)
                             this.forceRender();
-                           
+
                         } else {
                             tile.canKill = false
                         }
@@ -238,7 +237,7 @@ export default {
         },
 
         explodes(tile) {
-           
+
             let tileRight = this.tiles[tile.y][tile.x + 1]
             let tileRightDown = this.tiles[tile.y + 1][tile.x + 1]
             let tileDown = this.tiles[tile.y + 1][tile.x]
@@ -247,16 +246,16 @@ export default {
             let tileLeftAbove = this.tiles[tile.y - 1][tile.x - 1]
             let tileAbove = this.tiles[tile.y - 1][tile.x]
             let tileRightAbove = this.tiles[tile.y - 1][tile.x + 1]
-            
-            tile.background = 1
-            tileRight.background = 1
-            tileRightDown.background = 1
-            tileDown.background = 1
-            tileLeftDown.background = 1
-            tileLeft.background = 1
-            tileLeftAbove.background = 1
-            tileAbove.background = 1
-            tileRightAbove.background = 1
+
+            tile.background = 7
+            tileRight.background = 7
+            tileRightDown.background = 7
+            tileDown.background = 7
+            tileLeftDown.background = 7
+            tileLeft.background = 7
+            tileLeftAbove.background = 7
+            tileAbove.background = 7
+            tileRightAbove.background = 7
 
             this.$emit('game-over')
         },
@@ -468,7 +467,7 @@ export default {
                             (tileToTheLeft.background === Tile.brick || tileToTheLeft.background === Tile.boulder) &&
                             (tile2StepsToTheLeft.background === Tile.brick || tile2StepsToTheLeft.background === Tile.boulder || tile2StepsToTheLeft.background === Tile.dirt || tile2StepsToTheLeft.background === Tile.diamonds) &&
                             (tileAbove.background === Tile.brick || tileAbove.background === Tile.boulder)
-                        ){
+                        ) {
                             // console.log(true)
                             return true
                         }
