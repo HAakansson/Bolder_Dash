@@ -91,11 +91,6 @@ export default {
             this.position.background = Tile.diamond;
             this.$emit('change-background');
         },
-
-        setTileImage(direction){
-            this.$emit('test',this.tileState[5, 'Player', 'Img\MoveLeftAnimated.gif']);
-        }
-
     },
 
     computed: {
