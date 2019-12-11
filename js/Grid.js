@@ -195,6 +195,9 @@ export default {
                         if (tileUnder.background === Tile.boulder || tileUnder.background === Tile.diamond) {
                             const tileLeft = this.tiles[row][col - 1];
                             const tileRight = this.tiles[row][col + 1];
+                            tileAbove.canKill = false;
+                            tileUnder.canKill = false;
+                            tile.canKill = false;
                             if (tileRight.background == Tile.empty) {
                                 const tileRightUnder = this.tiles[row + 1][col + 1];
                                 if (tileRightUnder.background == Tile.empty) {
