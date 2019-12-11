@@ -9,6 +9,7 @@ export default {
     diamond: 4,
     player: 5,
     enemy: 6,
+    explode: 7,
 
     props: {
         position: {
@@ -55,6 +56,11 @@ export default {
                     tileName: 'Enemy',
                     tileImage: './Img/EnemyAnimated.gif'
                 },
+                {
+                    tileId: this.explode,
+                    tileName: 'Explode',
+                    tileImage: './Img/Expolotion.gif'
+                },
             ],
         }
     },
@@ -68,10 +74,11 @@ export default {
     methods: {
         logPosition() {
 
-            // if(this.position.background !== 1){
-            //     this.position.background = 0;
-            //     this.$emit('change-background');
-            // }                
+            if(this.position.background !== 1){
+                //this.position.background = 0;
+                //this.$emit('change-background');
+                this.$emit('change-playerHasMoved');
+            }                
 
             const convert = id => {
                 switch (id) {
@@ -82,6 +89,7 @@ export default {
                     case 4: return "diamond";
                     case 5: return "player";
                     case 6: return "enemy";
+                    case 7: return "explotion";
                 }
             }
             console.log(this.position.x, this.position.y, convert(this.position.background))
