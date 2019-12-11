@@ -59,7 +59,7 @@ export default {
                 {
                     tileId: this.exit,
                     tileName: 'Exit',
-                    tileImage: './Img/Diamond.png'
+                    tileImage: './Img/exit.png'
                 },
             ],
         }
