@@ -20,6 +20,8 @@ export default {
         v-bind:position="tile"
         v-bind:key="'tile' + i + tile.x + tile.y + tile.background"
         v-on:change-background="forceRender"
+        ref="tileComponenet"
+        v-on:test="animation"
         ></tile>
     </div>
     `,
@@ -72,6 +74,9 @@ export default {
         
         this.populateMap()
         this.getTotalNumberOfDiamonds()
+        var musicTheme = new Audio('Sound/MainTheme.mp3');
+        musicTheme.play();  
+
     },
     // beforeDestroy(){
     //     window.removeEventListener('keydown', this.onKeyPressed)
@@ -105,7 +110,7 @@ export default {
                     const tile = this.tiles[row][col];
                     switch (direction) {
                         case 'right':
-
+                            
                             if (tile.background == Tile.player) {
 
                                 const moveRight = this.tiles[row][col + 1];
@@ -117,7 +122,7 @@ export default {
                                     tile.background = Tile.empty;
                                     moveRight.background = Tile.player;
                                     this.forceRender();
-
+                                    
 
                                 } else if (moveRight.background === Tile.boulder &&
                                     checkIfEmpty.background === Tile.empty) {
@@ -207,8 +212,8 @@ export default {
             //this.checkForDiamonds() 
         },
 
-
         updateRollingStones: function () {
+            var boulderFall = new Audio('Sound/BoulderFall.mp3');
             for (let row = this.gridHeiht - 1; row >= 0; row--) {
                 for (let col = 0; col < this.gridWidth; col++) {
                     this.tiles[row][col].playerHasMoved = false;
@@ -256,6 +261,7 @@ export default {
                             tileUnder.background = tempTile;
                             tile.background = Tile.empty;
                             tile.playerHasMoved = true;
+                            boulderFall.play();
                             this.forceRender();
                         }
                     }
@@ -409,7 +415,6 @@ export default {
         },
 
 
-      
         // Check if tile player stands on contains a diamond
         checkForDiamonds() {
 

@@ -28,7 +28,7 @@ export default {
                 {
                     tileId: this.brick,
                     tileName: 'Brick',
-                    tileImage: './Img/Brick.png'
+                    tileImage: './Img/Brick2.png'
                 },
                 {
                     tileId: this.dirt,
@@ -43,17 +43,17 @@ export default {
                 {
                     tileId: this.diamond,
                     tileName: 'Diamond',
-                    tileImage: './Img/Diamond.png'
+                    tileImage: './Img/Diamond.gif'
                 },
                 {
                     tileId: this.player,
                     tileName: 'Player',
-                    tileImage: './Img/Player.png'
+                    tileImage: './Img/PlayerAnimated.gif'
                 },
                 {
                     tileId: this.enemy,
-                    tileName: 'Player',
-                    tileImage: './Img/Enemy.png'
+                    tileName: 'Enemy',
+                    tileImage: './Img/EnemyAnimated.gif'
                 },
             ],
         }
@@ -90,7 +90,12 @@ export default {
         setDiamond() {
             this.position.background = Tile.diamond;
             this.$emit('change-background');
+        },
+
+        setTileImage(direction){
+            this.$emit('test',this.tileState[5, 'Player', 'Img\MoveLeftAnimated.gif']);
         }
+
     },
 
     computed: {
