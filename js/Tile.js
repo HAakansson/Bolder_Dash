@@ -68,10 +68,11 @@ export default {
     methods: {
         logPosition() {
 
-            // if(this.position.background !== 1){
-            //     this.position.background = 0;
-            //     this.$emit('change-background');
-            // }                
+            if(this.position.background !== 1){
+                //this.position.background = 0;
+                //this.$emit('change-background');
+                this.$emit('change-playerHasMoved');
+            }                
 
             const convert = id => {
                 switch (id) {
