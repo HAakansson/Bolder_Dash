@@ -36,7 +36,6 @@ export default {
                 this.$emit('timeLeft', this.gameTime)
 
                 if (this.gameTime <= 0) {
-                    console.log("Game Over!!")
                     this.gameTime = 0                    
                 }
             }, 1000)  
