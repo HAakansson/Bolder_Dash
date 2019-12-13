@@ -23,9 +23,9 @@ export default {
             gameWon: false,
             gameOver: false
         }
-    },
+        },
 
-    methods: {
+        methods: {
         /*pickupDiamond() {
             collectedDiamonds += 1
         },*/
