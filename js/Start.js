@@ -1,15 +1,14 @@
 import Grid from './Grid.js'
 import Highscore from './Highscore.js'
 import Countdown from './Countdown.js'
-import Score from './ScoreCalculator.js'
-import Tile from './Tile.js'
+import ScoreCalculator from './ScoreCalculator.js'
 
 export default {
     components: {
         Grid,
         Highscore,
         Countdown,
-        Score
+        ScoreCalculator
     },
 
     template: `
@@ -35,17 +34,17 @@ export default {
                 <div class="hud">
                     <h2 class="level-box">Level {{ currentLevel }}</h2>
                     <!--<Countdown/>-->
-                    <Score class="score-text"
+                    <ScoreCalculator class="score-text"
                     :collected="this.diamondsCollected"
                     :total="this.totalAmountOfDiamonds"
                     @finalScore="updateFinalScore"
                     @gameIsOver="resetGame"/>
                 </div>
                 <div v-if="currentLevel === 1 && startGame">
-                    <grid @total="totalDiamonds" @collected="collectedDiamonds" @player-stuck="gameOver" v:dir="dir" ref="gridComponent" level="0"></grid>
+                    <grid @total="totalDiamonds" @collected="collectedDiamonds" @player-stuck="gameOver" ref="gridComponent" level="0"></grid>
                 </div>
                 <div v-if="currentLevel === 2 && startGame">
-                    <grid @total="totalDiamonds" @collected="collectedDiamonds" v:dir="dir" ref="gridComponent" level="1"></grid>
+                    <grid @total="totalDiamonds" @collected="collectedDiamonds" @player-stuck="gameOver" ref="gridComponent" level="1"></grid>
                 </div>
             </div>
         </div>   
@@ -67,7 +66,6 @@ export default {
                 { name: 'Yusra' },
                 { name: 'Henrik' }
             ],
-            dir: 0
         }
     },
 
