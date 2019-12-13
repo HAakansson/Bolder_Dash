@@ -10,6 +10,7 @@ export default {
     player: 5,
     enemy: 6,
     explode: 7,
+    exit: 8,
 
     props: {
         position: {
@@ -61,6 +62,11 @@ export default {
                     tileName: 'Explode',
                     tileImage: './Img/Expolotion.gif'
                 },
+                {
+                    tileId: this.exit,
+                    tileName: 'Exit',
+                    tileImage: './Img/exit.png'
+                },
             ],
         }
     },
@@ -90,6 +96,7 @@ export default {
                     case 5: return "player";
                     case 6: return "enemy";
                     case 7: return "explotion";
+                    case 8: return "exit";
                 }
             }
             console.log(this.position.x, this.position.y, convert(this.position.background))

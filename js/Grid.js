@@ -32,6 +32,7 @@ export default {
             playerHasMoved: false,
             diamondsCollected: null,
             maxNumberOfDiamonds: null,
+            enableExit: false,
             playerIsStuck: false
         }
     },
@@ -303,7 +304,11 @@ export default {
                         case 'D':
                             this.tiles[row][col].background = Tile.diamond
                             break
-                        case 'E': this.tiles[row][col].background = Tile.enemy
+                        case 'E': 
+                            this.tiles[row][col].background = Tile.enemy
+                            break
+                        case 'G':
+                            this.tiles[row][col].background = Tile.exit
                     }
                     // this.tiles[col][row].type = this.tileType
                     // index++
@@ -414,6 +419,7 @@ export default {
 
 
         },
+
         // Check if tile player stands on contains a diamond
         checkForDiamonds() {
 
@@ -425,10 +431,16 @@ export default {
 
                         this.diamondsCollected += 1
                         this.$emit('collected', this.diamondsCollected)
+
+                        // Number of diamonds needed to be collected before exit appears
+                        if (this.diamondsCollected === this.maxNumberOfDiamonds - 6) {
+                            this.enableExit = true
+                        }
                     }
                 }
             }
         },
+
         // Check how many diamonds the whole level have
         getTotalNumberOfDiamonds() {
 
@@ -440,9 +452,30 @@ export default {
                     }
                 }
             }
-            
             this.$emit('total', this.maxNumberOfDiamonds)
         },
+
+        openExit() {
+
+            this.customGrid[15][29] = 'G'
+            this.customGrid[14][29] = 'G'
+            
+            this.tiles[15][29].background = Tile.exit
+            this.tiles[14][29].background = Tile.exit
+            this.forceRender()
+        
+        },
+
+        checkForExit() {
+
+            if ((this.customGrid[15][29] == 'G' || this.customGrid[14][29] == 'G') && (this.tiles[15][29].background == Tile.player || this.tiles[14][29].background == Tile.player)) {
+                
+                this.$emit('gameCompleted', true)
+            }      
+        },
+
+
+
 
         onKeyPressed(event) {
             let keyEvent = event.key
@@ -502,9 +535,18 @@ export default {
 
     watch: {
 
-        playerHasMoved(val) {
+        enableExit(val) {
+            if (val) {
+                this.openExit()
+            }
+        },
+
+     
+
+        playerHasMoved(val) {  
             if (val) {
                 this.checkForDiamonds()
+                if (this.enableExit)this.checkForExit()
             }
         }
     },
