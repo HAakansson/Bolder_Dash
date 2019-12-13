@@ -2,13 +2,17 @@ import Grid from './Grid.js'
 import Highscore from './Highscore.js'
 import Countdown from './Countdown.js'
 import ScoreCalculator from './ScoreCalculator.js'
+import WinningScreen from './WinningScreen.js'
+import gameOverScreen from './gameOverScreen.js'
 
 export default {
     components: {
         Grid,
         Highscore,
         Countdown,
-        ScoreCalculator
+        ScoreCalculator,
+        WinningScreen,
+        gameOverScreen
     },
 
     template: `
@@ -38,17 +42,25 @@ export default {
                     :collected="this.diamondsCollected"
                     :total="this.totalAmountOfDiamonds"
                     @finalScore="updateFinalScore"
-                    @gameIsOver="resetGame"/>
+                    @gameIsOver="gameOver"
+                    @resetGame="resetGame"/>
                 </div>
                 <div v-if="currentLevel === 1 && startGame">
-                    <grid @total="totalDiamonds" @collected="collectedDiamonds" @player-stuck="gameOver" ref="gridComponent" level="0"></grid>
+                    <grid key="1" @total="totalDiamonds" @collected="collectedDiamonds" @game-over="gameOver" ref="gridComponent" level="0"></grid>
                 </div>
                 <div v-if="currentLevel === 2 && startGame">
-                    <grid @total="totalDiamonds" @collected="collectedDiamonds" @player-stuck="gameOver" ref="gridComponent" level="1"></grid>
+                    <!--key visar för vue att varje grid är "unik" och drf måste den göra om destrot/create -->    
+                    <grid key="2" @total="totalDiamonds" @collected="collectedDiamonds" @game-over="gameOver" ref="gridComponent" level="1"></grid>
                 </div>
                 <div v-if="currentLevel === 3 && startGame">
                 <grid @total="totalDiamonds" @collected="collectedDiamonds" @player-stuck="gameOver" ref="gridComponent" level="2"></grid>
             </div>
+            </div>
+            <div v-if="winningScreen">
+                <winningScreen />
+            </div>
+            <div v-if="gameOverScreen">
+                <gameOverScreen @resetGame="resetGame" />
             </div>
         </div>   
     `,
@@ -62,7 +74,8 @@ export default {
             showStartMenu: true,
             startGame: false,
             showHighScore: true,
-            gameIsOver: false,
+            gameOverScreen: false,
+            winningScreen: false,
             creators: [
                 { name: 'Niklas' },
                 { name: 'Anton' },
@@ -88,9 +101,9 @@ export default {
         },
 
         resetGame() {
-            console.log("Reset GAMEISNIAND")
             this.showStartMenu = true
             this.startGame = false
+            this.gameOverScreen = false
             this.showHighScore = true
         },
 
@@ -101,6 +114,16 @@ export default {
         collectedDiamonds(diamondsCollected) {
 
             this.diamondsCollected = diamondsCollected
+            
+            if (this.diamondsCollected == this.totalAmountOfDiamonds) {
+                if (this.currentLevel == this.maxNumberOfLevels ) {
+                    this.winningScreen = true
+                    this.startGame = false                    
+                } else {
+                    this.totalAmountOfDiamonds = 0;
+                    this.nextLevel()
+                }
+            }
         },
 
 
@@ -137,7 +160,9 @@ export default {
         },
 
         gameOver(){
-            alert('That move will result in you getting stuck... Sucker! Game over for you...')
+            this.gameOverScreen = true;
+            this.startGame = false;
+            this.totalAmountOfDiamonds = 0;
         }
     },
 

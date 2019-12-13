@@ -68,7 +68,16 @@ export default {
 
         if (this.checkIfPlayerIsStuck() && this.playerIsStuck === false) {
             this.playerIsStuck = true
-            this.$emit('player-stuck')
+            
+            setTimeout(() => {
+                this.$emit('game-over')
+
+                setTimeout(() => {
+                    alert("The player got stuck! Game Over") 
+                    this.$emit('resetGame')
+                }, 100);
+
+            }, 1000);
         }
     },
 
@@ -260,6 +269,15 @@ export default {
             tileAbove.background = 7
             tileRightAbove.background = 7
 
+            setTimeout(() => {
+                this.$emit('game-over')
+
+                setTimeout(() => {
+                    alert("Game Over") 
+                    this.$emit('resetGame')
+                }, 100);
+                
+            }, 2000);
             var deathSound = new Audio('Sound/DeathSound.mp3');
             deathSound.play();
             var explotionSound = new Audio('Sound/Explotion.mp3');
@@ -427,6 +445,7 @@ export default {
                     }
                 }
             }
+            
             this.$emit('total', this.maxNumberOfDiamonds)
         },
 
