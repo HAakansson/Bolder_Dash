@@ -32,6 +32,7 @@ export default {
             playerHasMoved: false,
             diamondsCollected: null,
             maxNumberOfDiamonds: null,
+            enableExit: false,
             playerIsStuck: false
         }
     },
@@ -413,7 +414,7 @@ export default {
                         this.diamondsCollected += 1
                         this.$emit('collected', this.diamondsCollected)
 
-                        if (this.diamondsCollected === this.maxNumberOfDiamonds - 6) {
+                        if (this.diamondsCollected === this.maxNumberOfDiamonds - 22) {
                             this.enableExit = true
                         }
                     }
@@ -438,27 +439,25 @@ export default {
 
         openExit() {
 
-            this.customGrid[15][29] = 'G'
-            this.customGrid[14][29] = 'G'
-            this.tiles[15][29].background = Tile.exit
-            this.tiles[14][29].background = Tile.exit
+            //this.customGrid[15][29] = 'G'
+            //this.customGrid[14][29] = 'G'
+            this.customGrid[15][0] = 'G'
+            this.customGrid[14][0] = 'G'
+            this.tiles[15][0].background = Tile.exit
+            this.tiles[14][0].background = Tile.exit
+
+            //this.tiles[15][29].background = Tile.exit
+            //this.tiles[14][29].background = Tile.exit
             this.forceRender()
         
         },
 
         checkForExit() {
 
-            for (let row = 0; row < this.gridHeiht; row++) {
-
-                for (let col = 0; col < this.gridWidth; col++) {
-                    
-                    if (this.customGrid[row][col] == 'G' && this.tiles[row][col].background == Tile.player) {
-                        
-                        console.log("GAME FINISHED")
-                        alert("FINISHED")
-                    }
-                }
-            }
+            if ((this.customGrid[15][0] == 'G' || this.customGrid[14][0] == 'G') && (this.tiles[15][0].background == Tile.player || this.tiles[14][0].background == Tile.player)) {
+                console.log("VICTORY")
+                alert("FINISHED")
+            }      
         },
 
 
@@ -533,7 +532,7 @@ export default {
         playerHasMoved(val) {  
             if (val) {
                 this.checkForDiamonds()
-                this.checkForExit()
+                if (this.enableExit)this.checkForExit()
             }
         }
     },

@@ -24,8 +24,6 @@ export default {
 
         startTimer() {
 
-            this.gameTime = 12
-
             let timer = setInterval(() => {
                 this.gameTime -= 1
                 // Time's up (Game Over)
