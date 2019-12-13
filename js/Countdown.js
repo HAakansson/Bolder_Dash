@@ -17,11 +17,13 @@ export default {
     },
     methods: {
     
-        gameIsOver() {
-            alert("Time's up! Game Over") // TODO: kolla poäng jämfört med highscore lista (ange namn om högt nog) 
+        gameIsOver() {// TODO: kolla poäng jämfört med highscore lista (ange namn om högt nog) 
             clearTimeout
             this.timeLeft = false
             this.$emit('gameIsOver', this.timeLeft)
+            setTimeout(() => {
+                alert("Time's up! Game Over") 
+            }, 100);
         },
 
         startTimer() {
