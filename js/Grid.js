@@ -456,6 +456,7 @@ export default {
 
             if ((this.customGrid[15][0] == 'G' || this.customGrid[14][0] == 'G') && (this.tiles[15][0].background == Tile.player || this.tiles[14][0].background == Tile.player)) {
                 console.log("VICTORY")
+                // TODO: emit (game ended)
                 alert("FINISHED")
             }      
         },
