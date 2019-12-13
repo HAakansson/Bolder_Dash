@@ -46,13 +46,16 @@ export default {
                 <div v-if="currentLevel === 2 && startGame">
                     <grid @total="totalDiamonds" @collected="collectedDiamonds" @player-stuck="gameOver" ref="gridComponent" level="1"></grid>
                 </div>
+                <div v-if="currentLevel === 3 && startGame">
+                <grid @total="totalDiamonds" @collected="collectedDiamonds" @player-stuck="gameOver" ref="gridComponent" level="2"></grid>
+            </div>
             </div>
         </div>   
     `,
     data() {
         return {
             currentLevel: 1,
-            maxNumberOfLevels: 2,
+            maxNumberOfLevels: 3,
             diamondsCollected: 0,
             totalAmountOfDiamonds: 0,
             totalScore: 0,

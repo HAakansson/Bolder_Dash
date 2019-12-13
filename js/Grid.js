@@ -260,6 +260,10 @@ export default {
             tileAbove.background = 7
             tileRightAbove.background = 7
 
+            var deathSound = new Audio('Sound/DeathSound.mp3');
+            deathSound.play();
+            var explotionSound = new Audio('Sound/Explotion.mp3');
+            explotionSound.play();
             this.$emit('game-over')
         },
 
