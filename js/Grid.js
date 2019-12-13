@@ -69,7 +69,16 @@ export default {
 
         if (this.checkIfPlayerIsStuck() && this.playerIsStuck === false) {
             this.playerIsStuck = true
-            this.$emit('player-stuck')
+            
+            setTimeout(() => {
+                this.$emit('game-over')
+
+                setTimeout(() => {
+                    alert("The player got stuck! Game Over") 
+                    this.$emit('resetGame')
+                }, 100);
+
+            }, 1000);
         }
     },
 
@@ -261,7 +270,15 @@ export default {
             tileAbove.background = 7
             tileRightAbove.background = 7
 
-            this.$emit('game-over')
+            setTimeout(() => {
+                this.$emit('game-over')
+
+                setTimeout(() => {
+                    alert("Game Over") 
+                    this.$emit('resetGame')
+                }, 100);
+                
+            }, 2000);
         },
 
         populateMap() {
@@ -402,6 +419,7 @@ export default {
 
 
         },
+
         // Check if tile player stands on contains a diamond
         checkForDiamonds() {
 
@@ -414,13 +432,15 @@ export default {
                         this.diamondsCollected += 1
                         this.$emit('collected', this.diamondsCollected)
 
-                        if (this.diamondsCollected === this.maxNumberOfDiamonds - 22) {
+                        // Number of diamonds needed to be collected before exit appears
+                        if (this.diamondsCollected === this.maxNumberOfDiamonds - 6) {
                             this.enableExit = true
                         }
                     }
                 }
             }
         },
+
         // Check how many diamonds the whole level have
         getTotalNumberOfDiamonds() {
 
@@ -435,29 +455,22 @@ export default {
             this.$emit('total', this.maxNumberOfDiamonds)
         },
 
-
-
         openExit() {
 
-            //this.customGrid[15][29] = 'G'
-            //this.customGrid[14][29] = 'G'
-            this.customGrid[15][0] = 'G'
-            this.customGrid[14][0] = 'G'
-            this.tiles[15][0].background = Tile.exit
-            this.tiles[14][0].background = Tile.exit
-
-            //this.tiles[15][29].background = Tile.exit
-            //this.tiles[14][29].background = Tile.exit
+            this.customGrid[15][29] = 'G'
+            this.customGrid[14][29] = 'G'
+            
+            this.tiles[15][29].background = Tile.exit
+            this.tiles[14][29].background = Tile.exit
             this.forceRender()
         
         },
 
         checkForExit() {
 
-            if ((this.customGrid[15][0] == 'G' || this.customGrid[14][0] == 'G') && (this.tiles[15][0].background == Tile.player || this.tiles[14][0].background == Tile.player)) {
-                console.log("VICTORY")
-                // TODO: emit (game ended)
-                alert("FINISHED")
+            if ((this.customGrid[15][29] == 'G' || this.customGrid[14][29] == 'G') && (this.tiles[15][29].background == Tile.player || this.tiles[14][29].background == Tile.player)) {
+                
+                this.$emit('gameCompleted', true)
             }      
         },
 

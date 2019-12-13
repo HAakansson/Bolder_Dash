@@ -2,7 +2,7 @@ import Countdown from './Countdown.js'
 
 export default {
     //TODO: lyssna på highscore
-    props: ['collected', 'total'],
+    props: ['collected', 'total', 'wonGame'],
 
     components: {
         Countdown
@@ -11,7 +11,6 @@ export default {
         <div>
             <h2>Diamonds collected {{ collectedDiamonds }} / {{ totalDiamonds }}</h2>
             <Countdown @gameIsOver="timeIsUp" @timeLeft="updateRemainingTime"/>
-            <!--<button @click="showTimeLeft"></button>--> <!-- TODO: REMOVE-->
         </div>
     `,
 
@@ -23,20 +22,15 @@ export default {
             gameWon: false,
             gameOver: false
         }
-    },
+        },
 
-    methods: {
-        /*pickupDiamond() {
-            collectedDiamonds += 1
-        },*/
+        methods: {
+      
         updateRemainingTime(gameTime) {
             this.timeLeft = gameTime
         },
         
-        /*showTimeLeft() {
-            alert("You have " + this.timeLeft + " seconds left")
-        },*/
-
+     
         calculateFinalScore() {
             let totalScore = this.collectedDiamonds * 100
             totalScore += (this.timeLeft * 2)
@@ -47,9 +41,7 @@ export default {
         timeIsUp() {
             gameOver: true
 
-            // TODO: GÖR HÅRD, sidoomladdning?
             this.$emit('gameIsOver', this.gameOver)
-            //console.log("TIME IS UP SCORE")
         }
 
     },
@@ -74,12 +66,12 @@ export default {
         },
 
         // Receives a boolean as parameter
-        gameWon(val) {
+        wonGame(val) {
             if (val) {
                 let score = this.calculateFinalScore()
                 this.$emit('finalScore', score)
-                alert("You have won!! " + score + " points")
-                console.log("WON GAME")
+                //alert("You have won!! " + score + " points")
+                //console.log("WON GAME")
             }
         },
 
