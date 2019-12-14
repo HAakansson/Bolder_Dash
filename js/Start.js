@@ -20,9 +20,9 @@ export default {
             <div v-if="showStartMenu" class="start-menu">
                 <h1 class="game-title" data-text="[Bolder_Dash]">[Bolder_Dash]</h1>
                 <div v-if="showHighScore" class="start info-box">
-                    <!--<highscore
+                    <highscore
                     :newScore="this.totalScore"
-                    class="highscore"/>-->
+                    class="highscore"/>
                 </div>
                 <div class="buttons">
                     <button class="next-level" @click="nextLevel">Choose your level: (Level {{ currentLevel }})</button>
@@ -37,14 +37,15 @@ export default {
             <div v-if="startGame" class="game-page-2">
                 <div class="hud">
                     <h2 class="level-box">Level {{ currentLevel }}</h2>
-                    <!--<Countdown/>-->
-                    <ScoreCalculator class="score-text"
+                    <Countdown @gameIsOver="timeIsUp" @timeLeft="updateRemainingTime"/>
+                    <h2>Diamonds collected {{ diamondsCollected }} / {{ totalAmountOfDiamonds }}</h2>
+                    <!--<ScoreCalculator class="score-text"
                     :collected="this.diamondsCollected"
                     :total="this.totalAmountOfDiamonds"
                     :wonGame="this.gameWon"
                     @finalScore="updateFinalScore"
                     @gameIsOver="gameOver"
-                    @resetGame="resetGame"/>
+                    @resetGame="resetGame"/>-->
                 </div>
                 <div v-if="currentLevel === 1 && startGame">
                     <grid key="1" @total="totalDiamonds" @collected="collectedDiamonds" @game-over="gameOver" @gameCompleted="gameCompleted" ref="gridComponent" level="0"></grid>
@@ -69,6 +70,7 @@ export default {
             maxNumberOfLevels: 2,
             diamondsCollected: 0,
             totalAmountOfDiamonds: 0,
+            timeLeft: null,
             gameWon: false,
             totalScore: 0,
             showStartMenu: true,
@@ -92,20 +94,38 @@ export default {
             this.startGame = true
         },
 
+
+        updateRemainingTime(time) {
+            this.timeLeft = time
+        },
+
         // IF GAME WON
         gameCompleted() {
 
             this.gameWon = true
-            
-            alert("You have finished the game " + this.totalScore)
+
+            let calculator = new ScoreCalculator()
+            let finalScore = calculator.calculateFinalScore(this.diamondsCollected, this.timeLeft)
+
+            this.updateFinalScore(finalScore)
+
+            console.log("FINAL SCORE:" + finalScore)
+            //let finalScore = new ScoreCalculator().calculateFinalScore(diamondsCollected, timeLeft)
+            alert("You have finished the game " + finalScore + " time left " + this.timeLeft)
         },
 
+
+
+        calculateResult() {
+
+        },
+
+        // TODO: ta bort? 
         updateFinalScore(score) {
             this.totalScore = score
             this.showStartMenu = true
             this.startGame = false
             this.showHighScore = true
-            console.log("FINAL SCORE " + this.totalScore)
         },
 
         resetGame() {
