@@ -1,5 +1,6 @@
 import Tile from './Tile.js'
 import { mapsArray } from './Maps.js'
+import Enemy from './Enemy.js'
 
 export default {
 
@@ -48,6 +49,7 @@ export default {
                     y: row,
                     background: Tile.dirt
                 }
+                // console.log(Enemy.moveRight(position))
                 this.tiles[row].push(position)
             }
         }
@@ -62,8 +64,12 @@ export default {
 
         this.playerHasMoved = false;
         this.updateRollingStones();
-        // TODO MAYBE - Fix so enemy moves when player moves, and it moves towards player.
-        this.enemyUpdate();
+
+        let enemyPos = this.findEnemy()
+        // console.log('Enemy Pos = ', enemyPos)
+        let newEnemyPos = Enemy.move(enemyPos, null, this.tiles, 2)
+        this.updateEnemyPosition(enemyPos, newEnemyPos, this.tiles)
+
         this.canKill = false;
         this.forceRender()
 
@@ -201,7 +207,6 @@ export default {
                         let tempTile = tile.background;
                         const tileUnder = this.tiles[row + 1][col]
                         const tileAbove = this.tiles[row - 1][col]
-                        // const tile2StepsUnder = this.tiles[row + 2][col]
                         if (tileUnder.background === Tile.boulder || tileUnder.background === Tile.diamond) {
                             const tileLeft = this.tiles[row][col - 1];
                             const tileRight = this.tiles[row][col + 1];
@@ -215,7 +220,6 @@ export default {
                                     tileRight.background = tempTile;
                                     tileRight.playerHasMoved = true;
                                     this.forceRender();
-                                    col++;
                                 }
                             } else if (tileLeft.background == Tile.empty) {
                                 const tileLeftUnder = this.tiles[row + 1][col - 1];
@@ -235,7 +239,7 @@ export default {
                             tile.playerHasMoved = true
                             this.forceRender();
                         } else if (tileUnder.background === Tile.player && tile.canKill === true) {
-                            // boulderFall.play();
+                            boulderFall.play();
                             tileUnder.background = tempTile;
                             tile.background = Tile.empty;
                             this.explodes(tileUnder)
@@ -318,106 +322,47 @@ export default {
 
         },
 
-        enemyUpdate: function () {
-            let rand = (Math.floor(Math.random() * 4));
-            switch (rand) {
-
-                case 0:
-                    this.enemyMoveLeft();
-                    break
-                case 1:
-                    this.enemyMoveUp();
-                    break
-                case 2:
-                    this.enemyMoveRight();
-                    break
-                case 3:
-                    this.enemyMoveDown();
-                    break
-            }
-
-
-        },
-
-        enemyMoveUp: function () {
-            for (let col = this.gridWidth - 1; col >= 0; col--) {
+        findEnemy() {
+            for (let col = 0; col < this.gridWidth; col++) {
                 for (let row = 0; row < this.gridHeight; row++) {
-                    const tile = this.tiles[row][col];
-                    if (tile.background === Tile.enemy) {
-                        const moveUp = this.tiles[row - 1][col]
-                        if (moveUp.background === Tile.empty ||
-                            moveUp.background === Tile.player) {
-                            tile.background = Tile.empty;
-                            moveUp.background = Tile.enemy;
-                            this.forceRender();
-                        }
-                    }
+                    const tileEnemy = this.tiles[row][col]
+                    if(tileEnemy.background === Tile.enemy)
+                    return tileEnemy
                 }
             }
         },
 
-        enemyMoveDown: function () {
-            for (let row = this.gridHeight - 1; row >= 0; row--) {
-                for (let col = 0; col < this.gridWidth; col++) {
-                    const tile = this.tiles[row][col];
-                    if (tile.background === Tile.enemy) {
-                        const moveDown = this.tiles[row + 1][col];
-                        if (moveDown.background === Tile.empty ||
-                            moveDown.background === Tile.player) {
-                            tile.background = Tile.empty;
-                            moveDown.background = Tile.enemy;
-                            this.forceRender();
-                        }
-                    }
-                }
-            }
-
-
-        },
-
-        enemyMoveLeft: function () {
-            for (let row = this.gridHeight - 1; row >= 0; row--) {
-                for (let col = 0; col < this.gridWidth; col++) {
-                    const tile = this.tiles[row][col];
-                    if (tile.background === Tile.enemy) {
-                        const moveLeft = this.tiles[row][col - 1];
-                        if (moveLeft.background === Tile.empty ||
-                            moveLeft.background === Tile.player) {
-                            tile.background = Tile.empty;
-                            moveLeft.background = Tile.enemy;
-                            this.forceRender();
-                        }
-                    }
-                }
-
-
-            }
-        },
-
-        enemyMoveRight: function () {
-            for (let col = this.gridWidth - 1; col >= 0; col--) {
+        findPlayer() {
+            for (let col = 0; col < this.gridWidth; col++) {
                 for (let row = 0; row < this.gridHeight; row++) {
-
-                    const tile = this.tiles[row][col];
-
-                    if (tile.background === Tile.enemy) {
-
-                        const moveRight = this.tiles[row][col + 1];
-
-                        if (moveRight.background === Tile.empty ||
-                            moveRight.background === Tile.player) {
-
-                            tile.background = Tile.empty;
-                            moveRight.background = Tile.enemy;
-
-                            this.forceRender();
-
-                        }
-                    }
+                    const tilePlayer = this.tiles[row][col]
+                    if(tilePlayer.background === Tile.player)
+                    return tilePlayer
                 }
             }
+        },
 
+        updateEnemyPosition(enemyPos, newEnemyPos, grid){
+            
+            let playerPos = this.findPlayer()
+            // console.log(playerPos)
+            let tileAbove = grid[enemyPos.y - 1][enemyPos.x]
+            let tileDown = grid[enemyPos.y + 1][enemyPos.x]
+            let tileRight = grid[enemyPos.y][enemyPos.x + 1]
+            let tileLeft = grid[enemyPos.y][enemyPos.x - 1]
 
+            if(
+                tileAbove.background === Tile.player ||
+                tileDown.background === Tile.player ||
+                tileRight.background === Tile.player ||
+                tileLeft.background === Tile.player
+            ) {
+                this.explodes(grid[playerPos.y][playerPos.x])
+                console.log('Explosion')
+            } else if (this.tiles[newEnemyPos.y][newEnemyPos.x].background === Tile.empty){
+                this.tiles[enemyPos.y][enemyPos.x].background = Tile.empty
+                this.tiles[newEnemyPos.y][newEnemyPos.x].background = Tile.enemy
+            }
         },
 
         // Check if tile player stands on contains a diamond
