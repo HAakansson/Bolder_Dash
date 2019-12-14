@@ -117,7 +117,9 @@ export default {
             alert("You have completed the game!\nYour score is: " + finalScore) //+ " time left " + this.timeLeft)
             //this.updateFinalScore(finalScore)
             this.totalAmountOfDiamonds = 0
-            this.nextLevel()
+
+            this.currentLevel == 1 ? this.nextLevel() : this.resetGame()
+            //this.nextLevel()
         },
 
 
