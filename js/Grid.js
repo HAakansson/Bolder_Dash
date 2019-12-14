@@ -414,12 +414,9 @@ export default {
         checkForExit() {
 
             if ((this.customGrid[15][29] == 'G' || this.customGrid[14][29] == 'G') && (this.tiles[15][29].background == Tile.player || this.tiles[14][29].background == Tile.player)) {
-                
                 this.$emit('gameCompleted', true)
             }      
         },
-
-
 
 
         onKeyPressed(event) {

@@ -1,5 +1,5 @@
 import Grid from './Grid.js'
-import Highscore from './Highscore.js'
+//import Highscore from './Highscore.js'
 import Countdown from './Countdown.js'
 import ScoreCalculator from './ScoreCalculator.js'
 import WinningScreen from './WinningScreen.js'
@@ -8,7 +8,7 @@ import gameOverScreen from './gameOverScreen.js'
 export default {
     components: {
         Grid,
-        Highscore,
+        //Highscore,
         Countdown,
         ScoreCalculator,
         WinningScreen,
@@ -17,32 +17,42 @@ export default {
 
     template: `
         <div class="game-page-1">
-            <div v-if="showStartMenu" class="start-menu">
-                <h1 class="game-title" data-text="[Bolder_Dash]">[Bolder_Dash]</h1>
-                <div v-if="showHighScore" class="start info-box">
-                    <highscore
-                    :newScore="this.totalScore"
-                    class="highscore"/>
+
+           
+            <div v-if="showStartMenu" class="start-menu start">
+
+                 <div v-if="showStartMenu" class="creators-list start">
+                    <h2>Creators:</h2> 
+                    <h3 class="creators-name" v-for="creator in creators">  {{ creator.name }}  </h3>
                 </div>
+                <div class="start-box">
+                    <h1 class="game-title" data-text="[Bolder_Dash]">[Bolder_Dash]</h1>
+                    <div v-if="showHighScore" class="start info-box">
+                         <!--<highscore
+                    :newScore="this.totalScore"
+                    class="highscore"/>-->
+                </div>
+               
+                   
                 <div class="buttons">
                     <button class="next-level" @click="nextLevel">Choose your level: (Level {{ currentLevel }})</button>
                     <button class="start-level" @click="beginGame">Start Game</button>
                 </div>  
-                <div class="creators-list">
-                    <h2>Creators:</h2> 
-                    <h3 class="creators-name" v-for="creator in creators"> || {{ creator.name }}  </h3>
-                </div>
             </div>
+        </div>
+
+
 
             <div v-if="startGame" class="game-page-2">
                 <div class="hud">
                     <h2 class="level-box">Level {{ currentLevel }}</h2>
-                    <Countdown @gameIsOver="timeIsUp" @timeLeft="updateRemainingTime"/>
+                    <Countdown 
+                    @gameIsOver="gameOver" 
+                    @timeLeft="updateRemainingTime"/>
                     <h2>Diamonds collected {{ diamondsCollected }} / {{ totalAmountOfDiamonds }}</h2>
                     <!--<ScoreCalculator class="score-text"
                     :collected="this.diamondsCollected"
                     :total="this.totalAmountOfDiamonds"
-                    :wonGame="this.gameWon"
                     @finalScore="updateFinalScore"
                     @gameIsOver="gameOver"
                     @resetGame="resetGame"/>-->
@@ -56,10 +66,10 @@ export default {
                 </div>
 
             </div>
-            <div v-if="winningScreen">
+            <div class="win-screen" v-if="winningScreen">
                 <winningScreen />
             </div>
-            <div v-if="gameOverScreen">
+            <div class="loose-screen" v-if="gameOverScreen">
                 <gameOverScreen @resetGame="resetGame" />
             </div>
         </div>   
@@ -71,7 +81,6 @@ export default {
             diamondsCollected: 0,
             totalAmountOfDiamonds: 0,
             timeLeft: null,
-            gameWon: false,
             totalScore: 0,
             showStartMenu: true,
             startGame: false,
@@ -102,21 +111,18 @@ export default {
         // IF GAME WON
         gameCompleted() {
 
-            this.gameWon = true
-
             let calculator = new ScoreCalculator()
             let finalScore = calculator.calculateFinalScore(this.diamondsCollected, this.timeLeft)
 
-            this.updateFinalScore(finalScore)
-
-            console.log("FINAL SCORE:" + finalScore)
-            //let finalScore = new ScoreCalculator().calculateFinalScore(diamondsCollected, timeLeft)
-            alert("You have finished the game " + finalScore + " time left " + this.timeLeft)
+            alert("You have completed the game!\nYour score is: " + finalScore) //+ " time left " + this.timeLeft)
+            //this.updateFinalScore(finalScore)
+            this.totalAmountOfDiamonds = 0
+            this.nextLevel()
         },
 
 
 
-        calculateResult() {
+        calculateScore() {
 
         },
 
@@ -135,15 +141,19 @@ export default {
             this.showHighScore = true
         },
 
+      
+
         totalDiamonds(maxNumberOfDiamonds) {
             this.totalAmountOfDiamonds = maxNumberOfDiamonds
         },
 
+
+        
         collectedDiamonds(diamondsCollected) {
 
             this.diamondsCollected = diamondsCollected
             
-            if (this.diamondsCollected == this.totalAmountOfDiamonds) {
+            /*if (this.diamondsCollected == this.totalAmountOfDiamonds) {
                 if (this.currentLevel == this.maxNumberOfLevels ) {
                     this.winningScreen = true
                     this.startGame = false                    
@@ -151,7 +161,7 @@ export default {
                     this.totalAmountOfDiamonds = 0;
                     this.nextLevel()
                 }
-            }
+            }*/
         },
 
 
@@ -187,11 +197,13 @@ export default {
             }
         },
 
-        gameOver(){
+        gameOver() {
             this.gameOverScreen = true;
             this.startGame = false;
             this.totalAmountOfDiamonds = 0;
-        }
+        },
+
+
     },
 
     created() {
