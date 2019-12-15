@@ -66,7 +66,6 @@ export default {
         this.updateRollingStones();
 
         let enemyPos = this.findEnemy()
-        // console.log('Enemy Pos = ', enemyPos)
         let newEnemyPos = Enemy.move(enemyPos, null, this.tiles, 2)
         this.updateEnemyPosition(enemyPos, newEnemyPos, this.tiles)
 

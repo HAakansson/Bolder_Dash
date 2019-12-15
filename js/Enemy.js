@@ -7,6 +7,8 @@ export default class Enemey {
 
     static move(enemyPos, playerPos, grid, level) {
 
+        console.log(this.direction[this.index])
+
         let newEnemyPos = null
         
         /*  enemyPos and playerPos is both an object with a x, y and background value.
@@ -50,6 +52,164 @@ export default class Enemey {
         }
     }
 
+    static inACorridor(enemyPos, grid, direction) {
+
+        let tileAbove = grid[enemyPos.y - 1][enemyPos.x]
+        let tileDown = grid[enemyPos.y + 1][enemyPos.x]
+        let tileRight = grid[enemyPos.y][enemyPos.x + 1]
+        let tileLeft = grid[enemyPos.y][enemyPos.x - 1]
+
+        switch(direction) {
+            
+            case 'up':
+            case 'down':
+                if(tileRight.background !== 0 && tileLeft.background !== 0 && tileAbove.background === 0 && tileDown.background == 0) {
+                    return true
+                } else {
+                    return false
+                }
+            case 'right':
+            case 'left':
+                if(tileAbove.background !== 0 && tileDown.background !== 0 && tileRight.background === 0 && tileLeft.background == 0) {
+                    return true
+                } else {
+                    return false
+                }
+        }
+    }
+
+    static inTheOpen(enemyPos,grid) {
+
+        let tileAbove = grid[enemyPos.y - 1][enemyPos.x]
+        let tileDown = grid[enemyPos.y + 1][enemyPos.x]
+        let tileRight = grid[enemyPos.y][enemyPos.x + 1]
+        let tileLeft = grid[enemyPos.y][enemyPos.x - 1]
+
+        if(
+            tileAbove.background === 0 && tileDown.background === 0 &&
+            tileRight.background === 0 && tileLeft.background === 0) {
+            return true
+        } else {
+            return false
+        }
+    }
+
+    static inATCrossing(enemyPos, grid, direction) {
+        
+        let tileAbove = grid[enemyPos.y - 1][enemyPos.x]
+        let tileDown = grid[enemyPos.y + 1][enemyPos.x]
+        let tileRight = grid[enemyPos.y][enemyPos.x + 1]
+        let tileLeft = grid[enemyPos.y][enemyPos.x - 1]
+        
+        switch (direction) {
+            
+            case 'right':
+                if(tileAbove.background === 0 && tileDown.background === 0 && tileRight.background !== 0 && tileLeft.background === 0) {
+                    return true
+                } else if((tileAbove.background === 0 || tileDown.background === 0) && tileRight.background === 0 && tileLeft.background === 0) {
+                    return true
+                } else {
+                    return false
+                }
+            case 'left':
+                if(tileAbove.background === 0 && tileDown.background === 0 && tileLeft.background !== 0 && tileRight.background === 0) {
+                    return true
+                } else if((tileAbove.background === 0 || tileDown.background === 0) && tileRight.background === 0 && tileLeft.background === 0) {
+                    return true
+                } else {
+                    return false
+                }
+            case 'up':
+                if(tileRight.background === 0 && tileLeft.background === 0 && tileAbove.background !== 0 && tileDown.background === 0) {
+                    return true
+                } else if((tileRight.background === 0 || tileLeft.background === 0) && tileAbove.background === 0 && tileDown.background === 0) {
+                    return true
+                } else {
+                    return false
+                }
+            case 'down':
+                if(tileRight.background === 0 && tileLeft.background === 0 && tileDown.background !== 0 && tileAbove.background === 0) {
+                    return true
+                } else if((tileRight.background === 0 || tileLeft.background === 0) && tileDown.background === 0 && tileAbove.background === 0) {
+                    return true
+                } else {
+                    return false
+                }
+        }
+    }
+
+    static inACorner(enemyPos, grid, direction) {
+
+        let tileAbove = grid[enemyPos.y - 1][enemyPos.x]
+        let tileDown = grid[enemyPos.y + 1][enemyPos.x]
+        let tileRight = grid[enemyPos.y][enemyPos.x + 1]
+        let tileLeft = grid[enemyPos.y][enemyPos.x - 1]
+
+        switch(direction) {
+            case 'right':
+                if((tileDown.background === 0 || tileAbove.background === 0) && tileLeft.background === 0 && tileRight.background !== 0) {
+                    return true
+                } else {
+                    return false
+                }
+            case 'left':
+                if((tileDown.background === 0 || tileAbove.background === 0) && tileRight.background === 0 && tileLeft.background !== 0) {
+                    return true
+                } else {
+                    return false
+                }
+            case 'up':
+                if((tileRight.background === 0 || tileLeft.background === 0) && tileDown.background === 0 && tileAbove.background !== 0) {
+                    return true
+                } else {
+                    return false
+                }
+            case 'down':
+                if((tileRight.background === 0 || tileLeft.background === 0) && tileAbove.background === 0 && tileDown.background !== 0) {
+                    return true
+                } else {
+                    return false
+                }
+        }
+
+    }
+
+    static inADeadEnd(enemyPos, grid, direction) {
+
+        let tileAbove = grid[enemyPos.y - 1][enemyPos.x]
+        let tileDown = grid[enemyPos.y + 1][enemyPos.x]
+        let tileRight = grid[enemyPos.y][enemyPos.x + 1]
+        let tileLeft = grid[enemyPos.y][enemyPos.x - 1]
+
+        switch(direction) {
+
+            case 'left':
+                if(tileAbove.background !== 0 && tileDown.background !== 0 && tileLeft.background !== 0 && tileRight.background === 0) {
+                    return true
+                } else {
+                    return false
+                }
+            case 'right':
+                if(tileAbove.background !== 0 && tileDown.background !== 0 && tileRight.background !== 0 && tileLeft.background === 0) {
+                    return true
+                } else {
+                    return false
+                }
+            case 'up':
+                if(tileRight.background !== 0 && tileLeft.background !== 0 && tileAbove.background !== 0 && tileDown.background === 0) {
+                    return true
+                } else {
+                    return false
+                }
+            case 'down':
+                if(tileRight.background !== 0 && tileLeft.background !== 0 && tileDown.background !== 0 && tileAbove.background === 0) {
+                    return true
+                } else {
+                    return false
+                }
+        }
+    }
+
     static level1Enemy(enemyPos) {
 
         let randomNumber = (Math.floor(Math.random() * 4))
@@ -72,31 +232,97 @@ export default class Enemey {
         let tileRight = grid[enemyPos.y][enemyPos.x + 1]
         let tileLeft = grid[enemyPos.y][enemyPos.x - 1]
 
-        let changeDirectionLoop = false
+        if(!this.inACorridor(enemyPos, grid, this.direction[this.index])){
+            if(!this.inTheOpen(enemyPos, grid)){
+                if(this.inATCrossing(enemyPos, grid, this.direction[this.index])) {
+                    console.log('In a T Crossing')
+                    switch(this.direction[this.index]) {
 
-        if(this.ifHitAnObstacle(enemyPos)) {
-            if(this.index < this.direction.length - 1) {
-                this.index++
-            } else {
-                this.index = 0
+                        case 'left': 
+                        case 'right':
+                            if(Math.random() > 0.5) {
+                                this.index = 3
+                                return this.moveUp(enemyPos)
+                            } else {
+                                this.index = 1
+                                return this.moveDown(enemyPos)  
+                            }  
+                        case 'up':
+                        case 'down':
+                            if(Math.random() > 0.5) {
+                                this.index = 0
+                                return this.moveRight(enemyPos)
+                            } else {
+                                this.index = 2
+                                return this.moveLeft(enemyPos)  
+                            } 
+                    }
+                } else if (this.inACorner(enemyPos, grid, this.direction[this.index])) {
+                    console.log('In a corner')
+
+                    switch(this.direction[this.index]) {
+
+                        case 'left': 
+                        case 'right':
+                            if(tileAbove.background !== 0) {
+                                this.index = 1
+                                return this.moveDown(enemyPos)
+                            } else if(tileDown.background !== 0) {
+                                this.index = 3
+                                return this.moveUp(enemyPos)
+                            }
+                        case 'up':
+                        case 'down':
+                            if(tileRight.background !== 0) {
+                                this.index = 2
+                                return this.moveLeft(enemyPos)
+                            } else if(tileLeft.background !== 0) {
+                                this.index = 0
+                                return this.moveRight(enemyPos)
+                            }
+                    }
+                } else if(this.inADeadEnd(enemyPos, grid, this.direction[this.index])) {    
+                    console.log('In a dead end')
+                    switch(this.direction[this.index]) {
+
+                        case 'left': 
+                            this.index = 0
+                            break
+                        case 'right':
+                            this.index = 2
+                            break
+                        case 'up':
+                            this.index = 1
+                            break
+                        case 'down':
+                            this.index = 3
+                            break
+                    }
+                }   
             }
-        } else {
-            this.oldEnemyPos = enemyPos
-        }
+        } 
 
-        console.log(this.direction[this.index])
-
-        switch(this.direction[this.index]) {
+        switch (this.direction[this.index]) {
 
             case 'left': 
-                return this.moveLeft(enemyPos)    
-            case 'up':
-                return this.moveUp(enemyPos)
+                return this.moveLeft(enemyPos)
             case 'right':
                 return this.moveRight(enemyPos)
+            case 'up':
+                return this.moveUp(enemyPos)
             case 'down':
                 return this.moveDown(enemyPos)
         }
+        // if(this.ifHitAnObstacle(enemyPos)) {
+        //     if(this.index < this.direction.length - 1) {
+        //         this.index++
+        //     } else {
+        //         this.index = 0
+        //     }
+        // } else {
+        //     this.oldEnemyPos = enemyPos
+        // }
+
     }
 
     static level3Enemy (enemyPos, playerPos, grid) {
