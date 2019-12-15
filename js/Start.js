@@ -69,7 +69,7 @@ export default {
             <div class="win-screen" v-if="winningScreen">
                 <winningScreen />
             </div>
-            <div class="loose-screen" v-if="gameOverScreen">
+            <div id="loose-screen" v-if="gameOverScreen">
                 <gameOverScreen @resetGame="resetGame" />
             </div>
         </div>   

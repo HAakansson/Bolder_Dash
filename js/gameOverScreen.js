@@ -2,8 +2,8 @@ export default{
 
     name: 'gameOverScreen',
     template: `
-    <div>
-        <button @click = "resetGame">Restart</button>
+    <div id="loose-screen">
+        <button id="restart-button" @click = "resetGame">Restart</button>
         <img id="gameover" src = "gameover.jpg">
     </div>
     `,

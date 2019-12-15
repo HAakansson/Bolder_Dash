@@ -4,6 +4,7 @@ export default class Enemey {
     static direction = ['right', 'down', 'left', 'up']
     static index = 0
     static hitAnObstacle = false
+    static inTheOpenCounter = 0
 
     static move(enemyPos, playerPos, grid, level) {
 
@@ -233,7 +234,26 @@ export default class Enemey {
         let tileLeft = grid[enemyPos.y][enemyPos.x - 1]
 
         if(!this.inACorridor(enemyPos, grid, this.direction[this.index])){
-            if(!this.inTheOpen(enemyPos, grid)){
+            if(this.inTheOpen(enemyPos, grid)){
+                console.log('In the open')
+                if(this.inTheOpenCounter < 1) {
+                    switch(Math.floor(Math.random() * 4)){
+
+                    case 0:
+                        this.index = 0
+                    case 1:
+                        this.index = 1
+                    case 2: 
+                        this.index = 2
+                    case 3:
+                        this.index = 3
+                   
+                    }
+                    this.inTheOpenCounter++
+                } else {
+                    this.inTheOpenCounter = 0
+                } 
+            } else {
                 if(this.inATCrossing(enemyPos, grid, this.direction[this.index])) {
                     console.log('In a T Crossing')
                     switch(this.direction[this.index]) {
@@ -298,7 +318,7 @@ export default class Enemey {
                             this.index = 3
                             break
                     }
-                }   
+                }  
             }
         } 
 
