@@ -1,0 +1,15 @@
+.win-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loose-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#gameover {
+    width: 75vw;
+}

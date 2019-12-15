@@ -1,7 +1,8 @@
 .hud {
     align-items: center;
-    border: 5px solid gray;
-    color: black;
+    border: 5px solid rgb(138, 49, 49);
+    background-color: black;
+    color: white;
     display: flex;
     font-family: 'Tomorrow', sans-serif;
     justify-content: space-around;

@@ -66,7 +66,6 @@ export default {
         this.updateRollingStones();
 
         let enemyPos = this.findEnemy()
-        // console.log('Enemy Pos = ', enemyPos)
         let newEnemyPos = Enemy.move(enemyPos, null, this.tiles, 2)
         this.updateEnemyPosition(enemyPos, newEnemyPos, this.tiles)
 
@@ -414,12 +413,9 @@ export default {
         checkForExit() {
 
             if ((this.customGrid[15][29] == 'G' || this.customGrid[14][29] == 'G') && (this.tiles[15][29].background == Tile.player || this.tiles[14][29].background == Tile.player)) {
-                
                 this.$emit('gameCompleted', true)
             }      
         },
-
-
 
 
         onKeyPressed(event) {
