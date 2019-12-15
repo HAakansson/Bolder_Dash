@@ -93,6 +93,7 @@ export default {
             console.log("NEW SCORE IN HIGHSCORE")
             this.currentScore = val
         },
+        
 
         
         highscoreList: {

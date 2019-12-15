@@ -41,16 +41,17 @@ export default {
                     <ScoreCalculator class="score-text"
                     :collected="this.diamondsCollected"
                     :total="this.totalAmountOfDiamonds"
+                    :wonGame="this.gameWon"
                     @finalScore="updateFinalScore"
                     @gameIsOver="gameOver"
                     @resetGame="resetGame"/>
                 </div>
                 <div v-if="currentLevel === 1 && startGame">
-                    <grid key="1" @total="totalDiamonds" @collected="collectedDiamonds" @game-over="gameOver" ref="gridComponent" level="0"></grid>
+                    <grid key="1" @total="totalDiamonds" @collected="collectedDiamonds" @game-over="gameOver" @gameCompleted="gameCompleted" ref="gridComponent" level="0"></grid>
                 </div>
                 <div v-if="currentLevel === 2 && startGame">
                     <!--key visar för vue att varje grid är "unik" och drf måste den göra om destrot/create -->    
-                    <grid key="2" @total="totalDiamonds" @collected="collectedDiamonds" @game-over="gameOver" ref="gridComponent" level="1"></grid>
+                    <grid key="2" @total="totalDiamonds" @collected="collectedDiamonds" @game-over="gameOver" @gameCompleted="gameCompleted" ref="gridComponent" level="1"></grid>
                 </div>
                 <div v-if="currentLevel === 3 && startGame">
                 <grid @total="totalDiamonds" @collected="collectedDiamonds" @player-stuck="gameOver" ref="gridComponent" level="2"></grid>
@@ -70,6 +71,7 @@ export default {
             maxNumberOfLevels: 3,
             diamondsCollected: 0,
             totalAmountOfDiamonds: 0,
+            gameWon: false,
             totalScore: 0,
             showStartMenu: true,
             startGame: false,
@@ -91,7 +93,15 @@ export default {
             this.showStartMenu = false
             this.startGame = true
         },
+
         // IF GAME WON
+        gameCompleted() {
+
+            this.gameWon = true
+            
+            alert("You have finished the game " + this.totalScore)
+        },
+
         updateFinalScore(score) {
             this.totalScore = score
             this.showStartMenu = true
