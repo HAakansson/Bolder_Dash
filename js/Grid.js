@@ -222,7 +222,7 @@ export default {
                 setTimeout(() => {
                     alert("Game Over")
                     this.$emit('resetGame')
-                }, 100);
+                }, 1000);
 
             }, 2000);
             var deathSound = new Audio('Sound/DeathSound.mp3');
