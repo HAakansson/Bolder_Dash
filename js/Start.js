@@ -58,11 +58,11 @@ export default {
                     @resetGame="resetGame"/>-->
                 </div>
                 <div v-if="currentLevel === 1 && startGame">
-                    <grid key="1" @total="totalDiamonds" @collected="collectedDiamonds" @game-over="gameOver" @gameCompleted="gameCompleted" ref="gridComponent" level="0"></grid>
+                    <grid key="1" @total="totalDiamonds" @collected="collectedDiamonds" @game-over="gameOver" @gameCompleted="gameCompleted" ref="gridComponent" level="0" ></grid>
                 </div>
                 <div v-if="currentLevel === 2 && startGame">
                     <!--key visar för vue att varje grid är "unik" och drf måste den göra om destrot/create -->    
-                    <grid key="2" @total="totalDiamonds" @collected="collectedDiamonds" @game-over="gameOver" @gameCompleted="gameCompleted" ref="gridComponent" level="1"></grid>
+                    <grid key="2" @total="totalDiamonds" @collected="collectedDiamonds" @game-over="gameOver" @gameCompleted="gameCompleted" ref="gridComponent" level="1" difficulity="this.difficulity"></grid>
                 </div>
                 <div v-if="currentLevel === 3 && startGame">
                 <grid @total="totalDiamonds" @collected="collectedDiamonds" @player-stuck="gameOver" ref="gridComponent" level="2"></grid>
@@ -89,6 +89,7 @@ export default {
             showHighScore: true,
             gameOverScreen: false,
             winningScreen: false,
+            difficulity: 1,
             creators: [
                 { name: 'Niklas' },
                 { name: 'Anton' },
@@ -99,6 +100,13 @@ export default {
     },
 
     methods: {
+
+        nextDifficulity(){
+            this.difficulity+=1;
+            if (this.difficulity === 3){
+                this.difficulity = 1
+            }
+        },
 
         beginGame() {
             this.showStartMenu = false
@@ -202,7 +210,7 @@ export default {
                 this.gameOverScreen = true;
                 this.startGame = false;
                 this.totalAmountOfDiamonds = 0;
-            },2000)
+            }, 2000)
         },
 
 
