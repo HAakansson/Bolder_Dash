@@ -15,8 +15,8 @@ export default {
     props: {
         position: {
             type: Object,
-            required: true
-        }
+            required: true,
+        },
     },
 
     data() {
@@ -80,11 +80,11 @@ export default {
     methods: {
         logPosition() {
 
-            if(this.position.background !== 1){
+            if (this.position.background !== 1) {
                 //this.position.background = 0;
                 //this.$emit('change-background');
                 this.$emit('change-playerHasMoved');
-            }                
+            }
 
             const convert = id => {
                 switch (id) {
@@ -95,8 +95,8 @@ export default {
                     case 4: return "diamond";
                     case 5: return "player";
                     case 6: return "enemy";
-                    case 7: return "explotion";
                     case 8: return "exit";
+                    case 7: return "explosion";
                 }
             }
             console.log(this.position.x, this.position.y, convert(this.position.background))
@@ -110,6 +110,13 @@ export default {
 
     computed: {
         image() {
+            if (false && this.position.background === 5) {
+                if (this.$parent.playerPos.heading === 'left') {
+                    return './Img/MoveLeftAnimated.gif'
+                } else if (this.$parent.playerPos.heading === 'right') {
+                    return './Img/MoveRightAnimated.gif'
+                }
+            }
             return this.tileState[this.position.background].tileImage
         }
     }
