@@ -35,6 +35,7 @@ export default {
             maxNumberOfDiamonds: null,
             enableExit: false,
             playerIsStuck: false,
+            PowerUp: false,
             playerPos: {
                 row: null,
                 col: null,
@@ -262,11 +263,15 @@ export default {
                             break
                         case ' ':
                             break
+                        case 'W':
+                            this.tiles[row][col].background = Tile.powerup
+                            break
                         default:
                             console.error('Unknown tile:', this.customGrid[row][col])
                             break
                             this.tiles[row][col].background = Tile.exit
                         case 'G':
+                            
                     }
                     // this.tiles[col][row].type = this.tileType
                     // index++
@@ -364,10 +369,10 @@ export default {
         },
 
         enemyUpdate: function () {
-            if (PowerUp){
+            if (this.PowerUp){
             setTimeout(() => {
-                PowerUp = false;
-            }, 10000)
+                this.PowerUp = false;
+            }, 4000)
         }else{
             this.enemyPos.forEach((enemy, index) => {
                 this.changeEnemyHeading(enemy)
@@ -410,12 +415,16 @@ export default {
             }
         },
 
+      
+
         // Check if tile player stands on contains a diamond
+        // RENAME checkForTiles
         checkForDiamonds() {
             for (let row = 0; row < this.gridHeight; row++) {
 
                 for (let col = 0; col < this.gridWidth; col++) {
 
+                    // DIAMOND TILE
                     if (this.customGrid[row][col] == 'D' && this.tiles[row][col].background == Tile.player) {
 
                         this.diamondsCollected += 1
@@ -425,6 +434,10 @@ export default {
                         if (this.diamondsCollected === (Math.round(this.maxNumberOfDiamonds * (2/3)))) {
                             this.enableExit = true
                         }
+                    }
+
+                    if (this.customGrid[row][col] == 'W' && this.tiles[row][col].background == Tile.player) {
+                        this.PowerUp = true
                     }
                 }
             }
@@ -480,6 +493,7 @@ export default {
             if (val) {
                 this.checkForDiamonds()
                 if (this.enableExit) this.checkForExit()
+                
             }
         }
     },
