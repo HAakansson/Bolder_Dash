@@ -197,9 +197,12 @@ export default {
         },
 
         gameOver() {
-            this.gameOverScreen = true;
-            this.startGame = false;
-            this.totalAmountOfDiamonds = 0;
+            window.removeEventListener('keydown', this.onKeyPressed)
+            setTimeout(() => {
+                this.gameOverScreen = true;
+                this.startGame = false;
+                this.totalAmountOfDiamonds = 0;
+            },2000)
         },
 
 
