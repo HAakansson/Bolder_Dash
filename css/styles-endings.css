@@ -4,18 +4,24 @@
     align-items: center;
 }
 
-#loose-screen {
+.game-over {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-#restart-button {
-    display: inline-block !important;
-    width: 100px;
+
+
+.game-over-title {
+    background: -webkit-linear-gradient(rgb(165, 13, 13), rgb(61, 54, 54));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;    
+    font-size: 150px;
 }
 
-#gameover {
-    width: 75vw;
+.game-over-button {
+    background: -webkit-linear-gradient(rgb(165, 13, 13), rgb(61, 54, 54));
+    -webkit-text-fill-color: white;  
+    height: 8vh;
 }
