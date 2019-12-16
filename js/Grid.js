@@ -266,6 +266,9 @@ export default {
                         case 'W':
                             this.tiles[row][col].background = Tile.powerup
                             break
+                        case 'T':
+                            this.tiles[row][col].background = Tile.addtime
+                            break
                         default:
                             console.error('Unknown tile:', this.customGrid[row][col])
                             break
@@ -438,6 +441,11 @@ export default {
 
                     if (this.customGrid[row][col] == 'W' && this.tiles[row][col].background == Tile.player) {
                         this.PowerUp = true
+                    }
+
+                    if (this.customGrid[row][col] == 'T' && this.tiles[row][col].background == Tile.player) {
+                        this.$emit('addTime')
+                        this.customGrid[row][col] = 'O'
                     }
                 }
             }

@@ -47,6 +47,7 @@ export default {
                 <div class="hud">
                     <h2 class="level-box">Level {{ currentLevel }}</h2>
                     <Countdown 
+                    ref="timeComponent"
                     @gameIsOver="gameOver" 
                     @timeLeft="updateRemainingTime"/>
                     <h2>Diamonds collected {{ diamondsCollected }} / {{ totalAmountOfDiamonds }}</h2>
@@ -58,7 +59,7 @@ export default {
                     @resetGame="resetGame"/>-->
                 </div>
                 <div v-if="currentLevel === 1 && startGame">
-                    <grid key="1" @total="totalDiamonds" @collected="collectedDiamonds" @game-over="gameOver" @gameCompleted="gameCompleted" ref="gridComponent" level="0" ></grid>
+                    <grid key="1" @addTime="updateTime" @total="totalDiamonds" @collected="collectedDiamonds" @game-over="gameOver" @gameCompleted="gameCompleted" ref="gridComponent" level="0" ></grid>
                 </div>
                 <div v-if="currentLevel === 2 && startGame">
                     <!--key visar för vue att varje grid är "unik" och drf måste den göra om destrot/create -->    
@@ -91,6 +92,7 @@ export default {
             winningScreen: false,
             deathMessage: "HOd",
             difficulity: 1,
+            addTime: null,
             creators: [
                 { name: 'Niklas' },
                 { name: 'Anton' },
@@ -110,12 +112,14 @@ export default {
         },
 
         beginGame() {
+
             this.showStartMenu = false
             this.startGame = true
         },
 
 
         updateRemainingTime(time) {
+
             this.timeLeft = time
         },
 
@@ -134,6 +138,12 @@ export default {
         },
 
 
+        updateTime() {
+            console.log("UPDATING TIME")
+            this.$refs.timeComponent.timeAdder();
+
+            addTime: 20
+        },
 
         calculateScore() {
 
