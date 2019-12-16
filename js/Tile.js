@@ -11,6 +11,7 @@ export default {
     enemy: 6,
     explode: 7,
     exit: 8,
+    powerup: 9,
 
     props: {
         position: {
@@ -70,7 +71,7 @@ export default {
                 {
                     tileId: this.stopTimePowerUp,
                     tileName: 'StopTime',
-                    tileImage 
+                    tileImage: './Img/exit.png'
                 },
             ],
         }

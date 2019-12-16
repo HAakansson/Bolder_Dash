@@ -89,6 +89,7 @@ export default {
             showHighScore: true,
             gameOverScreen: false,
             winningScreen: false,
+            deathMessage: "HOd",
             difficulity: 1,
             creators: [
                 { name: 'Niklas' },
