@@ -1,5 +1,6 @@
 export default {
 
+
     template: `
         <div class="timer">
             <h2>Time Left: {{ gameTime }} </h2>
@@ -8,6 +9,7 @@ export default {
 
     data() {
         return {
+            addTime: this.timeAdder,
             gameTime: 120,
             timeLeft: true,
         }
@@ -39,6 +41,11 @@ export default {
                 }
             }, 1000)
         },
+
+        timeAdder() {
+            this.gameTime += 20
+            console.log("IN COUBNTDOWN")
+        }
     },
 
     created() {
@@ -50,6 +57,9 @@ export default {
             if (val === 0) {
                 this.gameIsOver()
             }
-        }
+        },
+
+      
+
     },
 }

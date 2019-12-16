@@ -12,6 +12,7 @@ export default {
     explode: 7,
     exit: 8,
     powerup: 9,
+    addtime: 10,
 
     props: {
         position: {
@@ -71,7 +72,12 @@ export default {
                 {
                     tileId: this.stopTimePowerUp,
                     tileName: 'StopTime',
-                    tileImage: './Img/exit.png'
+                    tileImage: './Img/stopTimeEnemy.png'
+                },
+                {
+                    tileId: this.addTimePowerUp,
+                    tileName: 'addTime',
+                    tileImage: './Img/addTime.png'
                 },
             ],
         }
@@ -103,6 +109,7 @@ export default {
                     case 6: return "enemy";
                     case 8: return "exit";
                     case 7: return "explosion";
+                    //case 9: return ""; // Klick för ny ruta
                 }
             }
             console.log(this.position.x, this.position.y, convert(this.position.background))
