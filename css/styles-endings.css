@@ -4,10 +4,16 @@
     align-items: center;
 }
 
-.loose-screen {
+#loose-screen {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+#restart-button {
+    display: inline-block !important;
+    width: 100px;
 }
 
 #gameover {
