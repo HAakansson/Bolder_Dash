@@ -64,7 +64,9 @@ export default {
                     <!--key visar för vue att varje grid är "unik" och drf måste den göra om destrot/create -->    
                     <grid key="2" @total="totalDiamonds" @collected="collectedDiamonds" @game-over="gameOver" @gameCompleted="gameCompleted" ref="gridComponent" level="1"></grid>
                 </div>
-
+                <div v-if="currentLevel === 3 && startGame">
+                <grid @total="totalDiamonds" @collected="collectedDiamonds" @player-stuck="gameOver" ref="gridComponent" level="2"></grid>
+            </div>
             </div>
             <div class="win-screen" v-if="winningScreen">
                 <winningScreen />
@@ -77,7 +79,7 @@ export default {
     data() {
         return {
             currentLevel: 1,
-            maxNumberOfLevels: 2,
+            maxNumberOfLevels: 3,
             diamondsCollected: 0,
             totalAmountOfDiamonds: 0,
             timeLeft: null,
@@ -143,18 +145,18 @@ export default {
             this.showHighScore = true
         },
 
-      
+
 
         totalDiamonds(maxNumberOfDiamonds) {
             this.totalAmountOfDiamonds = maxNumberOfDiamonds
         },
 
 
-        
+
         collectedDiamonds(diamondsCollected) {
 
             this.diamondsCollected = diamondsCollected
-            
+
             /*if (this.diamondsCollected == this.totalAmountOfDiamonds) {
                 if (this.currentLevel == this.maxNumberOfLevels ) {
                     this.winningScreen = true
@@ -172,29 +174,24 @@ export default {
         },
 
         onKeyPressed(event) {
-            var audio = new Audio('Sound/MovementSound.mp3');
             let keyEvent = event.key
 
             switch (keyEvent) {
                 case 'ArrowUp':
                 case 'w':
                     this.$refs.gridComponent.updatePlayerMovement('up');
-                    audio.play();
                     break;
                 case 'ArrowDown':
                 case 's':
                     this.$refs.gridComponent.updatePlayerMovement('down');
-                    audio.play();
                     break
                 case 'ArrowLeft':
                 case 'a':
                     this.$refs.gridComponent.updatePlayerMovement('left');
-                    audio.play();
                     break
                 case 'ArrowRight':
                 case 'd':
                     this.$refs.gridComponent.updatePlayerMovement('right');
-                    audio.play();
                     break
             }
         },

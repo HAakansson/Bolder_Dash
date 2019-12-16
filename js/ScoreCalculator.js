@@ -7,7 +7,7 @@ export default class ScoreCalculator {
 
         return totalScore
     }
-    
+
 
 }
 
@@ -41,12 +41,12 @@ export default class ScoreCalculator {
 //         },
 
 //         methods: {
-      
+
 //         updateRemainingTime(gameTime) {
 //             this.timeLeft = gameTime
 //         },
-        
-     
+
+
 //         calculateFinalScore() {
 //             let totalScore = this.collectedDiamonds * 100
 //             totalScore += (this.timeLeft * 2)
@@ -74,7 +74,7 @@ export default class ScoreCalculator {
 //             //this.totalDiamonds = 1
 //             console.log(this.totalDiamonds + "total")
 //             console.log(this.collectedDiamonds + " collected")
-            
+
 //             /*if (val === this.totalDiamonds) {
 //                 this.gameWon = true
 //                 console.log("WON")
