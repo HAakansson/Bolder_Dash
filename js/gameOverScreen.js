@@ -1,4 +1,4 @@
-export default{
+export default {
 
     name: 'gameOverScreen',
     template: `
@@ -7,9 +7,9 @@ export default{
         <img id="gameover" src = "gameover.jpg">
     </div>
     `,
-    
 
-    
+
+
 
     methods: {
 

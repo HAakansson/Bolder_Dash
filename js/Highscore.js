@@ -18,7 +18,7 @@
 //     `,
 //     data() {
 //         return {
-            
+
 //             currentScore: 0,
 //             lowestCurrentScore: 0,
 //             highscoreList: [Score],
@@ -29,7 +29,7 @@
 //                 { name: 'DEF', score: 456},
 //                 { name: 'EFG', score: 567},
 //             ]*/
-           
+
 //         }
 //     },
 
@@ -69,8 +69,8 @@
 
 
 //                     //this.highscoreList.splice(highscore -1, this.highscoreList.length - 1, newScore)
-                    
-                    
+
+
 //                     //highscoreList.splice
 //                     // Insert score (remove scores after 5)
 
@@ -93,9 +93,9 @@
 //             console.log("NEW SCORE IN HIGHSCORE")
 //             this.currentScore = val
 //         },
-        
 
-        
+
+
 //         highscoreList: {
 //             // TODO: kalla updateHighscore?
 

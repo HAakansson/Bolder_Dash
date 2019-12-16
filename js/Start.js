@@ -145,18 +145,18 @@ export default {
             this.showHighScore = true
         },
 
-      
+
 
         totalDiamonds(maxNumberOfDiamonds) {
             this.totalAmountOfDiamonds = maxNumberOfDiamonds
         },
 
 
-        
+
         collectedDiamonds(diamondsCollected) {
 
             this.diamondsCollected = diamondsCollected
-            
+
             /*if (this.diamondsCollected == this.totalAmountOfDiamonds) {
                 if (this.currentLevel == this.maxNumberOfLevels ) {
                     this.winningScreen = true
