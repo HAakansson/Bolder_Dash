@@ -8,19 +8,19 @@ export default {
 
     data() {
         return {
-            gameTime: 120, 
+            gameTime: 120,
             timeLeft: true,
         }
     },
     methods: {
-    
+
         gameIsOver() {
 
             clearTimeout
             this.timeLeft = false
             this.$emit('gameIsOver', this.timeLeft)
             setTimeout(() => {
-                alert("Time's up! Game Over") 
+                alert("Time's up! Game Over")
             }, 100);
         },
 
@@ -29,15 +29,15 @@ export default {
 
             let timer = setInterval(() => {
 
-                this.gameTime -= 1                
+                this.gameTime -= 1
                 this.$emit('timeLeft', this.gameTime) // Send remaining time to parent
 
                 if (this.gameTime <= 0) {
 
                     clearInterval(timer)
-                    this.gameTime = 0                    
+                    this.gameTime = 0
                 }
-            }, 1000)  
+            }, 1000)
         },
     },
 
