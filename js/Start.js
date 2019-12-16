@@ -174,29 +174,24 @@ export default {
         },
 
         onKeyPressed(event) {
-            var audio = new Audio('Sound/MovementSound.mp3');
             let keyEvent = event.key
 
             switch (keyEvent) {
                 case 'ArrowUp':
                 case 'w':
                     this.$refs.gridComponent.updatePlayerMovement('up');
-                    audio.play();
                     break;
                 case 'ArrowDown':
                 case 's':
                     this.$refs.gridComponent.updatePlayerMovement('down');
-                    audio.play();
                     break
                 case 'ArrowLeft':
                 case 'a':
                     this.$refs.gridComponent.updatePlayerMovement('left');
-                    audio.play();
                     break
                 case 'ArrowRight':
                 case 'd':
                     this.$refs.gridComponent.updatePlayerMovement('right');
-                    audio.play();
                     break
             }
         },

@@ -49,7 +49,6 @@ export default {
             this.tiles[row] = []
             for (let col = 0; col < this.gridWidth; col++) {
                 let position = {
-                    // TODO MAYBE - Create an instance of a class here instead of x, y and background. Like a boulder class or something.
                     x: col,
                     y: row,
                     background: Tile.dirt
@@ -71,9 +70,10 @@ export default {
         this.updateRollingStones();
 
         let enemyPos = this.findEnemy()
-        // // console.log('Enemy Pos = ', enemyPos)
+        console.log('Enemy Pos = ', enemyPos)
         let newEnemyPos = Enemy.move(enemyPos, this.playerPos, this.tiles, 2)
         this.updateEnemyPosition(enemyPos, newEnemyPos, this.tiles)
+        //this.enemyUpdate();
 
         this.canKill = false;
         this.forceRender()
@@ -107,7 +107,8 @@ export default {
 
             if (this.playerHasMoved) { return; }
             this.playerHasMoved = true;
-
+            var audio = new Audio('Sound/MovementSound.mp3');
+            audio.play()
             switch (direction) {
                 case 'right': {
                     let newPlayerPos = Player.right(this.tiles, Tile, this.playerPos)
@@ -271,6 +272,103 @@ export default {
             }
 
         },
+        canMove(row, col) {
+            return this.tiles[row][col].background === Tile.empty || this.tiles[row][col].background === Tile.player;
+        },
+
+        changeEnemyHeading(enemy) {
+            switch (enemy.heading) {
+                case 0:
+                    if (this.canMove(enemy.row, enemy.col - 1)) {
+                        enemy.heading = 3;
+                    } else if (!this.canMove(enemy.row - 1, enemy.col)) {
+                        enemy.heading = 1;
+                    }
+
+                    break;
+                case 1:
+                    if (this.canMove(enemy.row - 1, enemy.col)) {
+                        enemy.heading = 0;
+                    } else if (!this.canMove(enemy.row, enemy.col + 1)) {
+                        enemy.heading = 2;
+                    }
+
+                    break;
+                case 2:
+                    if (this.canMove(enemy.row, enemy.col + 1)) {
+                        enemy.heading = 1;
+                    } else if (!this.canMove(enemy.row + 1, enemy.col)) {
+                        enemy.heading = 3;
+                    }
+
+                    break;
+                case 3:
+                    if (this.canMove(enemy.row + 1, enemy.col)) {
+                        enemy.heading = 2;
+                    } else if (!this.canMove(enemy.row, enemy.col - 1)) {
+                        enemy.heading = 0;
+                    }
+
+                    break;
+            }
+        },
+
+        moveEnemy(enemy) {
+            switch (enemy.heading) {
+                case 0:
+                    if (!this.canMove(enemy.row - 1, enemy.col)) {
+                        return;
+                    }
+                    break;
+                case 1:
+                    if (!this.canMove(enemy.row, enemy.col + 1)) {
+                        return;
+                    }
+                    break;
+                case 2:
+                    if (!this.canMove(enemy.row + 1, enemy.col)) {
+                        return;
+                    }
+                    break;
+                case 3:
+                    if (!this.canMove(enemy.row, enemy.col - 1)) {
+                        return;
+                    }
+                    break;
+
+            }
+
+            this.tiles[enemy.row][enemy.col].background = Tile.empty;
+
+            switch (enemy.heading) {
+                case 0:
+                    enemy.row -= 1
+                    break;
+                case 1:
+                    enemy.col += 1;
+                    break;
+                case 2:
+                    enemy.row += 1;
+                    break;
+                case 3:
+                    enemy.col -= 1;
+                    break;
+            }
+            this.tiles[enemy.row][enemy.col].background = Tile.enemy;
+
+            this.forceRender();
+        },
+
+        enemyUpdate: function () {
+            this.enemyPos.forEach((enemy, index) => {
+                this.changeEnemyHeading(enemy)
+                this.moveEnemy(enemy);
+                if (enemy.row === this.playerPos.row && enemy.col === this.playerPos.col) {
+                    this.explodes(this.tiles[enemy.row][enemy.col])
+                }
+            })
+        },
+
 
         findEnemy() {
             for (let col = 0; col < this.gridWidth; col++) {
@@ -281,103 +379,6 @@ export default {
                 }
             }
         },
-
-        // canMove(row, col) {
-        //     return this.tiles[row][col].background === Tile.empty || this.tiles[row][col].background === Tile.player;
-        // },
-
-        // changeEnemyHeading(enemy) {
-        //     switch (enemy.heading) {
-        //         case 0:
-        //             if (this.canMove(enemy.row, enemy.col - 1)) {
-        //                 enemy.heading = 3;
-        //             } else if (!this.canMove(enemy.row - 1, enemy.col)) {
-        //                 enemy.heading = 1;
-        //             }
-
-        //             break;
-        //         case 1:
-        //             if (this.canMove(enemy.row - 1, enemy.col)) {
-        //                 enemy.heading = 0;
-        //             } else if (!this.canMove(enemy.row, enemy.col + 1)) {
-        //                 enemy.heading = 2;
-        //             }
-
-        //             break;
-        //         case 2:
-        //             if (this.canMove(enemy.row, enemy.col + 1)) {
-        //                 enemy.heading = 1;
-        //             } else if (!this.canMove(enemy.row + 1, enemy.col)) {
-        //                 enemy.heading = 3;
-        //             }
-
-        //             break;
-        //         case 3:
-        //             if (this.canMove(enemy.row + 1, enemy.col)) {
-        //                 enemy.heading = 2;
-        //             } else if (!this.canMove(enemy.row, enemy.col - 1)) {
-        //                 enemy.heading = 0;
-        //             }
-
-        //             break;
-        //     }
-        // },
-
-        // moveEnemy(enemy) {
-        //     switch (enemy.heading) {
-        //         case 0:
-        //             if (!this.canMove(enemy.row - 1, enemy.col)) {
-        //                 return;
-        //             }
-        //             break;
-        //         case 1:
-        //             if (!this.canMove(enemy.row, enemy.col + 1)) {
-        //                 return;
-        //             }
-        //             break;
-        //         case 2:
-        //             if (!this.canMove(enemy.row + 1, enemy.col)) {
-        //                 return;
-        //             }
-        //             break;
-        //         case 3:
-        //             if (!this.canMove(enemy.row, enemy.col - 1)) {
-        //                 return;
-        //             }
-        //             break;
-
-        //     }
-
-        //     this.tiles[enemy.row][enemy.col].background = Tile.empty;
-
-        //     switch (enemy.heading) {
-        //         case 0:
-        //             enemy.row -= 1
-        //             break;
-        //         case 1:
-        //             enemy.col += 1;
-        //             break;
-        //         case 2:
-        //             enemy.row += 1;
-        //             break;
-        //         case 3:
-        //             enemy.col -= 1;
-        //             break;
-        //     }
-        //     this.tiles[enemy.row][enemy.col].background = Tile.enemy;
-
-        //     this.forceRender();
-        // },
-
-        // enemyUpdate: function () {
-        //     this.enemyPos.forEach((enemy, index) => {
-        //         this.changeEnemyHeading(enemy)
-        //         this.moveEnemy(enemy);
-        //         if (enemy.row === this.playerPos.row && enemy.col === this.playerPos.col) {
-        //             this.explodes(this.tiles[enemy.row][enemy.col])
-        //         }
-        //     })
-        // },
 
         updateEnemyPosition(enemyPos, newEnemyPos, grid) {
             let tileAbove = grid[enemyPos.y - 1][enemyPos.x]
