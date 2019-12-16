@@ -1,9 +1,13 @@
 export default {
 
     name: 'gameOverScreen',
+
+    props: ['message'],
+
     template: `
     <div class="game-over">
         <h1 class="game-over-title">GAME OVER</h1>
+        <h3>{{ message }}</h3>
         <button class="game-over-button" @click = "resetGame">Restart</button>
         <!--<img id="gameover" src = "gameover.jpg">-->
     </div>

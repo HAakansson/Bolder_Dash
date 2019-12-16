@@ -86,4 +86,27 @@ export default class Player {
         }
         return playerPos
     }
+
+    static ifStuck(tiles, Tile, playerPos){
+        const row = playerPos.row;
+        const col = playerPos.col
+
+        let tileToTheRight = tiles[row][col + 1]
+        let tile2StepsToTheRight = tiles[row][col + 2]
+        let tileUnder = tiles[row + 1][col]
+        let tileToTheLeft = tiles[row][col - 1]
+        let tile2StepsToTheLeft = tiles[row][col - 2]
+        let tileAbove = tiles[row - 1][col]
+        if (
+            (tileToTheRight.background === Tile.brick || tileToTheRight.background === Tile.boulder) &&
+            (tile2StepsToTheRight.background === Tile.brick || tile2StepsToTheRight.background === Tile.boulder || tile2StepsToTheRight.background === Tile.dirt || tile2StepsToTheLeft.background === Tile.diamonds) &&
+            (tileUnder.background === Tile.brick || tileUnder.background === Tile.boulder) &&
+            (tileToTheLeft.background === Tile.brick || tileToTheLeft.background === Tile.boulder) &&
+            (tile2StepsToTheLeft.background === Tile.brick || tile2StepsToTheLeft.background === Tile.boulder || tile2StepsToTheLeft.background === Tile.dirt || tile2StepsToTheLeft.background === Tile.diamonds) &&
+            (tileAbove.background === Tile.brick || tileAbove.background === Tile.boulder)
+        ) {
+            return true
+        }
+        return false
+    }
 }

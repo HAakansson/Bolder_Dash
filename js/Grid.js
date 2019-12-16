@@ -11,7 +11,7 @@ export default {
         Tile,
     },
 
-    props: ['level'],
+    props: ['level', 'difficulity'],
 
     template: `
     <div class="grid-layout">
@@ -44,7 +44,7 @@ export default {
     },
 
     created() {
-
+        console.log(this.cos, this.difficulity)
         for (let row = 0; row < this.gridHeight; row++) {
             this.tiles[row] = []
             for (let col = 0; col < this.gridWidth; col++) {
@@ -68,11 +68,12 @@ export default {
 
         this.playerHasMoved = false;
         this.updateRollingStones();
-
-        let enemyPos = this.findEnemy()
-        let newEnemyPos = Enemy.move(enemyPos, null, this.tiles, 2)
-        this.updateEnemyPosition(enemyPos, newEnemyPos, this.tiles)
-        //this.enemyUpdate();
+        
+        // let enemyPos = this.findEnemy()
+        // let newEnemyPos = Enemy.move(enemyPos, null, this.tiles, 2)
+        // this.updateEnemyPosition(enemyPos, newEnemyPos, this.tiles)
+        this.enemyUpdate();
+        
 
         this.canKill = false;
         this.forceRender()
@@ -100,6 +101,10 @@ export default {
                 // This will make the component re-render
                 Vue.set(this.tiles, 0, this.tiles[0]);
             }, 100)
+        },
+
+        difficulityChanger(level){
+            this.difficulity = level;
         },
 
         updatePlayerMovement: function (direction) {
@@ -220,7 +225,6 @@ export default {
                 this.$emit('game-over')
 
                 setTimeout(() => {
-                    alert("Game Over")
                     this.$emit('resetGame')
                 }, 1000);
 
@@ -360,6 +364,11 @@ export default {
         },
 
         enemyUpdate: function () {
+            if (PowerUp){
+            setTimeout(() => {
+                PowerUp = false;
+            }, 10000)
+        }else{
             this.enemyPos.forEach((enemy, index) => {
                 this.changeEnemyHeading(enemy)
                 this.moveEnemy(enemy);
@@ -367,6 +376,7 @@ export default {
                     this.explodes(this.tiles[enemy.row][enemy.col])
                 }
             })
+        }
         },
 
 
@@ -402,7 +412,6 @@ export default {
 
         // Check if tile player stands on contains a diamond
         checkForDiamonds() {
-
             for (let row = 0; row < this.gridHeight; row++) {
 
                 for (let col = 0; col < this.gridWidth; col++) {
@@ -413,7 +422,7 @@ export default {
                         this.$emit('collected', this.diamondsCollected)
 
                         // Number of diamonds needed to be collected before exit appears
-                        if (this.diamondsCollected === this.maxNumberOfDiamonds - 6) {
+                        if (this.diamondsCollected === (Math.round(this.maxNumberOfDiamonds * (2/3)))) {
                             this.enableExit = true
                         }
                     }
@@ -452,32 +461,8 @@ export default {
         },
 
         checkIfPlayerIsStuck() {
-
-            const row = this.playerPos.row;
-            const col = this.playerPos.col
-
-            let tileToTheRight = this.tiles[row][col + 1]
-            let tile2StepsToTheRight = this.tiles[row][col + 2]
-            let tileUnder = this.tiles[row + 1][col]
-            let tileToTheLeft = this.tiles[row][col - 1]
-            let tile2StepsToTheLeft = this.tiles[row][col - 2]
-            let tileAbove = this.tiles[row - 1][col]
-
-            if (
-                (tileToTheRight.background === Tile.brick || tileToTheRight.background === Tile.boulder) &&
-                (tile2StepsToTheRight.background === Tile.brick || tile2StepsToTheRight.background === Tile.boulder || tile2StepsToTheRight.background === Tile.dirt || tile2StepsToTheLeft.background === Tile.diamonds) &&
-                (tileUnder.background === Tile.brick || tileUnder.background === Tile.boulder) &&
-                (tileToTheLeft.background === Tile.brick || tileToTheLeft.background === Tile.boulder) &&
-                (tile2StepsToTheLeft.background === Tile.brick || tile2StepsToTheLeft.background === Tile.boulder || tile2StepsToTheLeft.background === Tile.dirt || tile2StepsToTheLeft.background === Tile.diamonds) &&
-                (tileAbove.background === Tile.brick || tileAbove.background === Tile.boulder)
-            ) {
-                // console.log(true)
-                return true
-            }
-            // console.log(false)
-            return false
-
-
+            let bol = Player.ifStuck(this.tiles, Tile, this.playerPos);
+            return bol;
         },
     },
 
