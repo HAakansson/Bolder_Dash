@@ -237,22 +237,30 @@ export default class Enemey {
             if (this.inTheOpen(enemyPos, grid)) {
                 console.log('In the open')
                 if (this.inTheOpenCounter < 1) {
+
+                    this.inTheOpenCounter++
                     switch (Math.floor(Math.random() * 4)) {
 
                         case 0:
                             this.index = 0
+                            break
                         case 1:
                             this.index = 1
+                            break
                         case 2:
                             this.index = 2
+                            break
                         case 3:
                             this.index = 3
-
+                            break
+                    
                     }
-                    this.inTheOpenCounter++
-                } else {
+                } else if (this.inTheOpenCounter < 6) {
                     this.inTheOpenCounter = 0
+                } else {
+                this.inTheOpenCounter++
                 }
+           
             } else {
                 if (this.inATCrossing(enemyPos, grid, this.direction[this.index])) {
                     console.log('In a T Crossing')
