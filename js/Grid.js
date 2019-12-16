@@ -275,6 +275,7 @@ export default {
             }
 
         },
+        
         canMove(row, col) {
             return this.tiles[row][col].background === Tile.empty || this.tiles[row][col].background === Tile.player;
         },
@@ -389,7 +390,7 @@ export default {
             }
         },
 
-        updateEnemyPosition(enemyPos, newEnemyPos, grid) {
+        updateEnemyPosition(enemyPos, newEnemyPos, grid) { 
             let tileAbove = grid[enemyPos.y - 1][enemyPos.x]
             let tileDown = grid[enemyPos.y + 1][enemyPos.x]
             let tileRight = grid[enemyPos.y][enemyPos.x + 1]
