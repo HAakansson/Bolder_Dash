@@ -223,10 +223,10 @@ export default {
             tileRightAbove.background = Tile.explode
 
             setTimeout(() => {
-                this.$emit('game-over')
+                //this.$emit('game-over')
 
                 setTimeout(() => {
-                    this.$emit('resetGame')
+                    //this.$emit('resetGame')
                 }, 1000);
 
             }, 2000);

@@ -4,6 +4,13 @@
     align-items: center;
 }
 
+
+
+.end-buttons {
+    display: flex;
+    justify-content: center;
+}
+
 .game-over {
     display: flex;
     flex-direction: column;
@@ -18,6 +25,16 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;    
     font-size: 150px;
+    margin-bottom: 0px;
+}
+
+.game-over-message {
+    margin: 0px;
+    background: -webkit-linear-gradient(rgb(228, 218, 218), rgb(61, 54, 54));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;    
+    font-size: 70px;
+    display: block;
 }
 
 .game-over-button {
@@ -25,3 +42,4 @@
     -webkit-text-fill-color: white;  
     height: 8vh;
 }
+
