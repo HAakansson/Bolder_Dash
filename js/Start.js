@@ -147,6 +147,8 @@ export default {
         // IF GAME WON
         gameCompleted() {
 
+            //this.winningScreen = true
+
             let calculator = new ScoreCalculator()
             let finalScore = calculator.calculateFinalScore(this.diamondsCollected, this.timeLeft)
 
