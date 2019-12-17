@@ -18,32 +18,26 @@ export default {
     template: `
         <div class="game-page-1">
 
-           
+            <!-- Start Menu -->
             <div v-if="showStartMenu" class="start-menu start">
 
-                 <div v-if="showStartMenu" class="creators-list start">
+                <div v-if="showStartMenu" class="creators-list start">
                     <h2>Creators:</h2> 
-                    <h3 class="creators-name" v-for="creator in creators">  {{ creator.name }}  </h3>
+                    <h3 class="creators-name" v-for="creator in creators">{{ creator.name }}</h3>
                 </div>
+
                 <div class="start-box">
                     <h1 class="game-title" data-text="[Bolder_Dash]">[Bolder_Dash]</h1>
-                    <div v-if="showHighScore" class="start info-box">
-                         <!--<highscore
-                    :newScore="this.totalScore"
-                    class="highscore"/>-->
+                
+                    <div class="buttons">
+                        <button class="next-level" @click="nextLevel">Choose your level: (Level {{ currentLevel }})</button>
+                        <button class="start-level" @click="startGame">Start Game</button>
+                    </div>  
                 </div>
-               
-                   
-                <div class="buttons">
-                    <button class="next-level" @click="nextLevel">Choose your level: (Level {{ currentLevel }})</button>
-                    <button class="start-level" @click="beginGame">Start Game</button>
-                </div>  
             </div>
-        </div>
 
-
-
-            <div v-if="startGame" class="game-page-2">
+            <div v-if="showGame" class="game-page-2">
+               
                 <div class="hud">
                     <h2 class="level-box">Level {{ currentLevel }}</h2>
                     <Countdown 
@@ -51,29 +45,29 @@ export default {
                     @gameIsOver="gameOver" 
                     @timeLeft="updateRemainingTime"/>
                     <h2>Diamonds collected {{ diamondsCollected }} / {{ totalAmountOfDiamonds }}</h2>
-                    <!--<ScoreCalculator class="score-text"
-                    :collected="this.diamondsCollected"
-                    :total="this.totalAmountOfDiamonds"
-                    @finalScore="updateFinalScore"
-                    @gameIsOver="gameOver"
-                    @resetGame="resetGame"/>-->
                 </div>
-                <div v-if="currentLevel === 1 && startGame">
+
+                <div v-if="currentLevel === 1 && showGame">
                     <grid key="1" @addTime="updateTime" @total="totalDiamonds" @collected="collectedDiamonds" @game-over="gameOver" @gameCompleted="gameCompleted" ref="gridComponent" level="0" ></grid>
                 </div>
-                <div v-if="currentLevel === 2 && startGame">
+
+                <div v-if="currentLevel === 2 && showGame">
                     <!--key visar för vue att varje grid är "unik" och drf måste den göra om destrot/create -->    
                     <grid key="2" @total="totalDiamonds" @collected="collectedDiamonds" @game-over="gameOver" @gameCompleted="gameCompleted" ref="gridComponent" level="1" difficulity="this.difficulity"></grid>
                 </div>
-                <div v-if="currentLevel === 3 && startGame">
-                <grid @total="totalDiamonds" @collected="collectedDiamonds" @player-stuck="gameOver" ref="gridComponent" level="2"></grid>
+
+                <div v-if="currentLevel === 3 && showGame">
+                    <grid @total="totalDiamonds" @collected="collectedDiamonds" @player-stuck="gameOver" ref="gridComponent" level="2"></grid>
+                </div>
+
             </div>
-            </div>
+
             <div class="win-screen" v-if="winningScreen">
                 <winningScreen />
             </div>
-            <div id="loose-screen" v-if="gameOverScreen">
-                <gameOverScreen @resetGame="resetGame" />
+
+            <div id="loose-screen" v-if="showGameOver">
+                <gameOverScreen :deathMessage="gameOverReason" @reloadLevel="restartLevel" @startMenu="showMenu"/>
             </div>
         </div>   
     `,
@@ -86,11 +80,10 @@ export default {
             timeLeft: null,
             totalScore: 0,
             showStartMenu: true,
-            startGame: false,
-            showHighScore: true,
-            gameOverScreen: false,
+            showGame: false,
+            showGameOver: false,
             winningScreen: false,
-            deathMessage: "HOd",
+            gameOverReason: "You are dead",
             difficulity: 1,
             addTime: null,
             creators: [
@@ -104,24 +97,52 @@ export default {
 
     methods: {
 
-        nextDifficulity(){
-            this.difficulity+=1;
-            if (this.difficulity === 3){
-                this.difficulity = 1
-            }
-        },
-
-        beginGame() {
-
+        startGame() {
             this.showStartMenu = false
-            this.startGame = true
+            this.showGame = true
         },
 
-
-        updateRemainingTime(time) {
-
-            this.timeLeft = time
+        showMenu() {
+            this.showStartMenu = true
+            this.currentLevel = 1,
+            this.difficulity = 1,
+            this.resetEverything()
         },
+
+        restartLevel() {
+            this.resetEverything()
+            this.startGame()
+        },
+
+        resetEverything() {
+            this.showGameOver = false
+            this.totalScore = 0,
+            this.diamondsCollected = 0,
+            this.totalAmountOfDiamonds = 0,
+            this.timeLeft = null
+            window.addEventListener('keydown', this.onKeyPressed)
+        },
+
+        /*resetGame() {
+            this.showStartMenu = true
+            this.showGame = false
+            this.showGameOver = false
+        },*/
+
+
+        gameOver() {
+
+            window.removeEventListener('keydown', this.onKeyPressed)
+
+            let gameOverDelay = setTimeout(() => {
+                this.showGame = false;
+                this.showGameOver = true;
+                clearTimeout(gameOverDelay)
+
+            }, 2000)
+
+        },
+        
 
         // IF GAME WON
         gameCompleted() {
@@ -133,10 +154,15 @@ export default {
             //this.updateFinalScore(finalScore)
             this.totalAmountOfDiamonds = 0
 
-            this.currentLevel == 1 ? this.nextLevel() : this.resetGame()
+            this.currentLevel == 1 ? this.nextLevel() : this.showMenu()
             //this.nextLevel()
         },
 
+
+        updateRemainingTime(time) {
+
+            this.timeLeft = time
+        },
 
         updateTime() {
             console.log("UPDATING TIME")
@@ -145,32 +171,27 @@ export default {
             addTime: 20
         },
 
+        updateDeathMessage() {
+            this.$refs.gameOverComponent.updateDeathMessage("HOWDY")
+        },
+
         calculateScore() {
 
         },
 
         // TODO: ta bort? 
-        updateFinalScore(score) {
+        /*updateFinalScore(score) {
             this.totalScore = score
             this.showStartMenu = true
-            this.startGame = false
-            this.showHighScore = true
-        },
+            this.showGame = false
+        },*/
 
-        resetGame() {
-            this.showStartMenu = true
-            this.startGame = false
-            this.gameOverScreen = false
-            this.showHighScore = true
-        },
-
+       
 
 
         totalDiamonds(maxNumberOfDiamonds) {
             this.totalAmountOfDiamonds = maxNumberOfDiamonds
         },
-
-
 
         collectedDiamonds(diamondsCollected) {
 
@@ -187,6 +208,14 @@ export default {
             }*/
         },
 
+        nextDifficulity(){
+            this.difficulity+=1;
+            if (this.difficulity === 3){
+                this.difficulity = 1
+            }
+
+            //this.difficulity = this.difficulity >= 3 ? 1 : difficulity + 1
+        },
 
         nextLevel() {
             this.currentLevel = this.currentLevel >= this.maxNumberOfLevels ? 1 : this.currentLevel + 1
@@ -215,15 +244,7 @@ export default {
             }
         },
 
-        gameOver() {
-            window.removeEventListener('keydown', this.onKeyPressed)
-            setTimeout(() => {
-                this.gameOverScreen = true;
-                this.startGame = false;
-                this.totalAmountOfDiamonds = 0;
-            }, 2000)
-        },
-
+    
 
     },
 
