@@ -63,6 +63,7 @@ export default {
         this.getTotalNumberOfDiamonds()
         var musicTheme = new Audio('Sound/MainTheme.mp3');
         musicTheme.play();
+        this.resetExit()
     },
 
     updated() {
@@ -434,7 +435,7 @@ export default {
                         this.$emit('collected', this.diamondsCollected)
 
                         // Number of diamonds needed to be collected before exit appears
-                        if (this.diamondsCollected === (Math.round(this.maxNumberOfDiamonds * (2/3)))) {
+                        if (this.diamondsCollected === 3) {//(Math.round(this.maxNumberOfDiamonds * (2/3)))) {
                             this.enableExit = true
                         }
                     }
@@ -474,9 +475,17 @@ export default {
 
         },
 
+        resetExit() {
+            this.tiles[14][29].background = Tile.brick
+            this.tiles[15][29].background = Tile.brick
+        },
+
         checkForExit() {
 
             if ((this.customGrid[15][29] == 'G' || this.customGrid[14][29] == 'G') && (this.tiles[15][29].background == Tile.player || this.tiles[14][29].background == Tile.player)) {
+                
+                //this.tiles[14][28].background = Tile.empty
+                //this.tiles[15][28].background = Tile.empty
                 this.$emit('gameCompleted', true)
             }
         },

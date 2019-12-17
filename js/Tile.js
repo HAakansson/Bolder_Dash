@@ -67,7 +67,7 @@ export default {
                 {
                     tileId: this.exit,
                     tileName: 'Exit',
-                    tileImage: './Img/exit.png'
+                    tileImage: './Img/ExitLvl.png'
                 },
                 {
                     tileId: this.stopTimePowerUp,
