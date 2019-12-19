@@ -1,5 +1,10 @@
+
+
 .start-menu {
-    border: 2px solid black;
+}
+
+.start-box {
+    border: 2px solid white;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -8,6 +13,7 @@
 }
 
 .game-title {
+    font-size: 75px;
     font-family: 'Quicksand', sans-serif;
     color: white;
     text-align: center;
@@ -33,8 +39,8 @@
     z-index: -2;
     opacity: .5;
     filter: blur(70px);
-
 }
+
 #gameover{
     height: 100vh;
     width: 100vw;
@@ -50,8 +56,11 @@ body {
 }
 
 button {
-    width: 50%;
-    margin: 0.5vw;
+    width: 70%;
+    height: 35px;
+    margin: 0.6vw;
+    background-color: #795763;
+    color: white;
 }
 
 .highscore {
@@ -59,7 +68,9 @@ button {
 }
 
 .creators-list {
-    display: flex;
+    color: white;
+    /*display: flex;*/
+    display: inline-flex;
     justify-content: flex-start;
     align-items: center;
 }

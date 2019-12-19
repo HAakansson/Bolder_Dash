@@ -1,0 +1,45 @@
+.win-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.end-buttons {
+    display: flex;
+    justify-content: center;
+}
+
+.game-over {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.game-over-title {
+    background: -webkit-linear-gradient(rgb(165, 13, 13), rgb(61, 54, 54));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;    
+    font-size: 150px;
+    margin-bottom: 0px;
+}
+
+.game-over-message {
+    margin: 0px;
+    background: -webkit-linear-gradient(rgb(228, 218, 218), rgb(61, 54, 54));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;    
+    font-size: 70px;
+    display: block;
+}
+
+.game-over-button {
+    background: -webkit-linear-gradient(rgb(165, 13, 13), rgb(61, 54, 54));
+    -webkit-text-fill-color: white;  
+    height: 8vh;
+}
+
